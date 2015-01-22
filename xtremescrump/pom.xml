@@ -24,18 +24,19 @@
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>1.9.17</version>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-
+        <!--
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                    <version>2.5</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>jstl</groupId>
+                    <artifactId>jstl</artifactId>
+                    <version>1.2</version>
+                </dependency>
+        -->
         <!-- Test Dependencies -->
         <dependency>
             <groupId>com.google.appengine</groupId>
@@ -49,6 +50,67 @@
             <version>1.9.17</version>
             <scope>test</scope>
         </dependency>
+        <!-- Especificacion e Implementacion jsf de Oracle -->
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <!-- Expression Language de Oracle -->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>jstl-api</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- Implementacion jsf de Sun -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+        <dependency>  
+            <groupId>org.primefaces</groupId>  
+            <artifactId>primefaces</artifactId>  
+            <version>5.1</version>  
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -105,7 +167,7 @@
                     <!-- address>0.0.0.0</address>
                     <port>8080</port -->
                     <!-- Comment in the below snippet to enable local debugging with a remove debugger
-                         like those included with Eclipse or IntelliJ -->
+                    like those included with Eclipse or IntelliJ -->
                     <!-- jvmFlags>
                       <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
                     </jvmFlags -->
