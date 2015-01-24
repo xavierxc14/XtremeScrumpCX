@@ -1,4 +1,4 @@
-package ec.edu.epn.software;
+package ec.edu.epn.software.controladores;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
