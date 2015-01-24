@@ -16,6 +16,6 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <head>
     </head>
     <body>
-    <jsp:forward page="historia_usuario/historia_usuario.jsf" />
+    <jsp:forward page="paginas/historia_usuario/historia_usuario.jsf" />
     </body>
 </html>

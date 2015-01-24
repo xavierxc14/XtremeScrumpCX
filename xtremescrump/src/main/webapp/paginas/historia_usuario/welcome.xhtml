@@ -3,13 +3,17 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <title>GAE + JSF</title>
     </h:head>
     <h:body>
-        <h1>PAGINA2 - welcome.xhtml</h1>
-        <h4>Texto: #{historiaUsuarioBean.saludo}</h4>
+        <p:dataTable value="#{historiaUsuarioControlador.historiaUsuarios}" var="hu">
+            <p:column headerText="Codigo">
+                <h:outputText value="#{hu.codigo}"/>
+            </p:column>
+        </p:dataTable>
     </h:body>
 </html>

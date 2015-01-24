@@ -16,8 +16,7 @@
         <h1>TEST - HU</h1>
         <h:form>
             <p:panel header="Prueba Prime">
-                <h:inputText value="#{historiaUsuarioBean.saludo}"/>
-                <p:commandButton value="Enviar" action="welcome"/>
+                <p:commandButton value="Enviar" action="#{historiaUsuarioControlador.guardar}"/>
             </p:panel>
         </h:form>
     </h:body>

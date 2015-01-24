@@ -3,7 +3,6 @@ package ec.edu.epn.software.entidades;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
-
 @Entity
 public class HistoriaUsuario {
 
@@ -22,6 +21,21 @@ public class HistoriaUsuario {
      * Constructor vacio.
      */
     public HistoriaUsuario() {
+    }
+
+    /**
+     * Constructor con argumentos.
+     *
+     * @param codigo
+     * @param titulo
+     * @param prioridad
+     * @param esfuerzo
+     */
+    public HistoriaUsuario(String codigo, String titulo, Integer prioridad, Integer esfuerzo) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.prioridad = prioridad;
+        this.esfuerzo = esfuerzo;
     }
 
     /**
