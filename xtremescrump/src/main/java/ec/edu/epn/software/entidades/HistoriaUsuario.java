@@ -1,68 +1,97 @@
 package ec.edu.epn.software.entidades;
 
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 
 @Entity
-@Table(name = "HistoriaUsuario")
 public class HistoriaUsuario {
 
+    @Id
     private Long id;
 
-    private String author;
-    private Date date;
-    private String content;
+    private String codigo;
 
+    private String titulo;
+
+    private Integer prioridad;
+
+    private Integer esfuerzo;
+
+    /**
+     * Constructor vacio.
+     */
     public HistoriaUsuario() {
     }
 
-    public HistoriaUsuario(String author, Date date, String content) {
-        this.author = author;
-        this.date = date;
-        this.content = content;
-    }
-
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    /**
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
-    private void setId(Long id) {
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
+    /**
+     * @return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date")
-    public Date getDate() {
-        return date;
+    /**
+     * @return the titulo
+     */
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    /**
+     * @param titulo the titulo to set
+     */
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getContent() {
-        return content;
+    /**
+     * @return the prioridad
+     */
+    public Integer getPrioridad() {
+        return prioridad;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    /**
+     * @param prioridad the prioridad to set
+     */
+    public void setPrioridad(Integer prioridad) {
+        this.prioridad = prioridad;
     }
+
+    /**
+     * @return the esfuerzo
+     */
+    public Integer getEsfuerzo() {
+        return esfuerzo;
+    }
+
+    /**
+     * @param esfuerzo the esfuerzo to set
+     */
+    public void setEsfuerzo(Integer esfuerzo) {
+        this.esfuerzo = esfuerzo;
+    }
+
 }

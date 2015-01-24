@@ -5,6 +5,9 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <listener>
+        <listener-class>ec.edu.epn.software.listener.ConfigStartup</listener-class>
+    </listener>
     <!-- Faces Servlet -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
