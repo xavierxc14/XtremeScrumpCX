@@ -24,7 +24,7 @@ import ec.edu.epn.software.entidades.HistoriaUsuario;
  */
 public class HistoriaUsuarioServicio extends ServicioBase<HistoriaUsuario> {
 
-    public HistoriaUsuarioServicio(Class<HistoriaUsuario> tipoEntidad, Class<?> tipoServicio) {
+    public HistoriaUsuarioServicio() {
         super(HistoriaUsuario.class, HistoriaUsuarioServicio.class);
     }
 

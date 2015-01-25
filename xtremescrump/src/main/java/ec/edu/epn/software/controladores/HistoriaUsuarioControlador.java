@@ -16,7 +16,7 @@ import javax.faces.bean.SessionScoped;
 public class HistoriaUsuarioControlador extends ControladorBase {
 
     private static Logger logger;
-    private HistoriaUsuarioServicio historiaUsuarioServicio;
+    private HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
     private HistoriaUsuario historiaUsuario;
     private List<HistoriaUsuario> historiaUsuarios;
 
