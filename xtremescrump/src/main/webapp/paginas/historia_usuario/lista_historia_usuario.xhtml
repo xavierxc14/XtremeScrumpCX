@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/generalTemplate.xhtml"
-                xmlns:xsp="http://xmlns.jcp.org/jsf/composite/xtremescrump">
+                xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
     <ui:define name="contenido">
         <h:form id="formClausula">
             <xsp:opciones id="listaHistoriasUsuario"
@@ -15,7 +15,7 @@
                           controlador="#{catalogoBean}"
                           formulario="#{false}">
                 <f:facet name="content">
-                    <p:dataTable id="tablaClausula"
+                    <p:dataTable id="tablaHistoriasUsuario"
                                  value="#{historiaUsuarioControlador.historiaUsuarios}"
                                  var="hu"
                                  paginator="#{true}"
@@ -26,6 +26,7 @@
                                  style="overflow: auto">
                         <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
                                   style="text-align: center; width: 0px">
+                            <h:outputText value="#{rowIndex+1}"/>
                         </p:column>
                     </p:dataTable>
                 </f:facet>

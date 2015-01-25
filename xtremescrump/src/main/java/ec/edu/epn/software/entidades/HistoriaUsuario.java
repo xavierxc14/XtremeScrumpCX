@@ -2,9 +2,10 @@ package ec.edu.epn.software.entidades;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import java.io.Serializable;
 
 @Entity
-public class HistoriaUsuario {
+public class HistoriaUsuario implements Serializable {
 
     @Id
     private Long id;
