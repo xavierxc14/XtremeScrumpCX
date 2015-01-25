@@ -3,8 +3,16 @@
     <application>${appengine.app.appId}</application>
     <version>${appengine.app.version}</version>
     <threadsafe>true</threadsafe>
-    <use-google-connector-j>true</use-google-connector-j>
     <sessions-enabled>true</sessions-enabled>
+    <static-files>
+        <include path="/favicon.ico" />
+        <include path="/resources/**" />
+        <include path="/css/style.css" />
+        <include path="/css/general.css" />
+        <include path="/css/iconic.css" />
+        <include path="/js/prefix-free.js" />
+        
+    </static-files>
 
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
