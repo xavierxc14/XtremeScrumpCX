@@ -14,6 +14,13 @@ public abstract class ControladorBase implements Serializable {
     public abstract String buscar();
 
     /**
+     * Inicia la creacion de un nuevo registro.
+     *
+     * @return String
+     */
+    public abstract String nuevo();
+
+    /**
      * Perimte guardar un registro.
      *
      * @return String
@@ -26,11 +33,4 @@ public abstract class ControladorBase implements Serializable {
      * @return String
      */
     public abstract String borrar();
-
-    /**
-     * Inicia la creacion de un nuevo registro.
-     *
-     * @return String
-     */
-    public abstract String iniciarCreacion();
 }

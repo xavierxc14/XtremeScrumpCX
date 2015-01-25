@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <composite:interface>
+        <composite:attribute name="controlador" required="true"
+                             type="ec.edu.epn.software.controladores.ControladorBase"/>
+        <composite:attribute name="titulo" type="java.lang.String"
+                             required="true"/>
+        <composite:attribute name="formulario"
+                             required="true"
+                             default="false"
+                             type="java.lang.Boolean"/>
+
+        <composite:facet name="contenido" required="false"/>
+    </composite:interface>
+    <composite:implementation>
+
+        <p:panel header="#{cc.attrs.titulo}"
+                 id="#{msg['ec.edu.epn.software.genericos.formulario.id']}">
+            <h:panelGrid columns="3">
+                <p:commandButton
+                    value="#{msg['ec.edu.epn.software.generico.boton.nuevo']}"
+                    icon="ui-icon-document"
+                    action="#{cc.attrs.controlador.nuevo}"
+                    rendered="#{!cc.attrs.formulario}"
+                    ajax="#{false}"/>
+                <p:commandButton
+                    value="#{msg['ec.edu.epn.software.generico.boton.imprimir']}"
+                    icon="ui-icon-print"
+                    action="#{cc.attrs.controlador.imprimir}"
+                    rendered="#{!cc.attrs.formulario}"
+                    ajax="#{false}"/>
+                <p:commandButton
+                    value="#{msg['ec.edu.epn.software.generico.boton.salir']}"
+                    partialSubmit="#{true}"
+                    icon="ui-icon-arrowreturnthick-1-w"
+                    action="#{cc.attrs.controlador.buscar}"
+                    rendered="#{!cc.attrs.formulario}"
+                    ajax="#{false}" immediate="#{true}"/>
+            </h:panelGrid>
+
+            <p:separator id="separator" rendered="#{!cc.attrs.formulario}"/>
+            <div class="ui-panel ui-widget ui-widget-content ui-corner-all" style="widows: 100%">
+                <composite:renderFacet name="content"/>
+            </div>
+            <p:separator id="separator2" rendered="#{cc.attrs.formulario}"/>
+            <center>
+                <h:panelGrid columns="2" rendered="#{cc.attrs.formulario}">
+                    <p:commandButton
+                        value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                        icon="ui-icon-disk"
+                        action="#{cc.attrs.controlador.guardar}"
+                        update="#{msg['ec.edu.epn.software.genericos.formulario.id']}"
+                        rendered="#{cc.attrs.formulario}"/>
+                    <p:commandButton
+                        value="#{msg['ec.edu.epn.software.generico.boton.regresar']}"
+                        partialSubmit="#{true}"
+                        icon="ui-icon-arrowreturnthick-1-w"
+                        action="#{cc.attrs.controlador.buscar}"
+                        rendered="#{cc.attrs.formulario}"
+                        ajax="#{false}" immediate="#{true}"/>
+                </h:panelGrid>
+            </center>
+        </p:panel>
+    </composite:implementation>
+</html>
