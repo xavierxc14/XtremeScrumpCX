@@ -17,7 +17,7 @@
                 <f:facet name="content">
                     <p:dataTable id="tablaHistoriasUsuario"
                                  value="#{historiaUsuarioControlador.historiaUsuarios}"
-                                 var="hu"
+                                 var="historiaUsuario"
                                  paginator="#{true}"
                                  emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
                                  rows="#{msg['ec.edu.epn.software.generico.maxRegistros']}"
@@ -25,8 +25,40 @@
                                  filterEvent="enter"
                                  style="overflow: auto">
                         <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
-                                  style="text-align: center; width: 0px">
+                                  style="text-align: center">
                             <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.codigo']}"
+                                  style="text-align: center; width: 100px">
+                            <h:outputText value="#{historiaUsuario.codigo}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
+                                  style="width: 200px">
+                            <h:outputText value="#{historiaUsuario.titulo}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.prioridad']}"
+                                  style="text-align: center; width: 50px">
+                            <h:outputText value="#{historiaUsuario.prioridad}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.esfuerzo']}"
+                                  style="text-align: center; width: 50px">
+                            <h:outputText value="#{historiaUsuario.esfuerzo}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
+                                  style="text-align: center; width: 50px">
+                            <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
+                                             ajax="#{false}"
+                                             action="#{historiaUsuarioControlador.editar}"
+                                             title="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}">
+                                <f:setPropertyActionListener value="#{historiaUsuario}"
+                                                             target="#{historiaUsuarioControlador.historiaUsuario}"/>
+                            </p:commandButton>
+                            <p:commandButton id="botonEliminar" icon="ui-icon-trash"
+                                             onclick="PF('confirmEliminacion').show()"
+                                             title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
+                                <f:setPropertyActionListener value="#{historiaUsuario}"
+                                                             target="#{historiaUsuarioControlador.historiaUsuario}"/>
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </f:facet>
