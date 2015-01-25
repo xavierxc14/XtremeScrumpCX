@@ -1,7 +1,7 @@
 package ec.edu.epn.software.servicios;
 
 import com.googlecode.objectify.Key;
-import static ec.edu.epn.software.servicios.OfyService.ofy;
+import static ec.edu.epn.software.servicios.objectify.OfyService.ofy;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;

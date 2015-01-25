@@ -1,4 +1,4 @@
-package ec.edu.epn.software.servicios;
+package ec.edu.epn.software.servicios.objectify;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
