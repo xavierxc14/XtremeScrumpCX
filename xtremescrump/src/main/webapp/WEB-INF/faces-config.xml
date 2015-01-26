@@ -13,4 +13,8 @@
         </resource-bundle>
         <message-bundle>messages</message-bundle>
     </application>
+    <!-- Configura un PhaseListener utilizado para forzar una serialización de la  sesión en App Engine. -->
+    <lifecycle>
+        <phase-listener>ec.edu.epn.software.configuraciones.SessionSerializationPhaseListener</phase-listener>
+    </lifecycle>
 </faces-config>

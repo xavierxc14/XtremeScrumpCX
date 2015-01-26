@@ -20,19 +20,32 @@
                         <p:outputLabel for="codigo" value="#{msg['ec.edu.epn.software.historiaUsuario.codigo']}:"/>
                         <p:inputText id="codigo" required="#{true}"
                                      value="#{historiaUsuarioControlador.historiaUsuario.codigo}"/>
-                        <p:message for="codigo" showDetail="false" display="icon"/>
+                        <p:message for="codigo" showDetail="#{false}" display="icon"/>
                         <p:outputLabel for="titulo" value="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}:"/>
                         <p:inputText id="titulo" required="#{true}"
                                      value="#{historiaUsuarioControlador.historiaUsuario.titulo}"/>
-                        <p:message for="titulo" showDetail="false" display="icon"/>
+                        <p:message for="titulo" showDetail="#{false}" display="icon"/>
+                        <p:outputLabel for="descripcion" value="#{msg['ec.edu.epn.software.historiaUsuario.descripcion']}:"/>
+                        <p:inputTextarea id="descripcion"
+                                         value="#{historiaUsuarioControlador.historiaUsuario.descripcion}"
+                                         style="width: 250px; resize: none"
+                                         counter="contDescripcion" rows="5" cols="50"
+                                         autoResize="#{false}"
+                                         maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
+                                         counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
+                                         required="#{true}"/>
+                        <p:message for="descripcion" showDetail="#{false}" display="icon"/>
+                        <h:outputText/>
+                        <h:outputText id="contDescripcion"/>
+                        <h:outputText/>
                         <p:outputLabel for="prioridad" value="#{msg['ec.edu.epn.software.historiaUsuario.prioridad']}:"/>
                         <pe:inputNumber id="prioridad" maxlength="3" required="#{true}"
                                         value="#{historiaUsuarioControlador.historiaUsuario.prioridad}"/>
-                        <p:message for="prioridad" showDetail="false" display="icon"/>
+                        <p:message for="prioridad" showDetail="#{false}" display="icon"/>
                         <p:outputLabel for="esfuerzo" value="#{msg['ec.edu.epn.software.historiaUsuario.esfuerzo']}:"/>
                         <pe:inputNumber id="esfuerzo" maxlength="3" required="#{true}"
                                         value="#{historiaUsuarioControlador.historiaUsuario.esfuerzo}"/>
-                        <p:message for="esfuerzo" showDetail="false" display="icon"/>
+                        <p:message for="esfuerzo" showDetail="#{false}" display="icon"/>
                     </h:panelGrid>
                 </f:facet>
             </xsp:opciones>
