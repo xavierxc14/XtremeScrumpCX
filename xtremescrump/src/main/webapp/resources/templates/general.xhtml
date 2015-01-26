@@ -6,17 +6,17 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title><ui:insert name="tituloPagina">#{msg['app.title']}</ui:insert></title>
-        <link href="#{request.contextPath}/css/general.css" rel="stylesheet"
+        <link href="#{request.contextPath}/resources/css/general.css" rel="stylesheet"
               type="text/css" />
 
-        <link href="#{request.contextPath}/css/style.css" rel="stylesheet"
+        <link href="#{request.contextPath}/resources/css/style.css" rel="stylesheet"
               type="text/css" />
-        <link href="#{request.contextPath}/css/iconic.css" rel="stylesheet"
+        <link href="#{request.contextPath}/resources/css/iconic.css" rel="stylesheet"
               type="text/css" />
         <link href="#{request.contextPath}/resources/css/xtremescrump.css" rel="stylesheet"
               type="text/css" />
 
-        <script src="#{request.contextPath}/js/prefix-free.js"></script>
+        <script src="#{request.contextPath}/resources/js/prefix-free.js"></script>
 
     </h:head>
     <h:body>
@@ -32,8 +32,8 @@
                         <ul>
                             <li><a href="/paginas/historia_usuario/lista_historia_usuario.jsf">
                                     Historias de Usuario</a></li>
-                            <li><a href="#">Gestionar Cobro</a></li>
                         </ul></li>
+                    <!--
                     <li><a href="#"><span class="iconic magnifying-glass"></span>
                             Gestión de Condóminos</a>
                         <ul>
@@ -54,6 +54,7 @@
                             <li><a href="#">Gestionar Páginas</a></li>
                             <li><a href="#">Gestionar Permisos</a></li>
                         </ul></li>
+                    -->
                 </ul>
                 <div class="clearfix"></div>
             </nav>
