@@ -9,10 +9,10 @@
                 template="/templates/generalTemplate.xhtml"
                 xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
     <ui:define name="contenido">
-        <h:form id="formClausula">
-            <xsp:opciones id="listaHistoriasUsuario"
+        <h:form id="formListaHistoriaUsuario">
+            <xsp:opciones id="formHistoriaUsuario"
                           titulo="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
-                          controlador="#{catalogoBean}"
+                          controlador="#{historiaUsuarioControlador}"
                           formulario="#{false}">
                 <f:facet name="content">
                     <p:dataTable id="tablaHistoriasUsuario"
