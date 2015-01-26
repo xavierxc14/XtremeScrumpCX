@@ -14,15 +14,7 @@
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
-    <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>redmond</param-value>
-        <!-- <param-value>dark-hive</param-value>
-        <param-value>rocket</param-value>
-        <param-value>home</param-value>
-        <param-value>ui-darkness</param-value> -->
-    </context-param>
-    
+
     <filter>
         <filter-name>ObjectifyFilter</filter-name>
         <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>

@@ -1,3 +1,13 @@
 <!-- Indices written at Sun, 25 Jan 2015 21:20:39 COT -->
 
-<datastore-indexes autoGenerate="true" />
+<datastore-indexes autoGenerate="true">
+    
+    <datastore-index kind="HistoriaUsuario" ancestor="false">
+        <property name="codigo" direction="asc" />
+        <property name="titulo" direction="asc" />
+        <property name="descripcion" direction="asc" />
+        <property name="esfuerzo" direction="asc" />
+        <property name="prioridad" direction="asc" />
+    </datastore-index>
+    
+</datastore-indexes>

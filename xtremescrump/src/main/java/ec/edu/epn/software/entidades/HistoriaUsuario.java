@@ -14,6 +14,17 @@ public class HistoriaUsuario implements Serializable {
 
     private String codigo;
 
+    private String descripcion;
+
+    public HistoriaUsuario(Long id, String codigo, String descripcion, String titulo, Integer prioridad, Integer esfuerzo) {
+        this.id = id;
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.titulo = titulo;
+        this.prioridad = prioridad;
+        this.esfuerzo = esfuerzo;
+    }
+
     private String titulo;
 
     private Integer prioridad;
@@ -111,4 +122,11 @@ public class HistoriaUsuario implements Serializable {
         this.esfuerzo = esfuerzo;
     }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 }
