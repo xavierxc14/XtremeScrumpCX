@@ -3,28 +3,24 @@ package ec.edu.epn.software.controladores;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author Xavier Naunay <xavier.naunay@markasoft.ec>
- */
 @ManagedBean
 @SessionScoped
 public class HistoriaUsuarioControlador extends ControladorBase {
 
-    private static Logger logger;
-    
+    private static Logger logger = Logger.getLogger(HistoriaUsuarioControlador.class);
+
     public static final String LISTA = "/paginas/historia_usuario/lista_historia_usuario.jsf";
     public static final String FORMULARIO = "/paginas/historia_usuario/historia_usuario.jsf";
-    
-    private HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
-    
+
+    private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
+
     private HistoriaUsuario historiaUsuario;
-    
+
     private List<HistoriaUsuario> historiaUsuarios;
 
     @PostConstruct
@@ -49,16 +45,20 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     }
 
     @Override
+    public String editar() {
+        return FORMULARIO;
+    }
+
+    @Override
     public String guardar() {
-        //historiaUsuario = new HistoriaUsuario("HU01", "Levantar ambiente", 1, 8);
         historiaUsuarioServicio.guardar(historiaUsuario);
-        nuevo();
-        return null;
+        return nuevo();
     }
 
     @Override
     public String borrar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        historiaUsuarioServicio.eliminar(historiaUsuario);
+        return buscar();
     }
 
     /**

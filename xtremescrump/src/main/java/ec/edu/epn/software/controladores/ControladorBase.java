@@ -21,7 +21,14 @@ public abstract class ControladorBase implements Serializable {
     public abstract String nuevo();
 
     /**
-     * Perimte guardar un registro.
+     * Permite editar un registro.
+     *
+     * @return String
+     */
+    public abstract String editar();
+
+    /**
+     * Permite guardar un registro.
      *
      * @return String
      */

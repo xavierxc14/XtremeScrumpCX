@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/resources/templates/general.xhtml"
+                xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
+    <h:panelGrid columns="3">
+        <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.proyecto.nombre']}:"/>
+        <p:inputText id="nombre" required="#{true}"
+                     value="#{proyectoControlador.proyecto.nombre}"/>
+        <p:message for="nombre" showDetail="#{false}" display="icon"/>
+        <p:outputLabel for="descripcion" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
+        <p:inputTextarea id="descripcion"
+                         value="#{proyectoControlador.proyecto.descripcion}"
+                         style="width: 250px; resize: none"
+                         counter="contDescripcion" rows="5" cols="50"
+                         autoResize="#{false}"
+                         maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
+                         counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
+                         required="#{true}"/>
+        <p:message for="descripcion" showDetail="#{false}" display="icon"/>
+        <h:outputText/>
+        <h:outputText id="contDescripcion"/>
+        <h:outputText/>
+    </h:panelGrid>
+</ui:composition>

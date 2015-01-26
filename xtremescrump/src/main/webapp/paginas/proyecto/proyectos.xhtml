@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/general.xhtml"
+                xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
+    <ui:define name="contenido">
+        <h:form id="formListaProyecto">
+            <xsp:opciones id="formProyecto"
+                          titulo="#{msg['ec.edu.epn.software.proyecto.titulo']}"
+                          controlador="#{proyectoControlador}"
+                          formulario="#{false}">
+                <f:facet name="content">
+                    <p:dataTable id="tablaHistoriasUsuario"
+                                 value="#{proyectoControlador.proyectos}"
+                                 var="proyecto"
+                                 paginator="#{true}"
+                                 emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
+                                 rows="#{msg['ec.edu.epn.software.generico.maxRegistros']}"
+                                 rowIndexVar="rowIndex"
+                                 filterEvent="enter"
+                                 style="overflow: auto">
+                        <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
+                                  style="text-align: center; width: 0px">
+                            <h:outputText value="#{rowIndex+1}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.proyecto.nombre']}"
+                                  style="text-align: center; width: 100px">
+                            <h:outputText value="#{proyecto.nombre}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.proyecto.descripcion']}"
+                                  style="width: 200px">
+                            <h:outputText value="#{proyecto.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
+                                  style="text-align: center; width: 50px">
+                            <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
+                                             ajax="#{false}"
+                                             action="#{proyectoControlador.editar}"
+                                             title="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}">
+                                <f:setPropertyActionListener value="#{proyecto}"
+                                                             target="#{proyectoControlador.proyecto}"/>
+                            </p:commandButton>
+                            <p:commandButton id="botonEliminar" icon="ui-icon-trash"
+                                             onclick="PF('confirmEliminacion').show()"
+                                             title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
+                                <f:setPropertyActionListener value="#{proyecto}"
+                                                             target="#{proyectoControlador.proyecto}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </f:facet>
+            </xsp:opciones>
+        </h:form>
+    </ui:define>
+</ui:composition>

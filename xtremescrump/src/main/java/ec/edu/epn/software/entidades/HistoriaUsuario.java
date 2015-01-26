@@ -1,5 +1,6 @@
 package ec.edu.epn.software.entidades;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -22,6 +23,10 @@ public class HistoriaUsuario implements Serializable {
 
     private Integer esfuerzo;
 
+    private Ref<Backlog> backlog;
+
+    private Ref<Sprint> sprint;
+
     /**
      * Constructor vacio.
      */
@@ -36,13 +41,16 @@ public class HistoriaUsuario implements Serializable {
      * @param titulo
      * @param prioridad
      * @param esfuerzo
+     * @param sprint
      */
-    public HistoriaUsuario(String codigo, String descripcion, String titulo, Integer prioridad, Integer esfuerzo) {
+    public HistoriaUsuario(String codigo, String descripcion, String titulo, Integer prioridad, Integer esfuerzo, Backlog backlog, Sprint sprint) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.titulo = titulo;
         this.prioridad = prioridad;
         this.esfuerzo = esfuerzo;
+        this.backlog = Ref.create(backlog);
+        this.sprint = Ref.create(sprint);
     }
 
     /**
@@ -121,5 +129,33 @@ public class HistoriaUsuario implements Serializable {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    /**
+     * @return the backlog
+     */
+    public Backlog getBacklog() {
+        return backlog.get();
+    }
+
+    /**
+     * @param backlog the backlog to set
+     */
+    public void setBacklog(Backlog backlog) {
+        this.backlog = Ref.create(backlog);
+    }
+
+    /**
+     * @return the sprint
+     */
+    public Sprint getSprint() {
+        return sprint.get();
+    }
+
+    /**
+     * @param sprint the sprint to set
+     */
+    public void setSprint(Sprint sprint) {
+        this.sprint = Ref.create(sprint);
     }
 }
