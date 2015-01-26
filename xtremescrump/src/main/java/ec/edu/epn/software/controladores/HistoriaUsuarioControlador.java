@@ -39,7 +39,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
             setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
         } catch (Exception e) {
         }
-        return null;
+        return LISTA;
     }
 
     @Override

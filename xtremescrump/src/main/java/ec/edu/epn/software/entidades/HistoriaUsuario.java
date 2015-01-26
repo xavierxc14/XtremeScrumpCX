@@ -16,15 +16,6 @@ public class HistoriaUsuario implements Serializable {
 
     private String descripcion;
 
-    public HistoriaUsuario(Long id, String codigo, String descripcion, String titulo, Integer prioridad, Integer esfuerzo) {
-        this.id = id;
-        this.codigo = codigo;
-        this.descripcion = descripcion;
-        this.titulo = titulo;
-        this.prioridad = prioridad;
-        this.esfuerzo = esfuerzo;
-    }
-
     private String titulo;
 
     private Integer prioridad;
@@ -41,12 +32,14 @@ public class HistoriaUsuario implements Serializable {
      * Constructor con argumentos.
      *
      * @param codigo
+     * @param descripcion
      * @param titulo
      * @param prioridad
      * @param esfuerzo
      */
-    public HistoriaUsuario(String codigo, String titulo, Integer prioridad, Integer esfuerzo) {
+    public HistoriaUsuario(String codigo, String descripcion, String titulo, Integer prioridad, Integer esfuerzo) {
         this.codigo = codigo;
+        this.descripcion = descripcion;
         this.titulo = titulo;
         this.prioridad = prioridad;
         this.esfuerzo = esfuerzo;
