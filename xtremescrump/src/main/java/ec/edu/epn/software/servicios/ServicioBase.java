@@ -4,8 +4,6 @@ import com.googlecode.objectify.Key;
 import static ec.edu.epn.software.servicios.objectify.OfyService.ofy;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class ServicioBase<T> implements Serializable {
 

@@ -1,7 +1,9 @@
 package ec.edu.epn.software.controladores;
 
+import com.epn.utils.MensajesPagina;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
+import ec.edu.epn.software.utils.MensajesInformacion;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -11,24 +13,24 @@ import org.apache.log4j.Logger;
 @ManagedBean
 @SessionScoped
 public class HistoriaUsuarioControlador extends ControladorBase {
-
+    
     private static Logger logger = Logger.getLogger(HistoriaUsuarioControlador.class);
-
+    
     public static final String LISTA = "/paginas/historia_usuario/lista_historia_usuario.jsf";
     public static final String FORMULARIO = "/paginas/historia_usuario/historia_usuario.jsf";
-
+    
     private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
-
+    
     private HistoriaUsuario historiaUsuario;
-
+    
     private List<HistoriaUsuario> historiaUsuarios;
-
+    
     @PostConstruct
     @Override
     public void init() {
         buscar();
     }
-
+    
     @Override
     public String buscar() {
         try {
@@ -37,28 +39,41 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         }
         return LISTA;
     }
-
+    
     @Override
     public String nuevo() {
         setHistoriaUsuario(new HistoriaUsuario());
-        return FORMULARIO;
+        ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
+        return null;
     }
-
+    
     @Override
     public String editar() {
-        return FORMULARIO;
+        setHistoriaUsuario(historiaUsuario);
+        ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
+        return null;
     }
-
+    
     @Override
     public String guardar() {
         historiaUsuarioServicio.guardar(historiaUsuario);
-        return nuevo();
+        MensajesPagina
+                .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
+        cerrarDialogo();
+        return buscar();
     }
-
+    
     @Override
     public String borrar() {
+        setHistoriaUsuario(historiaUsuario);
         historiaUsuarioServicio.eliminar(historiaUsuario);
+        ejecutarJSPrimefaces("PF('dlgElimHistoriaUsuario').hide();");
         return buscar();
+    }
+    
+    public void cerrarDialogo() {
+        ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').hide();");
+        historiaUsuario = new HistoriaUsuario();
     }
 
     /**
@@ -88,5 +103,5 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     public void setHistoriaUsuarios(List<HistoriaUsuario> historiaUsuarios) {
         this.historiaUsuarios = historiaUsuarios;
     }
-
+    
 }
