@@ -3,32 +3,37 @@
 @import url('normalize.css');
 
 body {
-	background: url(../imagenes/light_alu.png);
-	background-repeat: repeat;
-	margin: 0px;
-	background-attachment: fixed;
+    background-color: #afdff9;
+    background-repeat: repeat;
+    margin: 0px;
+    background-attachment: fixed;
 }
 
 #contenedor {
-	width: 1120px;
-	margin: 0 auto;
-	margin-top: 20px;
+    width: 1120px;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
 #contenido {
-	width: 1120px;
-	/*background-color: rgba(255, 255, 255, 0.9);*/
-	float: left;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	padding: 10px
+    width: 1120px;
+    /*background-color: rgba(255, 255, 255, 0.9);*/
+    float: left;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px
 }
 
 .ui-widget {
-	font-size: 1em;
+    font-size: 1em;
 }
 
 .pnl-grid-sin-borde tr,.pnl-grid-sin-borde td {
-	border: none;
+    border: none;
+}
+
+.centeredImg {
+    display: block;
+    margin: 15px auto;
 }
