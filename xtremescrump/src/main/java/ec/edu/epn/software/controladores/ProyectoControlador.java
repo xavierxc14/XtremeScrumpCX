@@ -15,7 +15,7 @@ public class ProyectoControlador extends ControladorBase {
 
     private static Logger logger = Logger.getLogger(ProyectoControlador.class);
 
-    public static final String LISTA = "/paginas/proyecto/lista_proyecto.jsf";
+    public static final String LISTA = "/paginas/proyecto/proyectos.jsf";
 
     private final ProyectoServicio proyectoServicio = new ProyectoServicio();
 
