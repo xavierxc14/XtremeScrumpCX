@@ -16,7 +16,6 @@ public class ProyectoControlador extends ControladorBase {
     private static Logger logger = Logger.getLogger(ProyectoControlador.class);
 
     public static final String LISTA = "/paginas/proyecto/lista_proyecto.jsf";
-    public static final String FORMULARIO = "/paginas/proyecto/proyecto.jsf";
 
     private final ProyectoServicio proyectoServicio = new ProyectoServicio();
 
@@ -43,12 +42,14 @@ public class ProyectoControlador extends ControladorBase {
     @Override
     public String nuevo() {
         setProyecto(new Proyecto());
-        return FORMULARIO;
+        ejecutarJSPrimefaces("PF('dialogoProyecto').show()");
+        return null;
     }
 
     @Override
     public String editar() {
-        return FORMULARIO;
+        ejecutarJSPrimefaces("PF('dialogoProyecto').show()");
+        return null;
     }
 
     @Override

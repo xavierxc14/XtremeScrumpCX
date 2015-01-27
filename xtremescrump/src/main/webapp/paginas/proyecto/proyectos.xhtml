@@ -13,7 +13,7 @@
             <p:commandButton id="nuevo"
                              value="#{msg['ec.edu.epn.software.generico.boton.nuevo']}"
                              icon="ui-icon-document"
-                             onclick="PF('dialogoProyecto').show()"/>
+                             action="#{proyectoControlador.nuevo}"/>
             <p:dataTable id="tablaHistoriasUsuario"
                          value="#{proyectoControlador.proyectos}"
                          var="proyecto"
