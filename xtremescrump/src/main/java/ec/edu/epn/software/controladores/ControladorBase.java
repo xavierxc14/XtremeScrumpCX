@@ -48,7 +48,7 @@ public abstract class ControladorBase implements Serializable {
      *
      * @param comando String
      */
-    public final void ejecutarComandoPrimefaces(final String comando) {
+    public final void ejecutarJSPrimefaces(final String comando) {
         RequestContext currentInstance = RequestContext.getCurrentInstance();
         if (currentInstance != null) {
             currentInstance.execute(comando);
