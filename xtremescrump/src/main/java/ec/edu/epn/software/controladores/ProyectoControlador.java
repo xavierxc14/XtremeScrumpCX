@@ -2,6 +2,7 @@ package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.Proyecto;
 import ec.edu.epn.software.servicios.ProyectoServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +28,7 @@ public class ProyectoControlador extends ControladorBase {
     @Override
     public void init() {
         buscar();
+        setProyectos(new ArrayList<Proyecto>());
     }
 
     @Override

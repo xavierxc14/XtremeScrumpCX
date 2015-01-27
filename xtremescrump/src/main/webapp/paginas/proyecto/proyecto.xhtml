@@ -6,26 +6,26 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
-                template="/resources/templates/general.xhtml"
-                xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
-    <h:panelGrid columns="3">
-        <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.proyecto.nombre']}:"/>
-        <p:inputText id="nombre" required="#{true}"
-                     value="#{proyectoControlador.proyecto.nombre}"/>
-        <p:message for="nombre" showDetail="#{false}" display="icon"/>
-        <p:outputLabel for="descripcion" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
-        <p:inputTextarea id="descripcion"
-                         value="#{proyectoControlador.proyecto.descripcion}"
-                         style="width: 250px; resize: none"
-                         counter="contDescripcion" rows="5" cols="50"
-                         autoResize="#{false}"
-                         maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
-                         counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
-                         required="#{true}"/>
-        <p:message for="descripcion" showDetail="#{false}" display="icon"/>
-        <h:outputText/>
-        <h:outputText id="contDescripcion"/>
-        <h:outputText/>
-    </h:panelGrid>
+                xmlns:pe="http://primefaces.org/ui/extensions">
+    <p:outputPanel>
+        <h:panelGrid columns="3">
+            <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.proyecto.nombre']}:"/>
+            <p:inputText id="nombre" required="#{true}"
+                         value="#{proyectoControlador.proyecto.nombre}"/>
+            <p:message for="nombre" showDetail="#{false}" display="icon"/>
+            <p:outputLabel for="descripcion" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
+            <p:inputTextarea id="descripcion"
+                             value="#{proyectoControlador.proyecto.descripcion}"
+                             style="width: 250px; resize: none"
+                             counter="contDescripcion" rows="5" cols="50"
+                             autoResize="#{false}"
+                             maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
+                             counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
+                             required="#{true}"/>
+            <p:message for="descripcion" showDetail="#{false}" display="icon"/>
+            <h:outputText/>
+            <h:outputText id="contDescripcion"/>
+            <h:outputText/>
+        </h:panelGrid>
+    </p:outputPanel>
 </ui:composition>
