@@ -14,8 +14,12 @@ public interface MensajesInformacion {
 
     // HSITORIA DE USUARIO
     String HU_CREADO = "ÉXITO:  Historia de usuario registrada exitosamente.";
+    String HU_ELIMINADO = "ÉXITO:  Historia de usuario eliminada exitosamente.";
 
-       // PAGINAROL
+    //PROYECTO
+    String PROYECTO_CREADO = "ÉXITO:  Proyecto registrado exitosamente.";
+
+ // PAGINAROL
 //
 //    final String ACEPTAR_CAMBIOS = "Cambios registrados existosamente.";
 //

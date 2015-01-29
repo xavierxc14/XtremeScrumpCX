@@ -1,5 +1,6 @@
 package ec.edu.epn.software.controladores;
 
+import com.epn.utils.MensajesError;
 import com.epn.utils.MensajesPagina;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
@@ -7,62 +8,70 @@ import ec.edu.epn.software.utils.MensajesInformacion;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
 
 @ManagedBean
 @SessionScoped
 public class HistoriaUsuarioControlador extends ControladorBase {
-    
+
     private static Logger logger = Logger.getLogger(HistoriaUsuarioControlador.class);
-    
-    public static final String LISTA = "/paginas/historia_usuario/lista_historia_usuario.jsf";
-    public static final String FORMULARIO = "/paginas/historia_usuario/historia_usuario.jsf";
-    
+
+    public static final String LISTA = "/paginas/historia_usuario/product_backlog.jsf";
+
     private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
-    
+
     private HistoriaUsuario historiaUsuario;
-    
+
     private List<HistoriaUsuario> historiaUsuarios;
-    
+
+    @ManagedProperty("#{sesionControlador}")
+    private SesionControlador sesionControlador;
+
     @PostConstruct
     @Override
     public void init() {
         buscar();
     }
-    
+
     @Override
     public String buscar() {
         try {
             setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
+            //setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
         } catch (Exception e) {
         }
         return LISTA;
     }
-    
+
     @Override
     public String nuevo() {
         setHistoriaUsuario(new HistoriaUsuario());
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
         return null;
     }
-    
+
     @Override
     public String editar() {
         setHistoriaUsuario(historiaUsuario);
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
         return null;
     }
-    
+
     @Override
     public String guardar() {
-        historiaUsuarioServicio.guardar(historiaUsuario);
-        MensajesPagina
-                .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
-        cerrarDialogo();
+        try {
+            historiaUsuarioServicio.guardar(historiaUsuario);
+            MensajesPagina
+                    .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
+            cerrarDialogo();
+        } catch (Exception e) {
+            MensajesPagina.mostrarMensajeError(MensajesError.ERROR_HU_CREADO);
+        }
         return buscar();
     }
-    
+
     @Override
     public String borrar() {
         setHistoriaUsuario(historiaUsuario);
@@ -70,7 +79,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         ejecutarJSPrimefaces("PF('dlgElimHistoriaUsuario').hide();");
         return buscar();
     }
-    
+
     public void cerrarDialogo() {
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').hide();");
         historiaUsuario = new HistoriaUsuario();
@@ -103,5 +112,19 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     public void setHistoriaUsuarios(List<HistoriaUsuario> historiaUsuarios) {
         this.historiaUsuarios = historiaUsuarios;
     }
-    
+
+    /**
+     * @return the sesionControlador
+     */
+    public SesionControlador getSesionControlador() {
+        return sesionControlador;
+    }
+
+    /**
+     * @param sesionControlador the sesionControlador to set
+     */
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
+
 }

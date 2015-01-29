@@ -1,13 +1,14 @@
 package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.Proyecto;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public class Sesion {
+public class SesionControlador implements Serializable {
 
     private Proyecto proyecto;
 

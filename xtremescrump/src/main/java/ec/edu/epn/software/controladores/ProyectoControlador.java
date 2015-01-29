@@ -1,13 +1,21 @@
 package ec.edu.epn.software.controladores;
 
+import com.epn.utils.MensajesPagina;
 import ec.edu.epn.software.entidades.Proyecto;
 import ec.edu.epn.software.servicios.ProyectoServicio;
+import ec.edu.epn.software.utils.MensajesInformacion;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 
 @ManagedBean
 @SessionScoped
@@ -23,11 +31,13 @@ public class ProyectoControlador extends ControladorBase {
 
     private List<Proyecto> proyectos;
 
+    @ManagedProperty("#{sesionControlador}")
+    private SesionControlador sesionControlador;
+
     @PostConstruct
     @Override
     public void init() {
         buscar();
-        setProyectos(new ArrayList<Proyecto>());
     }
 
     @Override
@@ -55,7 +65,21 @@ public class ProyectoControlador extends ControladorBase {
     @Override
     public String guardar() {
         proyectoServicio.guardar(proyecto);
-        return nuevo();
+        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.PROYECTO_CREADO);
+        cerrarDialogo();
+        return buscar();
+    }
+
+    public void cerrarDialogo() {
+        ejecutarJSPrimefaces("PF('dialogoProyecto').hide()");
+    }
+
+    public void redirectHistorias(SelectEvent evt) {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(HistoriaUsuarioControlador.LISTA);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(ProyectoControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -90,5 +114,19 @@ public class ProyectoControlador extends ControladorBase {
      */
     public void setProyectos(List<Proyecto> proyectos) {
         this.proyectos = proyectos;
+    }
+
+    /**
+     * @return the sesionControlador
+     */
+    public SesionControlador getSesionControlador() {
+        return sesionControlador;
+    }
+
+    /**
+     * @param sesionControlador the sesionControlador to set
+     */
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
     }
 }

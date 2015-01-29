@@ -22,7 +22,10 @@
                          rows="#{msg['ec.edu.epn.software.generico.maxRegistros']}"
                          rowIndexVar="rowIndex"
                          filterEvent="enter"
+                         selectionMode="single" rowKey="#{proyecto.id}"
+                         selection="#{proyectoControlador.sesionControlador.proyecto}"
                          style="overflow: auto">
+                <p:ajax event="rowSelect" listener="#{proyectoControlador.redirectHistorias}"/>
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
                           style="text-align: center; width: 0px">
                     <h:outputText value="#{rowIndex+1}"/>
@@ -53,6 +56,8 @@
                 </p:column>
             </p:dataTable>
         </h:form>
+    </ui:define>
+    <ui:define name="dialogos"> 
         <p:dialog id="panelNuevoProyecto"
                   widgetVar="dialogoProyecto"
                   header="#{msg['ec.edu.epn.software.proyecto.titulo']}"
@@ -60,19 +65,51 @@
                   modal="#{true}"
                   resizable="false">
             <h:form id="formDialogoProyecto">
-                <ui:include id="form" src="/paginas/proyecto/proyecto.xhtml"/>
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.proyecto.nombre']}:"/>
+                    <p:inputText id="nombre" required="#{true}"
+                                 value="#{proyectoControlador.proyecto.nombre}"/>
+                    <p:message for="nombre" showDetail="#{false}" display="icon"/>
+                    <p:outputLabel for="descripcion" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
+                    <p:inputTextarea id="descripcion"
+                                     value="#{proyectoControlador.proyecto.descripcion}"
+                                     style="width: 250px; resize: none"
+                                     counter="contDescripcion" rows="5" cols="50"
+                                     autoResize="#{false}"
+                                     maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
+                                     counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
+                                     required="#{true}"/>
+                    <p:message for="descripcion" showDetail="#{false}" display="icon"/>
+                    <h:outputText/>
+                    <h:outputText id="contDescripcion"/>
+                    <h:outputText/>
+                </h:panelGrid>
                 <p:commandButton id="guardar"
                                  value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
                                  icon="ui-icon-disk"
                                  action="#{proyectoControlador.guardar}"
                                  update=":formListaProyecto:tablaHistoriasUsuario"/>
-                <p:commandButton id="regresar"
-                                 value="#{msg['ec.edu.epn.software.generico.boton.regresar']}"
-                                 partialSubmit="#{true}"
+                <p:commandButton id="cancelar"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
                                  icon="ui-icon-arrowreturnthick-1-w"
-                                 action="#{proyectoControlador.buscar}"
-                                 ajax="#{false}" immediate="#{true}"/>
+                                 action="#{proyectoControlador.cerrarDialogo}"
+                                 process="@this"/>
             </h:form>
         </p:dialog>
+
+        <p:dialog header="¿Está Seguro que desea eliminar el proyecto?"
+                  modal="true" widgetVar="dlgEliminarProyecto" id="dlgElimProyecto"
+                  closable="false" resizable="false">
+            <h:form id="frmDlgElim">
+                <center>
+                    <p:commandButton id="confirm" value="Si" update=":formListaProyecto:tablaHistoriasUsuario"
+                                     action="#{proyectoControlador.borrar}" />
+                    <p:commandButton id="decline" value="No"
+                                     onclick="PF('dlgEliminarProyecto').hide()"
+                                     process="@this"/>
+                </center>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>

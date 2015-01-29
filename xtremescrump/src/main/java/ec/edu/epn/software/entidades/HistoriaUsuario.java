@@ -23,6 +23,8 @@ public class HistoriaUsuario implements Serializable {
 
     private Integer esfuerzo;
 
+    private Ref<Proyecto> proyecto;
+    
     private Ref<Backlog> backlog;
 
     private Ref<Sprint> sprint;
@@ -158,4 +160,20 @@ public class HistoriaUsuario implements Serializable {
     public void setSprint(Sprint sprint) {
         this.sprint = Ref.create(sprint);
     }
+
+    /**
+     * @return the proyecto
+     */
+    public Proyecto getProyecto() {
+        return proyecto.get();
+    }
+
+    /**
+     * @param proyecto the proyecto to set
+     */
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = Ref.create(proyecto);
+    }
+    
+    
 }
