@@ -1,9 +1,18 @@
 package ec.edu.epn.software.controladores;
 
+import java.io.IOException;
 import java.io.Serializable;
+import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 public abstract class ControladorBase implements Serializable {
+
+    /**
+     * Logger de la clase.
+     */
+    private static final Logger LOG = Logger.getLogger(ControladorBase.class);
 
     public abstract void init();
 
@@ -52,6 +61,20 @@ public abstract class ControladorBase implements Serializable {
         RequestContext currentInstance = RequestContext.getCurrentInstance();
         if (currentInstance != null) {
             currentInstance.execute(comando);
+        }
+    }
+
+    /**
+     * Metodo que realiza una redireccion a la url deseada.
+     *
+     * @param evt
+     * @param url
+     */
+    public void redirect(SelectEvent evt, String url) {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+        } catch (IOException ex) {
+            LOG.error("Error al redirigir a la pagina", ex);
         }
     }
 }

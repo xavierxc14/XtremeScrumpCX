@@ -7,6 +7,7 @@
 
     <groupId>ec.edu.epn.software</groupId>
     <artifactId>xtremescrump</artifactId>
+    <name>XtremeScrumP</name>
 
     <properties>
         <appengine.app.appId>xtremescrump</appengine.app.appId>
@@ -51,6 +52,13 @@
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
             <scope>provided</scope>
@@ -60,6 +68,7 @@
             <artifactId>javax.servlet.jsp-api</artifactId>
             <version>2.2.1</version>
         </dependency>
+        -->
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl-api</artifactId>
@@ -70,6 +79,7 @@
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
             <version>2.1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>  
             <groupId>org.primefaces</groupId>  
@@ -92,11 +102,18 @@
             <version>5.0</version>
         </dependency>
         <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>1.10</version>
+        </dependency>
+        <!--
+        <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>2.0</version>
             <scope>provided</scope>
         </dependency>
+        -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>

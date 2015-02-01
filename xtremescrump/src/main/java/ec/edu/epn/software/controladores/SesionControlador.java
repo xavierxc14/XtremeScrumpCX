@@ -2,6 +2,9 @@ package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.Proyecto;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -12,9 +15,17 @@ public class SesionControlador implements Serializable {
 
     private Proyecto proyecto;
 
+    private Date fechaActual;
+
     @PostConstruct
     public void init() {
         setProyecto(new Proyecto());
+    }
+
+    public String fecha() {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String hoy = formatter.format(fechaActual);
+        return hoy;
     }
 
     /**
@@ -29,5 +40,19 @@ public class SesionControlador implements Serializable {
      */
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = proyecto;
+    }
+
+    /**
+     * @return the fechaActual
+     */
+    public Date getFechaActual() {
+        return fechaActual;
+    }
+
+    /**
+     * @param fechaActual the fechaActual to set
+     */
+    public void setFechaActual(Date fechaActual) {
+        this.fechaActual = fechaActual;
     }
 }

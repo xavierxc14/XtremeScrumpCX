@@ -6,8 +6,9 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="/resources/templates/general.xhtml"
-                xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                template="/resources/templates/general.xhtml">
     <ui:define name="contenido">
         <h:form id="formListaProyecto">
             <p:commandButton id="nuevo"
@@ -83,6 +84,29 @@
                     <h:outputText/>
                     <h:outputText id="contDescripcion"/>
                     <h:outputText/>
+                    <p:outputLabel for="fechaInicio" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
+                    <p:calendar id="fechaInicio"
+                                value="#{proyectoControlador.proyecto.fechaInicio}"
+                                navigator="#{true}" showButtonPanel="#{true}"
+                                locale="es" showOn="button"
+                                required="#{true}" mask="#{true}"
+                                pattern="dd/MM/yyyy"
+                                mindate="#{proyectoControlador.sesionControlador.fecha()}"/>
+                    <p:message for="descripcion" showDetail="#{false}" display="icon"/>
+                    <p:outputLabel for="fechaFin" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
+                    <p:calendar id="fechaFin"
+                                value="#{proyectoControlador.proyecto.fechaFin}"
+                                navigator="#{true}" showButtonPanel="#{true}"
+                                locale="es" showOn="button"
+                                required="#{true}"  mask="#{true}"
+                                pattern="dd/MM/yyyy"
+                                mindate="#{proyectoControlador.sesionControlador.fecha()}"/>
+                    <h:panelGroup>
+                        <p:message for="descripcion" showDetail="#{false}" display="icon"/>
+                        <o:validateOrder id="fechas" components="fechaInicio fechaFin"
+                                         message="#{msg['ec.edu.epn.software.generico.fechas.orden']}"
+                                         showMessageFor="fechaInicio"/>
+                    </h:panelGroup>
                 </h:panelGrid>
                 <p:commandButton id="guardar"
                                  value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
@@ -96,8 +120,26 @@
                                  process="@this"/>
             </h:form>
         </p:dialog>
+        <p:confirmDialog id="dlgElimProyecto"
+                         header="#{msg['ec.edu.epn.software.generico.etiquetas.eliminacion']}"
+                         message="#{msg['ec.edu.epn.software.proyecto.eliminacion']}"
+                         severity="alert"
+                         widgetVar="dlgEliminarProyecto">
+            <div style="text-align: center">
+                <p:commandButton id="confirm"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.si']}"
+                                 update=":formListaProyecto:tablaHistoriasUsuario"
+                                 action="#{proyectoControlador.borrar}"
+                                 style="margin: auto"/>
+                <p:commandButton id="decline"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.no']}"
+                                 onclick="PF('dlgEliminarProyecto').hide()"
+                                 process="@this"
+                                 style="margin: auto"/>
+            </div>
+        </p:confirmDialog>
 
-        <p:dialog header="¿Está Seguro que desea eliminar el proyecto?"
+        <!-- <p:dialog header="¿Está seguro que desea eliminar el proyecto?"
                   modal="true" widgetVar="dlgEliminarProyecto" id="dlgElimProyecto"
                   closable="false" resizable="false">
             <h:form id="frmDlgElim">
@@ -109,7 +151,7 @@
                                      process="@this"/>
                 </center>
             </h:form>
-        </p:dialog>
+        </p:dialog> -->
 
     </ui:define>
 </ui:composition>

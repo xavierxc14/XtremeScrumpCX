@@ -1,19 +1,14 @@
 package ec.edu.epn.software.controladores;
 
-import com.epn.utils.MensajesPagina;
 import ec.edu.epn.software.entidades.Proyecto;
 import ec.edu.epn.software.servicios.ProyectoServicio;
 import ec.edu.epn.software.utils.MensajesInformacion;
-import java.io.IOException;
-import java.util.ArrayList;
+import ec.edu.epn.software.utils.MensajesPagina;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 
@@ -21,7 +16,7 @@ import org.primefaces.event.SelectEvent;
 @SessionScoped
 public class ProyectoControlador extends ControladorBase {
 
-    private static Logger logger = Logger.getLogger(ProyectoControlador.class);
+    private static Logger LOG = Logger.getLogger(ProyectoControlador.class);
 
     public static final String LISTA = "/paginas/proyecto/proyectos.jsf";
 
@@ -44,7 +39,8 @@ public class ProyectoControlador extends ControladorBase {
     public String buscar() {
         try {
             setProyectos(proyectoServicio.buscarTodos());
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LOG.error("Error al realizar la busqueda de proyectos", ex);
         }
         return LISTA;
     }
@@ -75,11 +71,7 @@ public class ProyectoControlador extends ControladorBase {
     }
 
     public void redirectHistorias(SelectEvent evt) {
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(HistoriaUsuarioControlador.LISTA);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(ProyectoControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        redirect(evt, HistoriaUsuarioControlador.LISTA);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.epn.utils;
+package ec.edu.epn.software.utils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

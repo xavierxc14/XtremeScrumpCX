@@ -1,10 +1,10 @@
 package ec.edu.epn.software.controladores;
 
-import com.epn.utils.MensajesError;
-import com.epn.utils.MensajesPagina;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
+import ec.edu.epn.software.utils.MensajesError;
 import ec.edu.epn.software.utils.MensajesInformacion;
+import ec.edu.epn.software.utils.MensajesPagina;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 @SessionScoped
 public class HistoriaUsuarioControlador extends ControladorBase {
 
-    private static Logger logger = Logger.getLogger(HistoriaUsuarioControlador.class);
+    private static Logger LOG = Logger.getLogger(HistoriaUsuarioControlador.class);
 
     public static final String LISTA = "/paginas/historia_usuario/product_backlog.jsf";
 
@@ -38,9 +38,10 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @Override
     public String buscar() {
         try {
-            setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
-            //setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
-        } catch (Exception e) {
+            //setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
+            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
+        } catch (Exception ex) {
+            LOG.error("Error al realizar la busqueda de proyectos", ex);
         }
         return LISTA;
     }

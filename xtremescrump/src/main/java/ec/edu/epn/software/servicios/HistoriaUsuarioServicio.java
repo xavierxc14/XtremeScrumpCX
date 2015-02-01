@@ -1,5 +1,6 @@
 package ec.edu.epn.software.servicios;
 
+import com.googlecode.objectify.Key;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Proyecto;
 import static ec.edu.epn.software.servicios.objectify.OfyService.ofy;
@@ -12,7 +13,8 @@ public class HistoriaUsuarioServicio extends ServicioBase<HistoriaUsuario> {
     }
 
     public List<HistoriaUsuario> buscarPorProyecto(Proyecto p) {
-        return ofy().load().type(HistoriaUsuario.class).filter("proyecto", p).list();
+        Key<Proyecto> proyectoKey = Key.create(Proyecto.class, p.getId());
+        return ofy().load().type(HistoriaUsuario.class).filter("proyecto", proyectoKey).list();
     }
 
 }
