@@ -5,18 +5,10 @@
     <threadsafe>true</threadsafe>
     <sessions-enabled>true</sessions-enabled>
     <static-files>
-        <include path="/favicon.ico" />
         <include path="/resources/**" />
-        <include path="/css/style.css" />
-        <include path="/css/general.css" />
-        <include path="/css/iconic.css" />
-        <include path="/js/prefix-free.js" />
-        
     </static-files>
 
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
-        <property name="cloudsql.url" value="${cloudsql.url}"/>
-        <property name="cloudsql.url.dev" value="${cloudsql.url.dev}"/>
     </system-properties>
 </appengine-web-app>

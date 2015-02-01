@@ -18,6 +18,7 @@ public interface MensajesInformacion {
 
     //PROYECTO
     String PROYECTO_CREADO = "ÉXITO:  Proyecto registrado exitosamente.";
+    String PROYECTO_ELIMINADO = "ÉXITO:  Proyecto eliminado exitosamente.";
 
  // PAGINAROL
 //

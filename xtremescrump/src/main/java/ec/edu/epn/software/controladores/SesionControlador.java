@@ -20,6 +20,7 @@ public class SesionControlador implements Serializable {
     @PostConstruct
     public void init() {
         setProyecto(new Proyecto());
+        setFechaActual(new Date());
     }
 
     public String fecha() {

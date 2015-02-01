@@ -49,7 +49,7 @@
                                                      target="#{proyectoControlador.proyecto}"/>
                     </p:commandButton>
                     <p:commandButton id="botonEliminar" icon="ui-icon-trash"
-                                     onclick="PF('confirmEliminacion').show()"
+                                     onclick="PF('dlgEliminarProyecto').show()"
                                      title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
                         <f:setPropertyActionListener value="#{proyecto}"
                                                      target="#{proyectoControlador.proyecto}"/>
@@ -90,8 +90,7 @@
                                 navigator="#{true}" showButtonPanel="#{true}"
                                 locale="es" showOn="button"
                                 required="#{true}" mask="#{true}"
-                                pattern="dd/MM/yyyy"
-                                mindate="#{proyectoControlador.sesionControlador.fecha()}"/>
+                                pattern="dd/MM/yyyy"/>
                     <p:message for="descripcion" showDetail="#{false}" display="icon"/>
                     <p:outputLabel for="fechaFin" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
                     <p:calendar id="fechaFin"
@@ -99,8 +98,7 @@
                                 navigator="#{true}" showButtonPanel="#{true}"
                                 locale="es" showOn="button"
                                 required="#{true}"  mask="#{true}"
-                                pattern="dd/MM/yyyy"
-                                mindate="#{proyectoControlador.sesionControlador.fecha()}"/>
+                                pattern="dd/MM/yyyy"/>
                     <h:panelGroup>
                         <p:message for="descripcion" showDetail="#{false}" display="icon"/>
                         <o:validateOrder id="fechas" components="fechaInicio fechaFin"
@@ -108,16 +106,19 @@
                                          showMessageFor="fechaInicio"/>
                     </h:panelGroup>
                 </h:panelGrid>
-                <p:commandButton id="guardar"
-                                 value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
-                                 icon="ui-icon-disk"
-                                 action="#{proyectoControlador.guardar}"
-                                 update=":formListaProyecto:tablaHistoriasUsuario"/>
-                <p:commandButton id="cancelar"
-                                 value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
-                                 icon="ui-icon-arrowreturnthick-1-w"
-                                 action="#{proyectoControlador.cerrarDialogo}"
-                                 process="@this"/>
+                <p:separator/>
+                <center>
+                    <p:commandButton id="guardar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                     icon="ui-icon-disk"
+                                     action="#{proyectoControlador.guardar}"
+                                     update=":formListaProyecto:tablaHistoriasUsuario formDialogoProyecto"/>
+                    <p:commandButton id="cancelar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{proyectoControlador.cerrarDialogo}"
+                                     process="@this"/>
+                </center>
             </h:form>
         </p:dialog>
         <p:confirmDialog id="dlgElimProyecto"

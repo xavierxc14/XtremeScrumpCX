@@ -77,6 +77,8 @@ public class ProyectoControlador extends ControladorBase {
     @Override
     public String borrar() {
         proyectoServicio.eliminar(proyecto);
+        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.PROYECTO_ELIMINADO);
+        ejecutarJSPrimefaces("PF('dlgEliminarProyecto').hide();");
         return buscar();
     }
 
