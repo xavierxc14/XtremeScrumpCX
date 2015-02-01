@@ -55,7 +55,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     @Override
     public String editar() {
-        setHistoriaUsuario(historiaUsuario);
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
         return null;
     }
@@ -74,16 +73,18 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     }
 
     @Override
-    public String borrar() {
-        setHistoriaUsuario(historiaUsuario);
-        historiaUsuarioServicio.eliminar(historiaUsuario);
-        ejecutarJSPrimefaces("PF('dlgElimHistoriaUsuario').hide();");
-        return buscar();
+    public String cerrarDialogo() {
+        ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').hide()");
+        historiaUsuario = new HistoriaUsuario();
+        return null;
     }
 
-    public void cerrarDialogo() {
-        ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').hide();");
-        historiaUsuario = new HistoriaUsuario();
+    @Override
+    public String borrar() {
+        historiaUsuarioServicio.eliminar(historiaUsuario);
+        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.HU_ELIMINADO);
+        ejecutarJSPrimefaces("PF('dlgElimHistoriaUsuario').hide()");
+        return buscar();
     }
 
     /**

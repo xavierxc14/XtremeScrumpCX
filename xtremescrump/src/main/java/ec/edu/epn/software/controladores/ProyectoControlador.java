@@ -48,13 +48,13 @@ public class ProyectoControlador extends ControladorBase {
     @Override
     public String nuevo() {
         setProyecto(new Proyecto());
-        ejecutarJSPrimefaces("PF('dialogoProyecto').show()");
+        ejecutarJSPrimefaces("PF('dlgProyecto').show()");
         return null;
     }
 
     @Override
     public String editar() {
-        ejecutarJSPrimefaces("PF('dialogoProyecto').show()");
+        ejecutarJSPrimefaces("PF('dlgProyecto').show()");
         return null;
     }
 
@@ -66,8 +66,10 @@ public class ProyectoControlador extends ControladorBase {
         return buscar();
     }
 
-    public void cerrarDialogo() {
-        ejecutarJSPrimefaces("PF('dialogoProyecto').hide()");
+    @Override
+    public String cerrarDialogo() {
+        ejecutarJSPrimefaces("PF('dlgProyecto').hide()");
+        return null;
     }
 
     public void redirectHistorias(SelectEvent evt) {
@@ -78,7 +80,7 @@ public class ProyectoControlador extends ControladorBase {
     public String borrar() {
         proyectoServicio.eliminar(proyecto);
         MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.PROYECTO_ELIMINADO);
-        ejecutarJSPrimefaces("PF('dlgEliminarProyecto').hide();");
+        ejecutarJSPrimefaces("PF('dlgElimProyecto').hide()");
         return buscar();
     }
 

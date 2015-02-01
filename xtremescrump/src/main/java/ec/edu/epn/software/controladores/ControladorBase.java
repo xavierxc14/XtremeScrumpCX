@@ -45,6 +45,13 @@ public abstract class ControladorBase implements Serializable {
     public abstract String guardar();
 
     /**
+     * Permite cerrar un dialogo.
+     *
+     * @return String
+     */
+    public abstract String cerrarDialogo();
+
+    /**
      * Permite borrar un registro.
      *
      * @return String

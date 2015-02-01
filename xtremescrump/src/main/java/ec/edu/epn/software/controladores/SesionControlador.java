@@ -23,7 +23,7 @@ public class SesionControlador implements Serializable {
         setFechaActual(new Date());
     }
 
-    public String fecha() {
+    public String getFecha() {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String hoy = formatter.format(fechaActual);
         return hoy;

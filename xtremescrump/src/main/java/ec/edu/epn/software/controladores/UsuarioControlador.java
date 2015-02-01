@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 @SessionScoped
 public class UsuarioControlador extends ControladorBase {
 
-    private static Logger logger = Logger.getLogger(UsuarioControlador.class);
+    private static Logger LOG = Logger.getLogger(UsuarioControlador.class);
 
     public static final String LISTA = "/paginas/usuario/usuarios.jsf";
 
@@ -56,6 +56,11 @@ public class UsuarioControlador extends ControladorBase {
     public String guardar() {
         usuarioServicio.guardar(getUsuario());
         return nuevo();
+    }
+
+    @Override
+    public String cerrarDialogo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

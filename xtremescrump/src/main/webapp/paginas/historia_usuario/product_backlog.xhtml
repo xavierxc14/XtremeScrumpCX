@@ -10,15 +10,12 @@
                 template="/resources/templates/general.xhtml"
                 xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
     <ui:define name="contenido">
-        <h:form id="formListaHistoriaUsuario">
-            <h:panelGrid columns="3">
-                <p:commandButton
-                    value="Agregar Historia de Usuario"
-                    icon="ui-icon-document"
-                    action="#{historiaUsuarioControlador.nuevo}"
-                    rendered="#{!cc.attrs.formulario}"
-                    ajax="#{false}"/>
-            </h:panelGrid>
+        <h:form id="formHistoriaUsuario">
+            <p:commandButton id="nuevo"
+                             value="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
+                             icon="ui-icon-document"
+                             action="#{historiaUsuarioControlador.nuevo}"
+                             update=":panelNuevaHistoriaUsuario"/>
             <p:dataTable id="tablaHistoriasUsuario"
                          value="#{historiaUsuarioControlador.historiaUsuarios}"
                          var="historiaUsuario"
@@ -72,10 +69,13 @@
         </h:form>
     </ui:define>
     <ui:define name="dialogos">
-        <p:dialog header="Nueva Historia de Usuario" widgetVar="dlgHistoriaUsuario"
-                  modal="true"
-                  resizable="false" closable="false">
-            <h:form id="formHistoriaUsuario">
+        <p:dialog id="panelNuevaHistoriaUsuario"
+                  widgetVar="dlgHistoriaUsuario"
+                  header="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
+                  draggable="#{false}"
+                  modal="#{true}"
+                  resizable="#{false}">
+            <h:form id="formDialogoHistoriaUsuario">
                 <h:panelGrid columns="3">  
                     <p:outputLabel for="codigo" value="#{msg['ec.edu.epn.software.historiaUsuario.codigo']}:"/>
                     <p:inputText id="codigo" required="#{true}"
@@ -98,47 +98,52 @@
                     <h:outputText/>
                     <h:outputText id="contDescripcion"/>
                     <h:outputText/>
+                </h:panelGrid>
+                <h:panelGrid columns="7">
                     <p:outputLabel for="prioridad" value="#{msg['ec.edu.epn.software.historiaUsuario.prioridad']}:"/>
                     <pe:inputNumber id="prioridad" maxlength="3" required="#{true}"
+                                    decimalPlaces="0" style="width: 20px"
                                     value="#{historiaUsuarioControlador.historiaUsuario.prioridad}"/>
                     <p:message for="prioridad" showDetail="#{false}" display="icon"/>
+                    <p:spacer width="10" height="0"/>
                     <p:outputLabel for="esfuerzo" value="#{msg['ec.edu.epn.software.historiaUsuario.esfuerzo']}:"/>
                     <pe:inputNumber id="esfuerzo" maxlength="3" required="#{true}"
+                                    decimalPlaces="0" style="width: 20px"
                                     value="#{historiaUsuarioControlador.historiaUsuario.esfuerzo}"/>
                     <p:message for="esfuerzo" showDetail="#{false}" display="icon"/>
-
-                    <p:commandButton value="Guardar"
-                                     action="#{historiaUsuarioControlador.guardar}"
-                                     update=":formListaHistoriaUsuario:tablaHistoriasUsuario"></p:commandButton>
-                    <p:commandButton value="Cancelar"
-                                     action="#{historiaUsuarioControlador.cerrarDialogo}"
-                                     process="@this"></p:commandButton>
-
                 </h:panelGrid>
-            </h:form>
-        </p:dialog>
-
-        <p:dialog header="¿Está Seguro que desea eliminar el usuario?"
-                  modal="true" widgetVar="dlgElimHistoriaUsuario" id="dlgElimUsuario"
-                  closable="false" resizable="false">
-            <h:form id="frmDlgElim">
+                <p:separator/>
                 <center>
-                    <p:panel style="border: 0px;" id="pnlElim">
-                        <p:column>
-                            <center>
-                                <h:outputText value="Historia de Usuario: " />
-                                <h:outputText value="#{historiaUsuarioControlador.historiaUsuario.codigo}" />
-                            </center>
-                        </p:column>
-                    </p:panel>
+                    <p:commandButton id="guardar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                     icon="ui-icon-disk"
+                                     action="#{historiaUsuarioControlador.guardar}"
+                                     update=":formHistoriaUsuario:tablaHistoriasUsuario"/>
+                    <p:commandButton id="cancelar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{historiaUsuarioControlador.cerrarDialogo}"
+                                     process="@this"/>
                 </center>
-                <p:commandButton id="confirm" value="Si" update=":formListaHistoriaUsuario:tablaHistoriasUsuario"
-                                 action="#{historiaUsuarioControlador.borrar}" />
-                <p:commandButton id="decline" value="No"
-                                 onclick="PF('dlgElimHistoriaUsuario').hide()"
-                                 process="@this"/>
             </h:form>
         </p:dialog>
-
+        <p:confirmDialog id="dlgEliminarHistoriaUsuario"
+                         header="#{msg['ec.edu.epn.software.generico.etiquetas.eliminacion']}"
+                         message="#{msg['ec.edu.epn.software.historiaUsuario.eliminacion']}"
+                         severity="alert"
+                         widgetVar="dlgElimHistoriaUsuario">
+            <div style="text-align: center">
+                <p:commandButton id="confirm"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.si']}"
+                                 update=":formHistoriaUsuario:tablaHistoriasUsuario"
+                                 action="#{historiaUsuarioControlador.borrar}"
+                                 style="margin: auto"/>
+                <p:commandButton id="decline"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.no']}"
+                                 onclick="PF('dlgElimHistoriaUsuario').hide()"
+                                 process="@this"
+                                 style="margin: auto"/>
+            </div>
+        </p:confirmDialog>
     </ui:define>
 </ui:composition>

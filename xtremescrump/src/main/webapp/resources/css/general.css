@@ -37,3 +37,8 @@ body {
     display: block;
     margin: 15px auto;
 }
+
+.ui-outputlabel .ui-outputlabel-rfi {
+    margin-left: 0.4em;
+    margin-right: 1em;
+}
