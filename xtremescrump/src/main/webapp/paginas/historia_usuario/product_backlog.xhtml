@@ -12,7 +12,7 @@
     <ui:define name="contenido">
         <h:form id="formHistoriaUsuario">
             <p:commandButton id="nuevo"
-                             value="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
+                             value="#{msg['ec.edu.epn.software.historiaUsuario.nuevo']}"
                              icon="ui-icon-document"
                              action="#{historiaUsuarioControlador.nuevo}"
                              update=":panelNuevaHistoriaUsuario"/>
@@ -71,7 +71,7 @@
     <ui:define name="dialogos">
         <p:dialog id="panelNuevaHistoriaUsuario"
                   widgetVar="dlgHistoriaUsuario"
-                  header="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
+                  header="#{msg['ec.edu.epn.software.historiaUsuario.nuevo']}"
                   draggable="#{false}"
                   modal="#{true}"
                   resizable="#{false}">
