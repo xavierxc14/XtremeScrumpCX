@@ -5,15 +5,16 @@ import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
 import ec.edu.epn.software.utils.MensajesError;
 import ec.edu.epn.software.utils.MensajesInformacion;
 import ec.edu.epn.software.utils.MensajesPagina;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class HistoriaUsuarioControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(HistoriaUsuarioControlador.class);
@@ -32,6 +33,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @PostConstruct
     @Override
     public void init() {
+        setHistoriaUsuarios(new ArrayList<HistoriaUsuario>());
         buscar();
     }
 
@@ -39,6 +41,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     public String buscar() {
         try {
             //setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
+            getHistoriaUsuarios().clear();
             setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de proyectos", ex);
