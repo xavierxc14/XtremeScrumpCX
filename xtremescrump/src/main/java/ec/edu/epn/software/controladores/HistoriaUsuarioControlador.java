@@ -49,6 +49,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @Override
     public String nuevo() {
         setHistoriaUsuario(new HistoriaUsuario());
+        historiaUsuario.setProyecto(sesionControlador.getProyecto());
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
         return null;
     }
