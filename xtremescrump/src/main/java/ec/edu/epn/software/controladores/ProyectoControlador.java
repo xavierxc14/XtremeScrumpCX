@@ -83,6 +83,9 @@ public class ProyectoControlador extends ControladorBase {
         ejecutarJSPrimefaces("PF('dlgElimProyecto').hide()");
         return buscar();
     }
+    public String agregarTeam(){
+        return null;
+    }
 
     /**
      * @return the proyecto
