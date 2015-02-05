@@ -10,7 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
-import org.primefaces.event.SelectEvent;
 
 @ManagedBean
 @SessionScoped
@@ -20,14 +19,14 @@ public class ProyectoControlador extends ControladorBase {
 
     public static final String LISTA = "/paginas/proyecto/proyectos.jsf";
 
+    @ManagedProperty("#{sesionControlador}")
+    private SesionControlador sesionControlador;
+
     private final ProyectoServicio proyectoServicio = new ProyectoServicio();
 
     private Proyecto proyecto;
 
     private List<Proyecto> proyectos;
-
-    @ManagedProperty("#{sesionControlador}")
-    private SesionControlador sesionControlador;
 
     @PostConstruct
     @Override
@@ -72,10 +71,6 @@ public class ProyectoControlador extends ControladorBase {
         return null;
     }
 
-    public void redirectHistorias(SelectEvent evt) {
-        redirect(evt, HistoriaUsuarioControlador.LISTA);
-    }
-
     @Override
     public String borrar() {
         proyectoServicio.eliminar(proyecto);
@@ -83,7 +78,8 @@ public class ProyectoControlador extends ControladorBase {
         ejecutarJSPrimefaces("PF('dlgElimProyecto').hide()");
         return buscar();
     }
-    public String agregarTeam(){
+
+    public String agregarTeam() {
         return null;
     }
 

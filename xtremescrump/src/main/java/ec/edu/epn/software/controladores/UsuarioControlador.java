@@ -22,10 +22,6 @@ public class UsuarioControlador extends ControladorBase {
     private Usuario usuario;
 
     private List<Usuario> usuarios;
-    
-    private List<Usuario> usuariosDisponibles;
-    
-    private List<Usuario> usuariosAsignados;
 
     @PostConstruct
     @Override
@@ -38,7 +34,8 @@ public class UsuarioControlador extends ControladorBase {
     public String buscar() {
         try {
             setUsuarios(usuarioServicio.buscarTodos());
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LOG.error("Error al buscar usuarios", ex);
         }
         return LISTA;
     }

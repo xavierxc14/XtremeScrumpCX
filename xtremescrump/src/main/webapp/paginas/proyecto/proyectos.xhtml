@@ -56,7 +56,7 @@
                           style="text-align: center; width: 50px">
                     <p:commandButton id="botonAgregar" icon="ui-icon-plusthick"
                                      ajax="#{false}"
-                                     action="#{proyectoControlador.agregarTeam}"
+                                     action="#{usuarioProyectoControlador.agregarTeam}"
                                      title="#{msg['ec.edu.epn.software.historiaUsuario.agregarTeam']}">
                         <f:setPropertyActionListener value="#{proyecto}"
                                                      target="#{proyectoControlador.proyecto}"/>
@@ -163,66 +163,46 @@
         </p:confirmDialog>
         <p:dialog id="panelAgregarTeam"
                   widgetVar="dlgTeam"
-                  header="#{msg['ec.edu.epn.software.historiaUsuario.agregarTeam']}"
+                  header="#{msg['ec.edu.epn.software.teamscrum.agregarTeam']}"
                   draggable="#{false}"
                   modal="#{true}"
                   resizable="#{false}">
-            <h:form id="formDialogoProyecto">
-                <h:panelGrid columns="3">
-                    <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.proyecto.nombre']}:"/>
-                    <p:inputText id="nombre" required="#{true}"
-                                 value="#{proyectoControlador.proyecto.nombre}"/>
-                    <p:message for="nombre" showDetail="#{false}" display="icon"/>
-                    <p:outputLabel for="descripcion" value="#{msg['ec.edu.epn.software.proyecto.descripcion']}:"/>
-                    <p:inputTextarea id="descripcion"
-                                     value="#{proyectoControlador.proyecto.descripcion}"
-                                     style="width: 250px; resize: none"
-                                     counter="contDescripcion" rows="5" cols="50"
-                                     autoResize="#{false}"
-                                     maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
-                                     counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
-                                     required="#{true}"/>
-                    <p:message for="descripcion" showDetail="#{false}" display="icon"/>
-                    <h:outputText/>
-                    <h:outputText id="contDescripcion"/>
-                    <h:outputText/>
-                    <p:outputLabel for="fechaInicio" value="#{msg['ec.edu.epn.software.proyecto.fechaInicio']}:"/>
-                    <p:calendar id="fechaInicio"
-                                value="#{proyectoControlador.proyecto.fechaInicio}"
-                                navigator="#{true}" showButtonPanel="#{true}"
-                                locale="es" showOn="button"
-                                required="#{true}" mask="#{true}"
-                                pattern="dd/MM/yyyy"
-                                mindate="#{proyectoControlador.sesionControlador.fecha}"/>
-                    <p:message for="fechaInicio" showDetail="#{false}" display="icon"/>
-                    <p:outputLabel for="fechaFin" value="#{msg['ec.edu.epn.software.proyecto.fechaFin']}:"/>
-                    <p:calendar id="fechaFin"
-                                value="#{proyectoControlador.proyecto.fechaFin}"
-                                navigator="#{true}" showButtonPanel="#{true}"
-                                locale="es" showOn="button"
-                                required="#{true}"  mask="#{true}"
-                                pattern="dd/MM/yyyy"
-                                mindate="#{proyectoControlador.sesionControlador.fecha}"/>
-                    <h:panelGroup>
-                        <p:message for="fechaFin" showDetail="#{false}" display="icon"/>
-                        <o:validateOrder id="fechas" components="fechaInicio fechaFin"
-                                         message="#{msg['ec.edu.epn.software.generico.fechas.orden']}"
-                                         showMessageFor="fechaInicio"/>
-                    </h:panelGroup>
-                </h:panelGrid>
-                <p:separator/>
-                <center>
-                    <p:commandButton id="guardar"
-                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
-                                     icon="ui-icon-disk"
-                                     action="#{proyectoControlador.guardar}"
-                                     update=":formProyecto:tablaHistoriasUsuario formDialogoProyecto"/>
-                    <p:commandButton id="cancelar"
-                                     value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
-                                     icon="ui-icon-arrowreturnthick-1-w"
-                                     action="#{proyectoControlador.cerrarDialogo}"
-                                     process="@this"/>
-                </center>
+            <h:form id="formAgregarTeam">
+                <p:pickList id="usuarios"
+                            value="#{usuarioProyectoControlador.usuarios}"
+                            var="usuario"
+                            itemValue="#{usuario}"
+                            itemLabel="#{usuario.nombre}"
+                            showCheckbox="#{true}"
+                            showSourceFilter="#{true}"
+                            showTargetFilter="#{true}"
+                            filterMatchMode="contains"
+                            addLabel="#{msg['ec.edu.epn.software.generico.etiquetas.agregar']}"
+                            addAllLabel="#{msg['ec.edu.epn.software.generico.etiquetas.agregarTodos']}"
+                            removeLabel="#{msg['ec.edu.epn.software.generico.etiquetas.quitar']}"
+                            removeAllLabel="#{msg['ec.edu.epn.software.generico.etiquetas.quitarTodos']}">
+                    <f:facet name="sourceCaption">#{msg['ec.edu.epn.software.teamscrum.usuariosDisponibles']}</f:facet>
+                    <f:facet name="targetCaption">#{msg['ec.edu.epn.software.teamscrum.usuariosAsignados']}</f:facet>
+                    <p:column>
+                        <h:outputText value="#{usuario.nombre}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{usuario.username}" />
+                    </p:column>
+                </p:pickList>
+            <p:separator/>
+            <center>
+                <p:commandButton id="guardar"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                 icon="ui-icon-disk"
+                                 action="#{usuarioProyectoControlador.guardar}"
+                                 update=":formProyecto:tablaHistoriasUsuario formAgregarTeam"/>
+                <p:commandButton id="cancelar"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
+                                 icon="ui-icon-arrowreturnthick-1-w"
+                                 action="#{usuarioProyectoControlador.cerrarDialogo}"
+                                 process="@this"/>
+            </center>
             </h:form>
         </p:dialog>
     </ui:define>

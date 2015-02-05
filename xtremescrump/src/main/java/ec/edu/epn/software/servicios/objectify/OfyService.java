@@ -5,12 +5,14 @@ import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Proyecto;
+import ec.edu.epn.software.entidades.UsuarioProyecto;
 
 public class OfyService {
 
     static {
         factory().register(HistoriaUsuario.class);
         factory().register(Proyecto.class);
+        factory().register(UsuarioProyecto.class);
     }
 
     public static Objectify ofy() {
