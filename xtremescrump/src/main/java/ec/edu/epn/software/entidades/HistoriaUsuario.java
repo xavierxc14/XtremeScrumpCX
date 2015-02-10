@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Index
-public class HistoriaUsuario implements Serializable {
+public class HistoriaUsuario extends TreeNodeHistoria implements Serializable {
 
     @Id
     private Long id;

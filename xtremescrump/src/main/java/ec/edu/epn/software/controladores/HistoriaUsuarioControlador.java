@@ -1,6 +1,7 @@
 package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.HistoriaUsuario;
+import ec.edu.epn.software.entidades.Tarea;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
 import ec.edu.epn.software.utils.MensajesError;
 import ec.edu.epn.software.utils.MensajesInformacion;
@@ -12,6 +13,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 @ManagedBean
 @ViewScoped
@@ -25,24 +28,39 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     private HistoriaUsuario historiaUsuario;
 
-    private List<HistoriaUsuario> historiaUsuarios;
+    private List<HistoriaUsuario> historiasUsuarios;
+
+    private HistoriaUsuario historiaUsuarioSeleccionada;
+    private List<Tarea> tareas;
 
     @ManagedProperty("#{sesionControlador}")
     private SesionControlador sesionControlador;
+
+    private TreeNode root;
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
 
     @PostConstruct
     @Override
     public void init() {
         setHistoriaUsuarios(new ArrayList<HistoriaUsuario>());
-        buscar();
+        setTareas(new ArrayList<Tarea>());
+//        buscar();
+        llenarArbol();
     }
 
     @Override
     public String buscar() {
         try {
-            //setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
+            setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
             getHistoriaUsuarios().clear();
-            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
+//            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de proyectos", ex);
         }
@@ -91,6 +109,29 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         return buscar();
     }
 
+    public TreeNode llenarArbol() {
+        root = new DefaultTreeNode(new HistoriaUsuario(), null);
+        for (int i = 1; i < historiasUsuarios.size(); i++) {
+
+            HistoriaUsuario historia = historiasUsuarios.get(i);
+            TreeNode nodoHistoria = new DefaultTreeNode(historia, root);
+
+            setTareas(historiaUsuarioServicio.buscarTareasPorHU(historia));
+
+            for (int j = 0; j < tareas.size(); j++) {
+                {
+                    Tarea tarea = tareas.get(j);
+                    TreeNode nodoTarea = new DefaultTreeNode(tarea, nodoHistoria);
+                }
+            }
+        }
+        return root;
+    }
+
+    public void nuevaTarea() {
+
+    }
+
     /**
      * @return the historiaUsuario
      */
@@ -106,17 +147,17 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     }
 
     /**
-     * @return the historiaUsuarios
+     * @return the historiasUsuarios
      */
     public List<HistoriaUsuario> getHistoriaUsuarios() {
-        return historiaUsuarios;
+        return historiasUsuarios;
     }
 
     /**
-     * @param historiaUsuarios the historiaUsuarios to set
+     * @param historiaUsuarios the historiasUsuarios to set
      */
     public void setHistoriaUsuarios(List<HistoriaUsuario> historiaUsuarios) {
-        this.historiaUsuarios = historiaUsuarios;
+        this.historiasUsuarios = historiaUsuarios;
     }
 
     /**
@@ -133,4 +174,17 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         this.sesionControlador = sesionControlador;
     }
 
+    /**
+     * @return the tareas
+     */
+    public List<Tarea> getTareas() {
+        return tareas;
+    }
+
+    /**
+     * @param tareas the tareas to set
+     */
+    public void setTareas(List<Tarea> tareas) {
+        this.tareas = tareas;
+    }
 }
