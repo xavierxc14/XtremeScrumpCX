@@ -40,7 +40,6 @@ public class UsuarioProyectoControlador extends ControladorBase {
         setUsuarioProyectos(new ArrayList<UsuarioProyecto>());
         setUsuariosAsignados(new ArrayList<Usuario>());
         setUsuariosDisponibles(new ArrayList<Usuario>());
-        buscar();
         setUsuarios(new DualListModel<>(usuariosDisponibles, usuariosAsignados));
     }
 
@@ -57,6 +56,7 @@ public class UsuarioProyectoControlador extends ControladorBase {
                     getUsuariosDisponibles().remove(u);
                 }
             }
+            setUsuarios(new DualListModel<>(usuariosDisponibles, usuariosAsignados));
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de usuarios", ex);
         }
@@ -117,6 +117,7 @@ public class UsuarioProyectoControlador extends ControladorBase {
     }
 
     public String agregarTeam() {
+        buscar();
         ejecutarJSPrimefaces("PF('dlgTeam').show()");
         return null;
     }

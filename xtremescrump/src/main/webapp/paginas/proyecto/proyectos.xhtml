@@ -57,9 +57,10 @@
                     <p:commandButton id="botonAgregar" icon="ui-icon-plusthick"
                                      ajax="#{false}"
                                      action="#{usuarioProyectoControlador.agregarTeam}"
-                                     title="#{msg['ec.edu.epn.software.historiaUsuario.agregarTeam']}">
+                                     title="#{msg['ec.edu.epn.software.historiaUsuario.agregarTeam']}"
+                                     update=":panelNuevoProyecto">
                         <f:setPropertyActionListener value="#{proyecto}"
-                                                     target="#{proyectoControlador.proyecto}"/>
+                                                     target="#{usuarioProyectoControlador.sesionControlador.proyecto}"/>
                     </p:commandButton>
                     <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
                                      ajax="#{false}"
