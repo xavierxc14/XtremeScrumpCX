@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 
 @ManagedBean
 @SessionScoped
@@ -79,8 +80,8 @@ public class ProyectoControlador extends ControladorBase {
         return buscar();
     }
 
-    public String agregarTeam() {
-        return null;
+    public void redirectHistorias(SelectEvent evt) {
+        redirect(evt, HistoriaUsuarioControlador.LISTA);
     }
 
     /**

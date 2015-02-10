@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Index
-public class Tarea extends TreeNodeHistoria implements Serializable {
+public class Tarea implements Serializable {
 
     @Id
     private Long id;
@@ -33,7 +33,7 @@ public class Tarea extends TreeNodeHistoria implements Serializable {
      * @param descripcion
      * @param prioridad
      * @param esfuerzo
-     * @param sprint
+     * @param historia
      */
     public Tarea(String descripcion, Integer prioridad, Integer esfuerzo, HistoriaUsuario historia) {
         this.descripcion = descripcion;

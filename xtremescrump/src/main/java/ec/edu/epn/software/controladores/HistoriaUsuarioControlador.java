@@ -22,7 +22,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(HistoriaUsuarioControlador.class);
 
-    public static final String LISTA = "/paginas/historia_usuario/product_backlog.jsf";
+    public static final String LISTA = "/paginas/historia_usuario/product_backlog_tree.jsf";
 
     private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
 

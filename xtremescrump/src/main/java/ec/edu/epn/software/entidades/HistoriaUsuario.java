@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Index
-public class HistoriaUsuario extends TreeNodeHistoria implements Serializable {
+public class HistoriaUsuario implements Serializable {
 
     @Id
     private Long id;
@@ -24,7 +24,7 @@ public class HistoriaUsuario extends TreeNodeHistoria implements Serializable {
     private Integer esfuerzo;
 
     private Ref<Proyecto> proyecto;
-    
+
     private Ref<Backlog> backlog;
 
     private Ref<Sprint> sprint;
@@ -174,6 +174,5 @@ public class HistoriaUsuario extends TreeNodeHistoria implements Serializable {
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = Ref.create(proyecto);
     }
-    
-    
+
 }
