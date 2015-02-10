@@ -7,10 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
-                template="/resources/templates/general.xhtml"
-                xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
-
-
+                template="/resources/templates/general.xhtml">
     <ui:define name="contenido">
         <h:form id="formHistoriaUsuario">
             <p:commandButton id="nuevo"
@@ -18,39 +15,25 @@
                              icon="ui-icon-document"
                              action="#{historiaUsuarioControlador.nuevo}"
                              update=":panelNuevaHistoriaUsuario"/>
-            <p:dataTable id="tablaHistoriasUsuario"
-                         value="#{historiaUsuarioControlador.historiaUsuarios}"
-                         var="historiaUsuario"
-                         paginator="#{true}"
-                         emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
-                         rows="#{msg['ec.edu.epn.software.generico.maxRegistros']}"
-                         rowIndexVar="rowIndex"
-                         filterEvent="enter"
-                         style="overflow: auto">
-                <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
-                          style="text-align: center; width: 0px">
-                    <h:outputText value="#{rowIndex+1}"/>
+
+
+            <p:treeTable value="#{historiaUsuarioControlador.root}" var="historia"
+                         id="tablaHistoriasUsuario">
+                <f:facet name="header">
+                    Historias de Usuario 
+                </f:facet>
+                <p:column headerText="Descripcion">
+                    <h:outputText value="#{historia.descripcion}" />
                 </p:column>
-                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.codigo']}"
-                          style="text-align: center; width: 100px">
-                    <h:outputText value="#{historiaUsuario.codigo}"/>
+
+                <p:column headerText="Esfuerzo">
+                    <h:outputText value="#{historia.prioridad}" />
                 </p:column>
-                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
-                          style="width: 200px">
-                    <h:outputText value="#{historiaUsuario.titulo}"/>
+
+                <p:column headerText="Esfuerzo">
+                    <h:outputText value="#{historia.esfuerzo}" />
                 </p:column>
-                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.descripcion']}"
-                          style="width: 300px">
-                    <h:outputText value="#{historiaUsuario.descripcion}"/>
-                </p:column>
-                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.prioridad']}"
-                          style="text-align: center; width: 50px">
-                    <h:outputText value="#{historiaUsuario.prioridad}"/>
-                </p:column>
-                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.esfuerzo']}"
-                          style="text-align: center; width: 50px">
-                    <h:outputText value="#{historiaUsuario.esfuerzo}"/>
-                </p:column>
+
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
                           style="text-align: center; width: 50px">
                     <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
@@ -67,7 +50,28 @@
                                                      target="#{historiaUsuarioControlador.historiaUsuario}"/>
                     </p:commandButton>
                 </p:column>
-            </p:dataTable>
+            </p:treeTable>
+
+
+<!--            <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
+                          style="text-align: center; width: 50px">
+                    <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
+                                     ajax="#{false}"
+                                     action="#{historiaUsuarioControlador.editar}"
+                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}">
+                        <f:setPropertyActionListener value="#{historiaUsuario}"
+                                                     target="#{historiaUsuarioControlador.historiaUsuario}"/>
+                    </p:commandButton>
+                    <p:commandButton id="botonEliminar" icon="ui-icon-trash"
+                                     onclick="PF('dlgElimHistoriaUsuario').show()"
+                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
+                        <f:setPropertyActionListener value="#{historiaUsuario}"
+                                                     target="#{historiaUsuarioControlador.historiaUsuario}"/>
+                    </p:commandButton>
+                </p:column>-->
+
+
+
         </h:form>
     </ui:define>
     <ui:define name="dialogos">
