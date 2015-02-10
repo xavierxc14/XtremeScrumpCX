@@ -2,6 +2,8 @@ package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.Usuario;
 import ec.edu.epn.software.servicios.UsuarioServicio;
+import ec.edu.epn.software.utils.MensajesInformacion;
+import ec.edu.epn.software.utils.MensajesPagina;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -26,8 +28,8 @@ public class UsuarioControlador extends ControladorBase {
     @PostConstruct
     @Override
     public void init() {
-        buscar();
         setUsuarios(new ArrayList<Usuario>());
+        buscar();
     }
 
     @Override
@@ -43,30 +45,34 @@ public class UsuarioControlador extends ControladorBase {
     @Override
     public String nuevo() {
         setUsuario(new Usuario());
-        ejecutarJSPrimefaces("PF('dialogoProyecto').show()");
+        ejecutarJSPrimefaces("PF('dlgUsuario').show()");
         return null;
     }
 
     @Override
     public String editar() {
-        ejecutarJSPrimefaces("PF('dialogoProyecto').show()");
+        ejecutarJSPrimefaces("PF('dlgUsuario').show()");
         return null;
     }
 
     @Override
     public String guardar() {
         usuarioServicio.guardar(getUsuario());
+        cerrarDialogo();
         return nuevo();
     }
 
     @Override
     public String cerrarDialogo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ejecutarJSPrimefaces("PF('dlgUsuario').show()");
+        return null;
     }
 
     @Override
     public String borrar() {
-        usuarioServicio.eliminar(getUsuario());
+        usuarioServicio.eliminar(usuario);
+        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.USUARIO_ELIMINADO);
+        ejecutarJSPrimefaces("PF('dlgElimUsuario').hide()");
         return buscar();
     }
 

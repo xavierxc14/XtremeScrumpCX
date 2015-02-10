@@ -21,8 +21,6 @@ public class Usuario implements Serializable {
 
     private Ref<Rol> rol;
 
-    private Ref<Proyecto> proyecto;
-
     /**
      * Constructor vacio.
      */
@@ -112,19 +110,5 @@ public class Usuario implements Serializable {
      */
     public void setRol(Rol rol) {
         this.rol = Ref.create(rol);
-    }
-
-    /**
-     * @return the proyecto
-     */
-    public Proyecto getProyecto() {
-        return proyecto.get();
-    }
-
-    /**
-     * @param proyecto the proyecto to set
-     */
-    public void setProyecto(Proyecto proyecto) {
-        this.proyecto = Ref.create(proyecto);
     }
 }

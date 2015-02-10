@@ -6,15 +6,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="/resources/templates/general.xhtml"
-                xmlns:xsp="http://java.sun.com/jsf/composite/xtremescrump">
+                template="/resources/templates/general.xhtml">
     <ui:define name="contenido">
         <h:form id="formListaUsuario">
             <p:commandButton id="nuevo"
                              value="#{msg['ec.edu.epn.software.generico.boton.nuevo']}"
                              icon="ui-icon-document"
-                             action="#{usuarioControlador.nuevo}"/>
-            <p:dataTable id="tablaHistoriasUsuario"
+                             action="#{usuarioControlador.nuevo}"
+                             update=":panelNuevoUsuario"/>
+            <p:dataTable id="tablaUsuarios"
                          value="#{usuarioControlador.usuarios}"
                          var="usuario"
                          paginator="#{true}"
@@ -31,9 +31,13 @@
                           style="text-align: center; width: 100px">
                     <h:outputText value="#{usuario.nombre}"/>
                 </p:column>
-                <p:column headerText="#{msg['ec.edu.epn.software.usuario.descripcion']}"
+                <p:column headerText="#{msg['ec.edu.epn.software.usuario.username']}"
                           style="width: 200px">
                     <h:outputText value="#{usuario.username}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.usuario.rol']}"
+                          style="width: 200px">
+                    <h:outputText value="#{usuario.rol.nombre}"/>
                 </p:column>
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
                           style="text-align: center; width: 50px">
@@ -45,7 +49,7 @@
                                                      target="#{usuarioControlador.usuario}"/>
                     </p:commandButton>
                     <p:commandButton id="botonEliminar" icon="ui-icon-trash"
-                                     onclick="PF('confirmEliminacion').show()"
+                                     onclick="PF('dlgElimUsuario').show()"
                                      title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
                         <f:setPropertyActionListener value="#{usuario}"
                                                      target="#{usuarioControlador.usuario}"/>
@@ -53,26 +57,64 @@
                 </p:column>
             </p:dataTable>
         </h:form>
+    </ui:define>
+    <ui:define name="dialogos">
         <p:dialog id="panelNuevoUsuario"
-                  widgetVar="dialogoUsuario"
-                  header="#{msg['ec.edu.epn.software.usuario.titulo']}"
+                  widgetVar="dlgUsuario"
+                  header="#{msg['ec.edu.epn.software.usuario.nuevo']}"
                   draggable="false"
                   modal="#{true}"
                   resizable="false">
             <h:form id="formDialogoUsuario">
-                <ui:include id="form" src="/paginas/usuario/usuario.xhtml"/>
-                <p:commandButton id="guardar"
-                                 value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
-                                 icon="ui-icon-disk"
-                                 action="#{usuarioControlador.guardar}"
-                                 update=":formListaUsuario:tablaHistoriasUsuario"/>
-                <p:commandButton id="regresar"
-                                 value="#{msg['ec.edu.epn.software.generico.boton.regresar']}"
-                                 partialSubmit="#{true}"
-                                 icon="ui-icon-arrowreturnthick-1-w"
-                                 action="#{usuarioControlador.buscar}"
-                                 ajax="#{false}" immediate="#{true}"/>
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.usuario.nombre']}"/>
+                    <p:inputText id="nombre" required="#{true}"
+                                 value="#{usuarioControlador.usuario.nombre}"/>
+                    <p:message for="nombre" showDetail="#{false}" display="icon"/>
+
+                    <p:outputLabel for="username" value="#{msg['ec.edu.epn.software.usuario.username']}"/>
+                    <p:inputText id="username" required="#{true}"
+                                 value="#{usuarioControlador.usuario.username}"/>
+                    <p:message for="username" showDetail="#{false}" display="icon"/>
+
+                    <p:outputLabel for="password" value="#{msg['ec.edu.epn.software.usuario.password']}"/>
+                    <p:password id="password" required="#{true}"
+                                value="#{usuarioControlador.usuario.password}"/>
+                    <p:message for="password" showDetail="#{false}" display="icon"/>
+                </h:panelGrid>
+                <p:separator/>
+                <center>
+                    <p:commandButton id="guardar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                     icon="ui-icon-disk"
+                                     action="#{usuarioControlador.guardar}"
+                                     update=":formListaUsuario:tablaUsuarios"/>
+                    <p:commandButton id="regresar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.regresar']}"
+                                     partialSubmit="#{true}"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{usuarioControlador.buscar}"
+                                     ajax="#{false}" immediate="#{true}"/>
+                </center>
             </h:form>
         </p:dialog>
+        <p:confirmDialog id="dlgElimUsuario"
+                         header="#{msg['ec.edu.epn.software.generico.etiquetas.eliminacion']}"
+                         message="#{msg['ec.edu.epn.software.usuario.eliminacion']}"
+                         severity="alert"
+                         widgetVar="dlgElimUsuario">
+            <div style="text-align: center">
+                <p:commandButton id="confirm"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.si']}"
+                                 update=":formListaUsuario:tablaUsuarios"
+                                 action="#{usuarioControlador.borrar}"
+                                 style="margin: auto"/>
+                <p:commandButton id="decline"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.no']}"
+                                 onclick="PF('dlgElimUsuario').hide()"
+                                 process="@this"
+                                 style="margin: auto"/>
+            </div>
+        </p:confirmDialog>
     </ui:define>
 </ui:composition>
