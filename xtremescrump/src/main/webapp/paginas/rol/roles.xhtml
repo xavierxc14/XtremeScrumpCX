@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                template="/resources/templates/general.xhtml">
+    <ui:define name="contenido">
+        <h:form id="formRol">
+            <p:commandButton id="nuevo"
+                             value="#{msg['ec.edu.epn.software.rol.nuevo']}"
+                             icon="ui-icon-document"
+                             action="#{rolControlador.nuevo}"
+                             update=":panelNuevoRol"/>
+            <p:dataTable id="tablaRoles"
+                         value="#{rolControlador.roles}"
+                         var="rol"
+                         paginator="#{true}"
+                         emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
+                         rows="#{msg['ec.edu.epn.software.generico.maxRegistros']}"
+                         rowIndexVar="rowIndex"
+                         filterEvent="enter"
+                         style="overflow: auto">
+                <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
+                          style="text-align: center; width: 0px">
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.rol.nombre']}"
+                          style="text-align: center; width: 100px">
+                    <h:outputText value="#{rol.nombre}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.rol.descripcion']}"
+                          style="width: 200px">
+                    <h:outputText value="#{rol.descripcion}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
+                          style="text-align: center; width: 50px">
+                    <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
+                                     ajax="#{false}"
+                                     action="#{rolControlador.editar}"
+                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}">
+                        <f:setPropertyActionListener value="#{rol}"
+                                                     target="#{rolControlador.rol}"/>
+                    </p:commandButton>
+                    <p:commandButton id="botonEliminar" icon="ui-icon-trash"
+                                     onclick="PF('dlgElimRol').show()"
+                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
+                        <f:setPropertyActionListener value="#{rol}"
+                                                     target="#{rolControlador.rol}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+    <ui:define name="dialogos"> 
+        <p:dialog id="panelNuevoRol"
+                  widgetVar="dlgRol"
+                  header="#{msg['ec.edu.epn.software.rol.nuevo']}"
+                  draggable="false"
+                  modal="#{true}"
+                  resizable="false">
+            <h:form id="formDialogoRol">
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.rol.nombre']}:"/>
+                    <p:inputText id="nombre" required="#{true}"
+                                 value="#{rolControlador.rol.nombre}"/>
+                    <p:message for="nombre" showDetail="#{false}" display="icon"/>
+                    <p:outputLabel for="descripcion" value="#{msg['ec.edu.epn.software.rol.descripcion']}:"/>
+                    <p:inputTextarea id="descripcion"
+                                     value="#{rolControlador.rol.descripcion}"
+                                     style="width: 250px; resize: none"
+                                     counter="contDescripcion" rows="5" cols="50"
+                                     autoResize="#{false}"
+                                     maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
+                                     counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
+                                     required="#{true}"/>
+                    <p:message for="descripcion" showDetail="#{false}" display="icon"/>
+                    <h:outputText/>
+                    <h:outputText id="contDescripcion"/>
+                    <h:outputText/>
+                </h:panelGrid>
+                <p:separator/>
+                <center>
+                    <p:commandButton id="guardar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                     icon="ui-icon-disk"
+                                     action="#{rolControlador.guardar}"
+                                     update=":formRol:tablaRoles"/>
+                    <p:commandButton id="regresar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{rolControlador.buscar}"
+                                     ajax="#{false}" immediate="#{false}"/>
+                </center>
+            </h:form>
+        </p:dialog>
+        <p:confirmDialog id="dlgEliminarRol"
+                         header="#{msg['ec.edu.epn.software.generico.etiquetas.eliminacion']}"
+                         message="#{msg['ec.edu.epn.software.rol.eliminacion']}"
+                         severity="alert"
+                         widgetVar="dlgElimRol">
+            <div style="text-align: center">
+                <p:commandButton id="confirm"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.si']}"
+                                 update=":formRol:tablaRoles"
+                                 action="#{rolControlador.borrar}"
+                                 style="margin: auto"/>
+                <p:commandButton id="decline"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.no']}"
+                                 onclick="PF('dlgElimRol').hide()"
+                                 process="@this"
+                                 style="margin: auto"/>
+            </div>
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>

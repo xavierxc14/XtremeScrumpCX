@@ -1,6 +1,8 @@
 package ec.edu.epn.software.controladores;
 
+import ec.edu.epn.software.entidades.Rol;
 import ec.edu.epn.software.entidades.Usuario;
+import ec.edu.epn.software.servicios.RolServicio;
 import ec.edu.epn.software.servicios.UsuarioServicio;
 import ec.edu.epn.software.utils.MensajesInformacion;
 import ec.edu.epn.software.utils.MensajesPagina;
@@ -21,15 +23,24 @@ public class UsuarioControlador extends ControladorBase {
 
     private final UsuarioServicio usuarioServicio = new UsuarioServicio();
 
+    private final RolServicio rolServicio = new RolServicio();
+
     private Usuario usuario;
 
     private List<Usuario> usuarios;
 
+    private List<Rol> roles;
+
+    // private Rol rol;
+    private Integer IdRol;
+
     @PostConstruct
     @Override
     public void init() {
+        setUsuario(new Usuario());
         setUsuarios(new ArrayList<Usuario>());
         buscar();
+        buscarRoles();
     }
 
     @Override
@@ -76,6 +87,11 @@ public class UsuarioControlador extends ControladorBase {
         return buscar();
     }
 
+    public void buscarRoles() {
+        setRoles(rolServicio.buscarTodos());
+
+    }
+
     /**
      * @return the usuario
      */
@@ -102,6 +118,22 @@ public class UsuarioControlador extends ControladorBase {
      */
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
+
+    public Integer getIdRol() {
+        return IdRol;
+    }
+
+    public void setIdRol(Integer IdRol) {
+        this.IdRol = IdRol;
     }
 
 }
