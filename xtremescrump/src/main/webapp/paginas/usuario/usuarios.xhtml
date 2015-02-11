@@ -10,7 +10,7 @@
     <ui:define name="contenido">
         <h:form id="formListaUsuario">
             <p:commandButton id="nuevo"
-                             value="#{msg['ec.edu.epn.software.generico.boton.nuevo']}"
+                             value="#{msg['ec.edu.epn.software.usuario.nuevo']}"
                              icon="ui-icon-document"
                              action="#{usuarioControlador.nuevo}"
                              update=":panelNuevoUsuario"/>
@@ -68,7 +68,7 @@
                   modal="#{true}"
                   resizable="false">
             <h:form id="formDialogoUsuario">
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="3">
                     <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.usuario.nombre']}"/>
                     <p:inputText id="nombre" required="#{true}"
                                  value="#{usuarioControlador.usuario.nombre}"/>
@@ -83,14 +83,14 @@
                     <p:password id="password" required="#{true}"
                                 value="#{usuarioControlador.usuario.password}"/>
                     <p:message for="password" showDetail="#{false}" display="icon"/>
-                    </h:panelGrid>
-                 <h:panelGrid columns="3">
                     <p:outputLabel for="comboRol" value="#{msg['ec.edu.epn.software.usuario.rol']}" />
-                    <p:selectOneMenu id="comboRol"                       >
-				<f:selectItem itemLabel="Seleccione Roles " itemValue="" />
-                                <f:selectItems value="#{usuarioControlador.roles}"
-					var="rol" itemLabel="#{rol.nombre}" itemValue="#{rol.id}" />
-			</p:selectOneMenu>
+                    <p:selectOneMenu id="comboRol" value="#{usuarioControlador.idRol}"
+                                     required="#{true}">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="0" />
+                        <f:selectItems value="#{usuarioControlador.roles}"
+                                       var="rol" itemLabel="#{rol.nombre}" itemValue="#{rol.id}" />
+                    </p:selectOneMenu>
+                    <p:message for="comboRol" showDetail="#{false}" display="icon"/>
                 </h:panelGrid>
                 <p:separator/>
                 <center>

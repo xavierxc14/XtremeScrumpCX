@@ -31,7 +31,6 @@ public class UsuarioControlador extends ControladorBase {
 
     private List<Rol> roles;
 
-    // private Rol rol;
     private Integer IdRol;
 
     @PostConstruct
@@ -56,6 +55,7 @@ public class UsuarioControlador extends ControladorBase {
     @Override
     public String nuevo() {
         setUsuario(new Usuario());
+        setIdRol(0);
         ejecutarJSPrimefaces("PF('dlgUsuario').show()");
         return null;
     }
@@ -75,7 +75,7 @@ public class UsuarioControlador extends ControladorBase {
 
     @Override
     public String cerrarDialogo() {
-        ejecutarJSPrimefaces("PF('dlgUsuario').show()");
+        ejecutarJSPrimefaces("PF('dlgUsuario').hide()");
         return null;
     }
 
@@ -89,7 +89,6 @@ public class UsuarioControlador extends ControladorBase {
 
     public void buscarRoles() {
         setRoles(rolServicio.buscarTodos());
-
     }
 
     /**

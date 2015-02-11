@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
 
@@ -66,7 +65,7 @@ public class RolControlador extends ControladorBase {
 
     @Override
     public String cerrarDialogo() {
-        ejecutarJSPrimefaces("PF('dlgRol').show()");
+        ejecutarJSPrimefaces("PF('dlgRol').hide()");
         return null;
     }
 
