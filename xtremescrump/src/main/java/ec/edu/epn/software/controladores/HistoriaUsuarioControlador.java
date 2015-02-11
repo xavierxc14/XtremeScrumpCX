@@ -3,6 +3,7 @@ package ec.edu.epn.software.controladores;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Tarea;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
+import ec.edu.epn.software.servicios.TareaServicio;
 import ec.edu.epn.software.utils.MensajesError;
 import ec.edu.epn.software.utils.MensajesInformacion;
 import ec.edu.epn.software.utils.MensajesPagina;
@@ -25,42 +26,37 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     public static final String LISTA = "/paginas/historia_usuario/product_backlog_tree.jsf";
 
     private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
+    private final TareaServicio tareaServicio = new TareaServicio();
 
     private HistoriaUsuario historiaUsuario;
-
     private List<HistoriaUsuario> historiasUsuarios;
-
     private HistoriaUsuario historiaUsuarioSeleccionada;
+
+    private Tarea tarea;
     private List<Tarea> tareas;
+    private Tarea tareaSeleccionada;
 
     @ManagedProperty("#{sesionControlador}")
     private SesionControlador sesionControlador;
 
     private TreeNode root;
 
-    public TreeNode getRoot() {
-        return root;
-    }
-
-    public void setRoot(TreeNode root) {
-        this.root = root;
-    }
-
     @PostConstruct
     @Override
     public void init() {
         setHistoriaUsuarios(new ArrayList<HistoriaUsuario>());
         setTareas(new ArrayList<Tarea>());
-//        buscar();
-        llenarArbol();
+        tarea = new Tarea();
+        buscar();
     }
 
     @Override
     public String buscar() {
         try {
-            setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
+//            setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
             getHistoriaUsuarios().clear();
-//            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
+            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
+            llenarArbol();
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de proyectos", ex);
         }
@@ -111,25 +107,34 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     public TreeNode llenarArbol() {
         root = new DefaultTreeNode(new HistoriaUsuario(), null);
-        for (int i = 1; i < historiasUsuarios.size(); i++) {
-
-            HistoriaUsuario historia = historiasUsuarios.get(i);
-            TreeNode nodoHistoria = new DefaultTreeNode(historia, root);
-
-            setTareas(historiaUsuarioServicio.buscarTareasPorHU(historia));
-
-            for (int j = 0; j < tareas.size(); j++) {
-                {
-                    Tarea tarea = tareas.get(j);
-                    TreeNode nodoTarea = new DefaultTreeNode(tarea, nodoHistoria);
-                }
+        for (HistoriaUsuario hu : historiasUsuarios) {
+            TreeNode nodoHistoria = new DefaultTreeNode("historia", hu, root);
+            setTareas(historiaUsuarioServicio.buscarTareasPorHU(hu));
+            for (Tarea t : tareas) {
+//                Tarea t = new Tarea();
+//                t.setDescripcion("Tarea prueba " + j);
+//                t.setEsfuerzo(2);
+                TreeNode nodoTarea = new DefaultTreeNode("tarea", t, nodoHistoria);
             }
         }
         return root;
     }
 
     public void nuevaTarea() {
+        setTarea(new Tarea());
+        ejecutarJSPrimefaces("PF('dlgTarea').show()");
+    }
 
+    public String guardarTarea() {
+        try {
+            tareaServicio.guardar(tarea);
+            MensajesPagina
+                    .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
+            cerrarDialogo();
+        } catch (Exception e) {
+            MensajesPagina.mostrarMensajeError(MensajesError.ERROR_HU_CREADO);
+        }
+        return buscar();
     }
 
     /**
@@ -186,5 +191,55 @@ public class HistoriaUsuarioControlador extends ControladorBase {
      */
     public void setTareas(List<Tarea> tareas) {
         this.tareas = tareas;
+    }
+
+    /**
+     * @return the historiaUsuarioSeleccionada
+     */
+    public HistoriaUsuario getHistoriaUsuarioSeleccionada() {
+        return historiaUsuarioSeleccionada;
+    }
+
+    /**
+     * @param historiaUsuarioSeleccionada the historiaUsuarioSeleccionada to set
+     */
+    public void setHistoriaUsuarioSeleccionada(HistoriaUsuario historiaUsuarioSeleccionada) {
+        this.historiaUsuarioSeleccionada = historiaUsuarioSeleccionada;
+    }
+
+    /**
+     * @return the tarea
+     */
+    public Tarea getTarea() {
+        return tarea;
+    }
+
+    /**
+     * @param tarea the tarea to set
+     */
+    public void setTarea(Tarea tarea) {
+        this.tarea = tarea;
+    }
+
+    /**
+     * @return the tareaSeleccionada
+     */
+    public Tarea getTareaSeleccionada() {
+        return tareaSeleccionada;
+    }
+
+    /**
+     * @param tareaSeleccionada the tareaSeleccionada to set
+     */
+    public void setTareaSeleccionada(Tarea tareaSeleccionada) {
+        this.tareaSeleccionada = tareaSeleccionada;
+    }
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
     }
 }

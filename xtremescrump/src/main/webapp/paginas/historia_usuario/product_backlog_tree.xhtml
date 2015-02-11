@@ -16,9 +16,19 @@
                              action="#{historiaUsuarioControlador.nuevo}"
                              update=":panelNuevaHistoriaUsuario"/>
 
+            <p:contextMenu for="tablaHistoriasUsuario" nodeType="historia">
+                <p:menuitem value="Nueva Tarea" update=":panelNuevaTarea" action="#{historiaUsuarioControlador.nuevaTarea}" icon="ui-icon-document" 
+                            onclick="PF('dlgTarea').show()"/>
+                <p:menuitem value="Editar" icon="ui-icon-pencil"/>
+            </p:contextMenu>
+            <p:contextMenu for="tablaHistoriasUsuario" nodeType="tarea">
+                <p:menuitem value="Editar" icon="ui-icon-pencil"/>
+            </p:contextMenu>
 
             <p:treeTable value="#{historiaUsuarioControlador.root}" var="historia"
-                         id="tablaHistoriasUsuario">
+                         id="tablaHistoriasUsuario"
+                         selectionMode="single"
+                         selection="#{historiaUsuarioControlador.historiaUsuarioSeleccionada}">
                 <f:facet name="header">
                     Historias de Usuario 
                 </f:facet>
@@ -40,40 +50,20 @@
                                      ajax="#{false}"
                                      action="#{historiaUsuarioControlador.editar}"
                                      title="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}">
-                        <f:setPropertyActionListener value="#{historiaUsuario}"
+                        <f:setPropertyActionListener value="#{historia}"
                                                      target="#{historiaUsuarioControlador.historiaUsuario}"/>
                     </p:commandButton>
                     <p:commandButton id="botonEliminar" icon="ui-icon-trash"
                                      onclick="PF('dlgElimHistoriaUsuario').show()"
                                      title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
-                        <f:setPropertyActionListener value="#{historiaUsuario}"
+                        <f:setPropertyActionListener value="#{historia}"
                                                      target="#{historiaUsuarioControlador.historiaUsuario}"/>
                     </p:commandButton>
                 </p:column>
             </p:treeTable>
-
-
-<!--            <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
-                          style="text-align: center; width: 50px">
-                    <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
-                                     ajax="#{false}"
-                                     action="#{historiaUsuarioControlador.editar}"
-                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}">
-                        <f:setPropertyActionListener value="#{historiaUsuario}"
-                                                     target="#{historiaUsuarioControlador.historiaUsuario}"/>
-                    </p:commandButton>
-                    <p:commandButton id="botonEliminar" icon="ui-icon-trash"
-                                     onclick="PF('dlgElimHistoriaUsuario').show()"
-                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}">
-                        <f:setPropertyActionListener value="#{historiaUsuario}"
-                                                     target="#{historiaUsuarioControlador.historiaUsuario}"/>
-                    </p:commandButton>
-                </p:column>-->
-
-
-
         </h:form>
     </ui:define>
+
     <ui:define name="dialogos">
         <p:dialog id="panelNuevaHistoriaUsuario"
                   widgetVar="dlgHistoriaUsuario"
@@ -133,6 +123,62 @@
                 </center>
             </h:form>
         </p:dialog>
+
+        <p:dialog id="panelNuevaTarea"
+                  widgetVar="dlgTarea"
+                  header="Nueva Tarea"
+                  draggable="#{false}"
+                  modal="#{true}"
+                  resizable="#{false}">
+            <h:form id="formDialogoTarea">
+                <h:panelGrid columns="3">  
+                    <p:outputLabel for="tareaDesc" value="Descripción"/>
+                    <p:inputTextarea id="tareaDesc"
+                                     value="#{historiaUsuarioControlador.tarea.descripcion}"
+                                     style="width: 250px; resize: none"
+                                     counter="contDescripcionTarea" rows="5" cols="50"
+                                     autoResize="#{false}"
+                                     maxlength="#{msg['ec.edu.epn.software.generico.formato.maxCaracteres']}"
+                                     counterTemplate="#{msg['ec.edu.epn.software.generico.formato.caracteresRestantes']}"
+                                     required="#{true}"/>
+                    <p:message for="tareaDesc" showDetail="#{false}" display="icon"/>
+                    <h:outputText/>
+                    <h:outputText id="contDescripcionTarea"/>
+                    <h:outputText/>
+                </h:panelGrid>
+
+                <h:panelGrid columns="7">
+                    <p:outputLabel for="tareaPrioridad" value="Prioridad: "/>
+                    <pe:inputNumber id="tareaPrioridad" maxlength="3" required="#{true}"
+                                    decimalPlaces="0" style="width: 20px"
+                                    value="#{historiaUsuarioControlador.tarea.prioridad}"/>
+                    <p:message for="tareaPrioridad" showDetail="#{false}" display="icon"/>
+                    <p:spacer width="10" height="0"/>
+
+                    <p:outputLabel for="tareaEsfuerzo" value="Esfuerzo: "/>
+                    <pe:inputNumber id="tareaEsfuerzo" maxlength="3" required="#{true}"
+                                    decimalPlaces="0" style="width: 20px"
+                                    value="#{historiaUsuarioControlador.tarea.esfuerzo}"/>
+                    <p:message for="tareaEsfuerzo" showDetail="#{false}" display="icon"/>
+                </h:panelGrid>
+                <p:separator/>
+                <center>
+                    <p:commandButton id="guardar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                     icon="ui-icon-disk"
+                                     action="#{historiaUsuarioControlador.guardarTarea}"
+                                     update=":formHistoriaUsuario:tablaHistoriasUsuario"/>
+                    <p:commandButton id="cancelar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{historiaUsuarioControlador.cerrarDialogo}"
+                                     process="@this"/>
+                </center>
+            </h:form>
+        </p:dialog>
+
+
+
         <p:confirmDialog id="dlgEliminarHistoriaUsuario"
                          header="#{msg['ec.edu.epn.software.generico.etiquetas.eliminacion']}"
                          message="#{msg['ec.edu.epn.software.historiaUsuario.eliminacion']}"
