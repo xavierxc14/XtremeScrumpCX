@@ -6,19 +6,20 @@ import com.googlecode.objectify.ObjectifyService;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Proyecto;
 import ec.edu.epn.software.entidades.Rol;
+import ec.edu.epn.software.entidades.Sprint;
 import ec.edu.epn.software.entidades.Tarea;
 import ec.edu.epn.software.entidades.Usuario;
-import ec.edu.epn.software.entidades.UsuarioProyecto;
     
 public class OfyService {
 
     static {
-        factory().register(HistoriaUsuario.class);
+        
         factory().register(Proyecto.class);
+        factory().register(HistoriaUsuario.class);
         factory().register(Usuario.class);
-        factory().register(UsuarioProyecto.class);
         factory().register(Tarea.class);
         factory().register(Rol.class);
+        factory().register(Sprint.class);
     }
 
     public static Objectify ofy() {

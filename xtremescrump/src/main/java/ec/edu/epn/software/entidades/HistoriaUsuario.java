@@ -25,8 +25,6 @@ public class HistoriaUsuario implements Serializable {
 
     private Ref<Proyecto> proyecto;
 
-    private Ref<Backlog> backlog;
-
     private Ref<Sprint> sprint;
 
     /**
@@ -45,13 +43,12 @@ public class HistoriaUsuario implements Serializable {
      * @param esfuerzo
      * @param sprint
      */
-    public HistoriaUsuario(String codigo, String descripcion, String titulo, Integer prioridad, Integer esfuerzo, Backlog backlog, Sprint sprint) {
+    public HistoriaUsuario(String codigo, String descripcion, String titulo, Integer prioridad, Integer esfuerzo, Sprint sprint) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.titulo = titulo;
         this.prioridad = prioridad;
         this.esfuerzo = esfuerzo;
-        this.backlog = Ref.create(backlog);
         this.sprint = Ref.create(sprint);
     }
 
@@ -131,20 +128,6 @@ public class HistoriaUsuario implements Serializable {
 
     public String getDescripcion() {
         return descripcion;
-    }
-
-    /**
-     * @return the backlog
-     */
-    public Backlog getBacklog() {
-        return backlog.get();
-    }
-
-    /**
-     * @param backlog the backlog to set
-     */
-    public void setBacklog(Backlog backlog) {
-        this.backlog = Ref.create(backlog);
     }
 
     /**
