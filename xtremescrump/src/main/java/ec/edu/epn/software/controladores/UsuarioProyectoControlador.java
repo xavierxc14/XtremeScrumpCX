@@ -1,8 +1,6 @@
 package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.Usuario;
-import ec.edu.epn.software.entidades.UsuarioProyecto;
-import ec.edu.epn.software.servicios.UsuarioProyectoServicio;
 import ec.edu.epn.software.servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +20,7 @@ public class UsuarioProyectoControlador extends ControladorBase {
     @ManagedProperty("#{sesionControlador}")
     private SesionControlador sesionControlador;
 
-    private final UsuarioProyectoServicio usuarioProyectoServicio = new UsuarioProyectoServicio();
-
     private final UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-    private List<UsuarioProyecto> usuarioProyectos;
 
     private List<Usuario> usuariosDisponibles;
 
@@ -37,7 +31,6 @@ public class UsuarioProyectoControlador extends ControladorBase {
     @PostConstruct
     @Override
     public void init() {
-        setUsuarioProyectos(new ArrayList<UsuarioProyecto>());
         setUsuariosAsignados(new ArrayList<Usuario>());
         setUsuariosDisponibles(new ArrayList<Usuario>());
         setUsuarios(new DualListModel<>(usuariosDisponibles, usuariosAsignados));
@@ -46,16 +39,8 @@ public class UsuarioProyectoControlador extends ControladorBase {
     @Override
     public String buscar() {
         try {
-            setUsuarioProyectos(usuarioProyectoServicio.buscarPorProyecto(getSesionControlador().getProyecto()));
-            for (UsuarioProyecto up : usuarioProyectos) {
-                getUsuariosAsignados().add(up.getUsuario());
-            }
-            setUsuariosDisponibles(usuarioServicio.buscarTodos());
-            for (Usuario u : usuariosDisponibles) {
-                if (getUsuariosAsignados().contains(u)) {
-                    getUsuariosDisponibles().remove(u);
-                }
-            }
+            setUsuariosDisponibles(usuarioServicio.buscarSinProyecto());
+            setUsuariosAsignados(usuarioServicio.buscarPorProyecto(getSesionControlador().getProyecto()));
             setUsuarios(new DualListModel<>(usuariosDisponibles, usuariosAsignados));
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de usuarios", ex);
@@ -75,34 +60,15 @@ public class UsuarioProyectoControlador extends ControladorBase {
 
     @Override
     public String guardar() {
-        agregar();
-        quitar();
+        for (Usuario u : usuarios.getSource()) {
+            u.setProyecto(null);
+            usuarioServicio.guardar(u);
+        }
+        for (Usuario u : usuarios.getTarget()) {
+            u.setProyecto(getSesionControlador().getProyecto());
+            usuarioServicio.guardar(u);
+        }
         return buscar();
-    }
-
-    public void agregar() {
-        for (UsuarioProyecto up : usuarioProyectos) {
-            if (usuariosAsignados.contains(up.getUsuario())) {
-                getUsuariosAsignados().remove(up.getUsuario());
-            }
-        }
-        for (Usuario u : usuariosAsignados) {
-            UsuarioProyecto up = new UsuarioProyecto();
-            up.setUsuario(u);
-            up.setProyecto(getSesionControlador().getProyecto());
-            usuarioProyectoServicio.guardar(up);
-        }
-    }
-
-    public void quitar() {
-        for (UsuarioProyecto up : usuarioProyectos) {
-            if (!usuariosDisponibles.contains(up.getUsuario())) {
-                getUsuarioProyectos().remove(up);
-            }
-        }
-        for (UsuarioProyecto up : usuarioProyectos) {
-            usuarioProyectoServicio.eliminar(up);
-        }
     }
 
     @Override
@@ -120,20 +86,6 @@ public class UsuarioProyectoControlador extends ControladorBase {
         buscar();
         ejecutarJSPrimefaces("PF('dlgTeam').show()");
         return null;
-    }
-
-    /**
-     * @return the usuarioProyectos
-     */
-    public List<UsuarioProyecto> getUsuarioProyectos() {
-        return usuarioProyectos;
-    }
-
-    /**
-     * @param usuarioProyectos the usuarioProyectos to set
-     */
-    public void setUsuarioProyectos(List<UsuarioProyecto> usuarioProyectos) {
-        this.usuarioProyectos = usuarioProyectos;
     }
 
     /**

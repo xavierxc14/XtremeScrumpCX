@@ -31,7 +31,7 @@ public abstract class ServicioBase<T> implements Serializable {
         ofy().delete().entity(entidad).now();
     }
 
-    public T buscarPorId(Integer id) {
+    public T buscarPorId(Long id) {
         //LOG.log(Level.INFO, "Buscando Entidad con id>>{0}", id);
         Key<T> k = Key.create(tipoEntidad, id);
         return ofy().load().key(k).now();

@@ -19,4 +19,10 @@ public class UsuarioServicio extends ServicioBase<Usuario> {
         List<Usuario> list = query.filter("proyecto", proyectoKey).list();
         return list;
     }
+
+    public List<Usuario> buscarSinProyecto() {
+        Query<Usuario> query = ofy().load().type(Usuario.class);
+        List<Usuario> list = query.filter("proyecto", null).list();
+        return list;
+    }
 }

@@ -178,6 +178,7 @@
                             showSourceFilter="#{true}"
                             showTargetFilter="#{true}"
                             filterMatchMode="contains"
+                            converter="usuarioConverter"
                             addLabel="#{msg['ec.edu.epn.software.generico.etiquetas.agregar']}"
                             addAllLabel="#{msg['ec.edu.epn.software.generico.etiquetas.agregarTodos']}"
                             removeLabel="#{msg['ec.edu.epn.software.generico.etiquetas.quitar']}"
@@ -191,19 +192,19 @@
                         <h:outputText value="#{usuario.username}" />
                     </p:column>
                 </p:pickList>
-            <p:separator/>
-            <center>
-                <p:commandButton id="guardar"
-                                 value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
-                                 icon="ui-icon-disk"
-                                 action="#{usuarioProyectoControlador.guardar}"
-                                 update=":formProyecto:tablaHistoriasUsuario formAgregarTeam"/>
-                <p:commandButton id="cancelar"
-                                 value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
-                                 icon="ui-icon-arrowreturnthick-1-w"
-                                 action="#{usuarioProyectoControlador.cerrarDialogo}"
-                                 process="@this"/>
-            </center>
+                <p:separator/>
+                <center>
+                    <p:commandButton id="guardar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                     icon="ui-icon-disk"
+                                     action="#{usuarioProyectoControlador.guardar}"
+                                     update=":formProyecto:tablaHistoriasUsuario formAgregarTeam"/>
+                    <p:commandButton id="cancelar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{usuarioProyectoControlador.cerrarDialogo}"
+                                     process="@this"/>
+                </center>
             </h:form>
         </p:dialog>
     </ui:define>
