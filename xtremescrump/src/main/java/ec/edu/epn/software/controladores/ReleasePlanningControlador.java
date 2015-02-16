@@ -2,10 +2,9 @@ package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Sprint;
+import ec.edu.epn.software.manejo.SprintHU;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
 import ec.edu.epn.software.servicios.SprintServicio;
-import ec.edu.epn.software.utils.MensajesInformacion;
-import ec.edu.epn.software.utils.MensajesPagina;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -36,10 +35,13 @@ public class ReleasePlanningControlador extends ControladorBase {
 
     private List<HistoriaUsuario> historiaUsuarios;
 
+    private List<SprintHU> sprintHUs;
+
     @PostConstruct
     @Override
     public void init() {
         setSprints(new ArrayList<Sprint>());
+        setSprintHUs(new ArrayList<SprintHU>());
         buscar();
         buscarHistoriasDisponibles();
     }
@@ -48,49 +50,43 @@ public class ReleasePlanningControlador extends ControladorBase {
     public String buscar() {
         try {
             setSprints(sprintServicio.buscarTodos());
+            for (Sprint s : getSprints()) {
+                s.setHistoriasUsuario(historiaUsuarioServicio.buscarPorSprint(s));
+                getSprintHUs().add(new SprintHU(s, s.getHistoriasUsuario()));
+            }
         } catch (Exception ex) {
             LOG.error("Error al realizar la buscqueda de sprints", ex);
         }
-        return LISTA;
+        return null;
     }
 
     @Override
     public String nuevo() {
-        setSprint(new Sprint());
-        ejecutarJSPrimefaces("PF('dlgSprint').show()");
         return null;
     }
 
     @Override
     public String editar() {
-        ejecutarJSPrimefaces("PF('dlgSprint').show()");
         return null;
     }
 
     @Override
     public String guardar() {
-        sprintServicio.guardar(sprint);
-        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_CREADO);
-        cerrarDialogo();
-        return buscar();
+        return null;
     }
 
     @Override
     public String cerrarDialogo() {
-        ejecutarJSPrimefaces("PF('dlgSprint').hide()");
         return null;
     }
 
     @Override
     public String borrar() {
-        sprintServicio.eliminar(sprint);
-        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_ELIMINADO);
-        ejecutarJSPrimefaces("PF('dlgElimSprint').hide()");
-        return buscar();
+        return null;
     }
 
     public void buscarHistoriasDisponibles() {
-        setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
+        setHistoriaUsuarios(historiaUsuarioServicio.buscarSinSprint());
     }
 
     public void onDrop(DragDropEvent ddEvent) {
@@ -159,6 +155,20 @@ public class ReleasePlanningControlador extends ControladorBase {
      */
     public void setHistoriaUsuarios(List<HistoriaUsuario> historiaUsuarios) {
         this.historiaUsuarios = historiaUsuarios;
+    }
+
+    /**
+     * @return the sprintHUs
+     */
+    public List<SprintHU> getSprintHUs() {
+        return sprintHUs;
+    }
+
+    /**
+     * @param sprintHUs the sprintHUs to set
+     */
+    public void setSprintHUs(List<SprintHU> sprintHUs) {
+        this.sprintHUs = sprintHUs;
     }
 
 }

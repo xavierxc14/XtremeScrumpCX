@@ -4,6 +4,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Proyecto;
+import ec.edu.epn.software.entidades.Sprint;
 import ec.edu.epn.software.entidades.Tarea;
 import static ec.edu.epn.software.servicios.objectify.OfyService.ofy;
 import java.util.List;
@@ -18,6 +19,19 @@ public class HistoriaUsuarioServicio extends ServicioBase<HistoriaUsuario> {
         Key<Proyecto> proyectoKey = Key.create(Proyecto.class, p.getId());
         Query<HistoriaUsuario> query = ofy().load().type(HistoriaUsuario.class);
         List<HistoriaUsuario> list = query.filter("proyecto", proyectoKey).list();
+        return list;
+    }
+
+    public List<HistoriaUsuario> buscarSinSprint() {
+        Query<HistoriaUsuario> query = ofy().load().type(HistoriaUsuario.class);
+        List<HistoriaUsuario> list = query.filter("sprint", null).list();
+        return list;
+    }
+
+    public List<HistoriaUsuario> buscarPorSprint(Sprint s) {
+        Key<Sprint> sprintKey = Key.create(Sprint.class, s.getId());
+        Query<HistoriaUsuario> query = ofy().load().type(HistoriaUsuario.class);
+        List<HistoriaUsuario> list = query.filter("sprint", sprintKey).list();
         return list;
     }
 

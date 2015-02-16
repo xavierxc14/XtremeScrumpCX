@@ -11,18 +11,19 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.SelectEvent;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class SprintControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(SprintControlador.class);
 
     public static final String LISTA = "/paginas/sprint/sprints.jsf";
+
     public static final String PLANEACION = "/paginas/sprint/planificar_sprint.jsf";
 
     @ManagedProperty("#{sesionControlador}")
@@ -36,12 +37,16 @@ public class SprintControlador extends ControladorBase {
 
     private List<Sprint> sprints;
 
-    private List<HistoriaUsuario> historiaUsuarios;
+    private List<HistoriaUsuario> historiaUsuariosDisponibles;
+
+    private List<HistoriaUsuario> historiaUsuariosAsignadas;
 
     @PostConstruct
     @Override
     public void init() {
         setSprints(new ArrayList<Sprint>());
+        setHistoriaUsuariosDisponibles(new ArrayList<HistoriaUsuario>());
+        setHistoriaUsuariosAsignadas(new ArrayList<HistoriaUsuario>());
         buscar();
         buscarHistoriasDisponibles();
     }
@@ -92,16 +97,24 @@ public class SprintControlador extends ControladorBase {
     }
 
     public void redirectPlaneacion(SelectEvent evt) {
+        buscarHistoriasAsignadas();
         redirect(evt, PLANEACION);
     }
 
     public void buscarHistoriasDisponibles() {
-        setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
+        setHistoriaUsuariosDisponibles(historiaUsuarioServicio.buscarSinSprint());
+    }
+
+    public void buscarHistoriasAsignadas() {
+        setHistoriaUsuariosAsignadas(historiaUsuarioServicio.buscarPorSprint(sesionControlador.getSprint()));
     }
 
     public void onDrop(DragDropEvent ddEvent) {
         HistoriaUsuario hu = ((HistoriaUsuario) ddEvent.getData());
-        System.out.println(ddEvent.getDropId());
+        historiaUsuariosAsignadas.add(hu);
+        hu.setSprint(sesionControlador.getSprint());
+        historiaUsuarioServicio.guardar(hu);
+        historiaUsuariosDisponibles.remove(hu);
     }
 
     /**
@@ -154,17 +167,31 @@ public class SprintControlador extends ControladorBase {
     }
 
     /**
-     * @return the historiaUsuarios
+     * @return the historiaUsuariosDisponibles
      */
-    public List<HistoriaUsuario> getHistoriaUsuarios() {
-        return historiaUsuarios;
+    public List<HistoriaUsuario> getHistoriaUsuariosDisponibles() {
+        return historiaUsuariosDisponibles;
     }
 
     /**
-     * @param historiaUsuarios the historiaUsuarios to set
+     * @param historiaUsuariosDisponibles the historiaUsuariosDisponibles to set
      */
-    public void setHistoriaUsuarios(List<HistoriaUsuario> historiaUsuarios) {
-        this.historiaUsuarios = historiaUsuarios;
+    public void setHistoriaUsuariosDisponibles(List<HistoriaUsuario> historiaUsuariosDisponibles) {
+        this.historiaUsuariosDisponibles = historiaUsuariosDisponibles;
+    }
+
+    /**
+     * @return the historiaUsuariosAsignadas
+     */
+    public List<HistoriaUsuario> getHistoriaUsuariosAsignadas() {
+        return historiaUsuariosAsignadas;
+    }
+
+    /**
+     * @param historiaUsuariosAsignadas the historiaUsuariosAsignadas to set
+     */
+    public void setHistoriaUsuariosAsignadas(List<HistoriaUsuario> historiaUsuariosAsignadas) {
+        this.historiaUsuariosAsignadas = historiaUsuariosAsignadas;
     }
 
 }

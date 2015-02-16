@@ -10,23 +10,18 @@
                 xmlns:of="http://omnifaces.org/functions"
                 template="/resources/templates/general.xhtml"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
-    <script type="text/javascript">
-        function handleDrop(event, ui) {
-            var droppedCar = ui.draggable;
-            droppedCar.fadeOut('fast');
-        }
-    </script>
     <ui:define name="contenido">
         <h:form id="formSprint">
             <p:fieldset id="historiasAsignadas" legend="Sprints">
                 <p:dataGrid id="historiasUsadas" columns="3"
-                            value="#{releasePlanningControlador.sprints}"
-                            var="sprint">
-                    <ui:repeat id="repeatSprints" value="#{sprint}" var="sp">
-                        <p:fieldset id="sprint" legend="#{sp.nombre}">
+                            value="#{releasePlanningControlador.sprintHUs}"
+                            var="sprintHU">
+                    
+                    <ui:repeat id="repeatSprints" value="#{sprintHU}" var="shu">
+                        <p:fieldset id="sprint" legend="#{shu.sprint.nombre}">
                             <p:dataGrid id="historiasLibres" var="historia"
-                                        value="#{sp.historiasUsuario}" columns="1"
-                                        emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}">
+                                        value="#{shu.historiaUsuarios}" columns="1"
+                                         emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}">
                                 <p:panel id="pnlDisponibles" header="#{historia.codigo}" style="text-align:center">
                                     <h:panelGrid columns="1" style="width:100%">
                                         #{historia.titulo}
