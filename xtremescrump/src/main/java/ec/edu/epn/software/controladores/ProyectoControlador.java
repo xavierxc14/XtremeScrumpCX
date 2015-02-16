@@ -20,6 +20,8 @@ public class ProyectoControlador extends ControladorBase {
 
     public static final String LISTA = "/paginas/proyecto/proyectos.jsf";
 
+    public static final String OPCIONES = "/paginas/proyecto/opciones.jsf";
+
     @ManagedProperty("#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -81,7 +83,14 @@ public class ProyectoControlador extends ControladorBase {
     }
 
     public void redirectHistorias(SelectEvent evt) {
-        redirect(evt, HistoriaUsuarioControlador.LISTA);
+        redirect(evt, OPCIONES);
+    }
+
+    /**
+     * @return the LISTA
+     */
+    public String getLISTA() {
+        return LISTA;
     }
 
     /**

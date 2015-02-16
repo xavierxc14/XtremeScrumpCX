@@ -1,10 +1,13 @@
 package ec.edu.epn.software.entidades;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Index
@@ -19,10 +22,13 @@ public class Sprint implements Serializable {
 
     private Date fechaFin;
 
+    private List<HistoriaUsuario> historiasUsuario;
+
     /**
      * Constructor vacio.
      */
     public Sprint() {
+        this.historiasUsuario = new ArrayList<>();
     }
 
     /**
@@ -36,6 +42,7 @@ public class Sprint implements Serializable {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.historiasUsuario = new ArrayList<>();
     }
 
     /**
@@ -92,5 +99,19 @@ public class Sprint implements Serializable {
      */
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    /**
+     * @return the historiasUsuario
+     */
+    public List<HistoriaUsuario> getHistoriasUsuario() {
+        return historiasUsuario;
+    }
+
+    /**
+     * @param historiasUsuario the historiasUsuario to set
+     */
+    public void setHistoriasUsuario(List<HistoriaUsuario> historiasUsuario) {
+        this.historiasUsuario = historiasUsuario;
     }
 }

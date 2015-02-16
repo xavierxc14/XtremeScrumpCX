@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                template="/resources/templates/general.xhtml">
+    <ui:define name="contenido">
+        <h:form id="formSprint">
+            <p:commandButton id="nuevo"
+                             value="#{msg['ec.edu.epn.software.sprint.nuevo']}"
+                             icon="ui-icon-document"
+                             action="#{sprintControlador.nuevo}"
+                             update=":panelNuevoSprint"/>
+            <p:dataTable id="tablaSprints"
+                         value="#{sprintControlador.sprints}"
+                         var="sprint"
+                         paginator="#{true}"
+                         emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
+                         rows="#{msg['ec.edu.epn.software.generico.maxRegistros']}"
+                         rowIndexVar="rowIndex"
+                         filterEvent="enter"
+                         selectionMode="single" rowKey="#{sprint.id}"
+                         selection="#{sprintControlador.sesionControlador.sprint}"
+                         style="overflow: auto">
+                <p:ajax event="rowSelect" listener="#{sprintControlador.redirectPlaneacion}"/>
+                <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
+                          style="text-align: center; width: 0px">
+                    <h:outputText value="#{rowIndex+1}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.sprint.nombre']}"
+                          style="width: 100px">
+                    <h:outputText value="#{sprint.nombre}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.sprint.fechaInicio']}"
+                          style="width: 100px">
+                    <h:outputText value="#{sprint.fechaInicio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.sprint.fechaFin']}"
+                          style="width: 100px">
+                    <h:outputText value="#{sprint.fechaFin}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
+                          style="text-align: center; width: 50px">
+                    <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
+                                     ajax="#{false}"
+                                     action="#{sprintControlador.editar}"
+                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}">
+                        <f:setPropertyActionListener value="#{sprint}"
+                                                     target="#{sprintControlador.sprint}"/>
+                    </p:commandButton>
+                    <p:commandButton id="botonEliminar" icon="ui-icon-trash"
+                                     onclick="PF('dlgElimSprint').show()"
+                                     title="#{msg['ec.edu.epn.software.generico.etiquetas.eliminar']}"
+                                     disabled="#{false}">
+                        <f:setPropertyActionListener value="#{sprint}"
+                                                     target="#{sprintControlador.sprint}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+    <ui:define name="dialogos"> 
+        <p:dialog id="panelNuevoSprint"
+                  widgetVar="dlgSprint"
+                  header="#{msg['ec.edu.epn.software.sprint.nuevo']}"
+                  draggable="#{false}"
+                  modal="#{true}"
+                  resizable="#{false}">
+            <h:form id="formDialogoSprint">
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="nombre" value="#{msg['ec.edu.epn.software.sprint.nombre']}:"/>
+                    <p:inputText id="nombre" required="#{true}"
+                                 value="#{sprintControlador.sprint.nombre}"/>
+                    <p:message for="nombre" showDetail="#{false}" display="icon"/>
+                    <p:outputLabel for="fechaInicio" value="#{msg['ec.edu.epn.software.sprint.fechaInicio']}:"/>
+                    <p:calendar id="fechaInicio"
+                                value="#{sprintControlador.sprint.fechaInicio}"
+                                navigator="#{true}" showButtonPanel="#{true}"
+                                locale="es" showOn="button"
+                                required="#{true}" mask="#{true}"
+                                pattern="dd/MM/yyyy"
+                                mindate="#{sprintControlador.sesionControlador.proyecto.fechaInicio}"/>
+                    <p:message for="fechaInicio" showDetail="#{false}" display="icon"/>
+                    <p:outputLabel for="fechaFin" value="#{msg['ec.edu.epn.software.sprint.fechaFin']}:"/>
+                    <p:calendar id="fechaFin"
+                                value="#{sprintControlador.sprint.fechaFin}"
+                                navigator="#{true}" showButtonPanel="#{true}"
+                                locale="es" showOn="button"
+                                required="#{true}"  mask="#{true}"
+                                pattern="dd/MM/yyyy"
+                                mindate="#{sprintControlador.sesionControlador.proyecto.fechaInicio}"/>
+                    <h:panelGroup>
+                        <p:message for="fechaFin" showDetail="#{false}" display="icon"/>
+                        <o:validateOrder id="fechas" components="fechaInicio fechaFin"
+                                         message="#{msg['ec.edu.epn.software.generico.fechas.orden']}"
+                                         showMessageFor="fechaInicio"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <p:separator/>
+                <center>
+                    <p:commandButton id="guardar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.guardar']}"
+                                     icon="ui-icon-disk"
+                                     action="#{sprintControlador.guardar}"
+                                     update=":formSprint:tablaSprints formDialogoSprint"/>
+                    <p:commandButton id="cancelar"
+                                     value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
+                                     icon="ui-icon-arrowreturnthick-1-w"
+                                     action="#{sprintControlador.cerrarDialogo}"
+                                     process="@this"/>
+                </center>
+            </h:form>
+        </p:dialog>
+        <p:confirmDialog id="dlgEliminarSprint"
+                         header="#{msg['ec.edu.epn.software.generico.etiquetas.eliminacion']}"
+                         message="#{msg['ec.edu.epn.software.sprint.eliminacion']}"
+                         severity="alert"
+                         widgetVar="dlgElimSprint">
+            <div style="text-align: center">
+                <p:commandButton id="confirm"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.si']}"
+                                 update=":formSprint:tablaSprints"
+                                 action="#{sprintControlador.borrar}"
+                                 style="margin: auto"/>
+                <p:commandButton id="decline"
+                                 value="#{msg['ec.edu.epn.software.generico.boton.no']}"
+                                 onclick="PF('dlgElimSprint').hide()"
+                                 process="@this"
+                                 style="margin: auto"/>
+            </div>
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>

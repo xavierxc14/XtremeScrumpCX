@@ -92,6 +92,13 @@ public class UsuarioControlador extends ControladorBase {
     }
 
     /**
+     * @return the LISTA
+     */
+    public String getLISTA() {
+        return LISTA;
+    }
+
+    /**
      * @return the usuario
      */
     public Usuario getUsuario() {

@@ -15,6 +15,7 @@
               type="text/css" />
         <link href="#{request.contextPath}/resources/css/xtremescrump.css" rel="stylesheet"
               type="text/css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 
         <script src="#{request.contextPath}/resources/js/prefix-free.js"></script>
         <script src="#{request.contextPath}/resources/js/calendar-localization.js"></script>
@@ -29,37 +30,40 @@
                 <ul class="menu">
                     <li>
                         <a href="/index.jsf">
-                            <span class="iconic home"></span>
+                            <span class="fa fa-home fa-2x"/>
                             Inicio
                         </a>
                     </li>
                     <li>
-                        <a href="/paginas/proyecto/proyectos.jsf">
-                            <span class="iconic check"></span>
+                        <a href="#{proyectoControlador.LISTA}">
+                            <span class="fa fa-cubes fa-2x"/>
                             Proyectos
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <span class="iconic plus-alt"></span>
+                            <span class="fa fa-university fa-2x"/>
                             Administración
                         </a>
                         <ul>
                             <li>
-                                <a href="/paginas/rol/roles.jsf">
+                                <a href="#{rolControlador.LISTA}">
+                                    <span class="fa fa-group fa-2x"/>
                                     Roles
                                 </a>
                             </li>
                             <li>
-                                <a href="/paginas/usuario/usuarios.jsf">
+                                <a href="#{usuarioControlador.LISTA}">
+                                    <span class="fa fa-user fa-2x"/>
                                     Usuarios
                                 </a>
                             </li>
                         </ul>
                     </li>
+                    <!--
                     <li>
                         <a href="#">
-                            <span class="iconic plus-alt"></span>
+                            <span class="iconic plus-alt"/>
                             Product Backlog
                         </a>
                         <ul>
@@ -69,6 +73,13 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                    -->
+                    <li>
+                        <a href="#{releasePlanningControlador.LISTA}">
+                            <span class="fa fa-trello fa-2x"/>
+                            Release Planning
+                        </a>
                     </li>
                     <!--
                     <li><a href="#"><span class="iconic magnifying-glass"></span>

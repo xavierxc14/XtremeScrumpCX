@@ -14,24 +14,24 @@ import org.apache.log4j.Logger;
 @ManagedBean
 @SessionScoped
 public class RolControlador extends ControladorBase {
-    
+
     private static Logger LOG = Logger.getLogger(RolControlador.class);
-    
-    public static final String LISTA = "/paginas/roles/roles.jsf";
-    
+
+    public static final String LISTA = "/paginas/rol/roles.jsf";
+
     private final RolServicio rolServicio = new RolServicio();
-    
+
     private Rol rol;
-    
+
     private List<Rol> roles;
-    
+
     @PostConstruct
     @Override
     public void init() {
         setRoles(new ArrayList<Rol>());
         buscar();
     }
-    
+
     @Override
     public String buscar() {
         try {
@@ -41,7 +41,7 @@ public class RolControlador extends ControladorBase {
         }
         return LISTA;
     }
-    
+
     @Override
     public String nuevo() {
         setRol(new Rol());
@@ -75,6 +75,13 @@ public class RolControlador extends ControladorBase {
         MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_ELIMINADO);
         ejecutarJSPrimefaces("PF('dlgElimRol').hide()");
         return buscar();
+    }
+
+    /**
+     * @return the LISTA
+     */
+    public String getLISTA() {
+        return LISTA;
     }
 
     /**

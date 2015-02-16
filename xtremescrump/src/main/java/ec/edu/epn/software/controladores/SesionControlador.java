@@ -1,6 +1,7 @@
 package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.Proyecto;
+import ec.edu.epn.software.entidades.Sprint;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,8 @@ import javax.faces.bean.SessionScoped;
 public class SesionControlador implements Serializable {
 
     private Proyecto proyecto;
+
+    private Sprint sprint;
 
     private Date fechaActual;
 
@@ -55,5 +58,19 @@ public class SesionControlador implements Serializable {
      */
     public void setFechaActual(Date fechaActual) {
         this.fechaActual = fechaActual;
+    }
+
+    /**
+     * @return the sprint
+     */
+    public Sprint getSprint() {
+        return sprint;
+    }
+
+    /**
+     * @param sprint the sprint to set
+     */
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
     }
 }

@@ -23,7 +23,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(HistoriaUsuarioControlador.class);
 
-    public static final String LISTA = "/paginas/historia_usuario/product_backlog_tree.jsf";
+    private static final String LISTA = "/paginas/historia_usuario/product_backlog_tree.jsf";
 
     private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
     private final TareaServicio tareaServicio = new TareaServicio();
@@ -60,7 +60,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de proyectos", ex);
         }
-        return LISTA;
+        return getLISTA();
     }
 
     @Override
@@ -135,6 +135,13 @@ public class HistoriaUsuarioControlador extends ControladorBase {
             MensajesPagina.mostrarMensajeError(MensajesError.ERROR_HU_CREADO);
         }
         return buscar();
+    }
+
+    /**
+     * @return the LISTA
+     */
+    public String getLISTA() {
+        return LISTA;
     }
 
     /**
