@@ -51,7 +51,7 @@ public class ReleasePlanningControlador extends ControladorBase {
         try {
             setSprints(sprintServicio.buscarTodos());
             for (Sprint s : getSprints()) {
-                s.setHistoriasUsuario(historiaUsuarioServicio.buscarPorSprint(s));
+                s.setHistoriasUsuario(historiaUsuarioServicio.buscarPorSprint(s.getId()));
                 getSprintHUs().add(new SprintHU(s, s.getHistoriasUsuario()));
             }
         } catch (Exception ex) {

@@ -106,7 +106,7 @@ public class SprintControlador extends ControladorBase {
     }
 
     public void buscarHistoriasAsignadas() {
-        setHistoriaUsuariosAsignadas(historiaUsuarioServicio.buscarPorSprint(sesionControlador.getSprint()));
+        setHistoriaUsuariosAsignadas(historiaUsuarioServicio.buscarPorSprint(sesionControlador.getSprint().getId()));
     }
 
     public void onDrop(DragDropEvent ddEvent) {

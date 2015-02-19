@@ -15,8 +15,8 @@ public class HistoriaUsuarioServicio extends ServicioBase<HistoriaUsuario> {
         super(HistoriaUsuario.class, HistoriaUsuarioServicio.class);
     }
 
-    public List<HistoriaUsuario> buscarPorProyecto(Proyecto p) {
-        Key<Proyecto> proyectoKey = Key.create(Proyecto.class, p.getId());
+    public List<HistoriaUsuario> buscarPorProyecto(Long idProyecto) {
+        Key<Proyecto> proyectoKey = Key.create(Proyecto.class, idProyecto);
         Query<HistoriaUsuario> query = ofy().load().type(HistoriaUsuario.class);
         List<HistoriaUsuario> list = query.filter("proyecto", proyectoKey).list();
         return list;
@@ -28,15 +28,15 @@ public class HistoriaUsuarioServicio extends ServicioBase<HistoriaUsuario> {
         return list;
     }
 
-    public List<HistoriaUsuario> buscarPorSprint(Sprint s) {
-        Key<Sprint> sprintKey = Key.create(Sprint.class, s.getId());
+    public List<HistoriaUsuario> buscarPorSprint(Long idSprint) {
+        Key<Sprint> sprintKey = Key.create(Sprint.class, idSprint);
         Query<HistoriaUsuario> query = ofy().load().type(HistoriaUsuario.class);
         List<HistoriaUsuario> list = query.filter("sprint", sprintKey).list();
         return list;
     }
 
-    public List<Tarea> buscarTareasPorHU(HistoriaUsuario hu) {
-        Key<HistoriaUsuario> historiaUsuarioKey = Key.create(HistoriaUsuario.class, hu.getId());
+    public List<Tarea> buscarTareasPorHU(Long idHistoriaUsuario) {
+        Key<HistoriaUsuario> historiaUsuarioKey = Key.create(HistoriaUsuario.class, idHistoriaUsuario);
         Query<Tarea> query = ofy().load().type(Tarea.class);
         List<Tarea> list = query.filter("historia", historiaUsuarioKey).list();
         return list;

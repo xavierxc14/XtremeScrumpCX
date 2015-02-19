@@ -55,7 +55,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         try {
 //            setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
             getHistoriaUsuarios().clear();
-            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto()));
+            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto().getId()));
             llenarArbol();
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de proyectos", ex);
@@ -109,7 +109,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         root = new DefaultTreeNode(new HistoriaUsuario(), null);
         for (HistoriaUsuario hu : historiasUsuarios) {
             TreeNode nodoHistoria = new DefaultTreeNode("historia", hu, root);
-            setTareas(historiaUsuarioServicio.buscarTareasPorHU(hu));
+            setTareas(historiaUsuarioServicio.buscarTareasPorHU(hu.getId()));
             for (Tarea t : tareas) {
 //                Tarea t = new Tarea();
 //                t.setDescripcion("Tarea prueba " + j);

@@ -9,8 +9,6 @@ public abstract class ServicioBase<T> implements Serializable {
 
     private Class<T> tipoEntidad;
     private Class<?> tipoServicio;
-    //protected static Logger LOG=Logger.getLogger();
-    //private Objectify ofy = ObjectifyService.begin();
 
     public ServicioBase(Class<T> tipoEntidad, Class<?> tipoServicio) {
         this.tipoEntidad = tipoEntidad;

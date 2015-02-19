@@ -13,8 +13,8 @@ public class UsuarioServicio extends ServicioBase<Usuario> {
         super(Usuario.class, UsuarioServicio.class);
     }
 
-    public List<Usuario> buscarPorProyecto(Proyecto p) {
-        Key<Proyecto> proyectoKey = Key.create(Proyecto.class, p.getId());
+    public List<Usuario> buscarPorProyecto(Long idProyecto) {
+        Key<Proyecto> proyectoKey = Key.create(Proyecto.class, idProyecto);
         Query<Usuario> query = ofy().load().type(Usuario.class);
         List<Usuario> list = query.filter("proyecto", proyectoKey).list();
         return list;

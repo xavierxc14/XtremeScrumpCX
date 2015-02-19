@@ -40,7 +40,7 @@ public class UsuarioProyectoControlador extends ControladorBase {
     public String buscar() {
         try {
             setUsuariosDisponibles(usuarioServicio.buscarSinProyecto());
-            setUsuariosAsignados(usuarioServicio.buscarPorProyecto(getSesionControlador().getProyecto()));
+            setUsuariosAsignados(usuarioServicio.buscarPorProyecto(getSesionControlador().getProyecto().getId()));
             setUsuarios(new DualListModel<>(usuariosDisponibles, usuariosAsignados));
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de usuarios", ex);
