@@ -11,13 +11,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.SelectEvent;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class SprintControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(SprintControlador.class);
