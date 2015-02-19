@@ -54,7 +54,7 @@ public class SprintControlador extends ControladorBase {
     @Override
     public String buscar() {
         try {
-            setSprints(sprintServicio.buscarTodos());
+            setSprints(sprintServicio.buscarPorProyecto(sesionControlador.getSprint().getId()));
         } catch (Exception ex) {
             LOG.error("Error al realizar la buscqueda de sprints", ex);
         }
