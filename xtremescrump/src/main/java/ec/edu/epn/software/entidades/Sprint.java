@@ -4,8 +4,6 @@ import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Load;
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +22,8 @@ public class Sprint implements Serializable {
 
     private Date fechaFin;
 
+    private Ref<Proyecto> proyecto;
+
     private List<HistoriaUsuario> historiasUsuario;
 
     /**
@@ -39,11 +39,13 @@ public class Sprint implements Serializable {
      * @param nombre
      * @param fechaInicio
      * @param fechaFin
+     * @param proyecto
      */
-    public Sprint(String nombre, Date fechaInicio, Date fechaFin) {
+    public Sprint(String nombre, Date fechaInicio, Date fechaFin, Proyecto proyecto) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.proyecto = Ref.create(proyecto);
         this.historiasUsuario = new ArrayList<>();
     }
 
@@ -115,6 +117,20 @@ public class Sprint implements Serializable {
      */
     public void setHistoriasUsuario(List<HistoriaUsuario> historiasUsuario) {
         this.historiasUsuario = historiasUsuario;
+    }
+
+    /**
+     * @return the proyecto
+     */
+    public Proyecto getProyecto() {
+        return proyecto.get();
+    }
+
+    /**
+     * @param proyecto the proyecto to set
+     */
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = Ref.create(proyecto);
     }
 
 }

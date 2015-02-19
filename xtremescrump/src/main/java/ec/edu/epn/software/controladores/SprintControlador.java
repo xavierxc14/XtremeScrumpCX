@@ -54,7 +54,7 @@ public class SprintControlador extends ControladorBase {
     @Override
     public String buscar() {
         try {
-            setSprints(sprintServicio.buscarPorProyecto(sesionControlador.getSprint().getId()));
+            setSprints(sprintServicio.buscarPorProyecto(sesionControlador.getProyecto().getId()));
         } catch (Exception ex) {
             LOG.error("Error al realizar la buscqueda de sprints", ex);
         }
@@ -76,6 +76,7 @@ public class SprintControlador extends ControladorBase {
 
     @Override
     public String guardar() {
+        sprint.setProyecto(sesionControlador.getProyecto());
         sprintServicio.guardar(sprint);
         MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_CREADO);
         cerrarDialogo();
