@@ -18,7 +18,7 @@ public interface MensajesError {
     String ERROR_ROL_ELIMINADO = "No se pudo eliminar la p�gina, error desconocido.";
 
     // SEGURIDAD
-    String USUARIO_REPETIDO = "ERROR: Usuario ya existe";
+    String USUARIO_REPETIDO = "ERROR: Username de usuario ya existe, porfavor escoja otro";
     String ERROR_USUARIO_ELIMINADO = "ERROR: No se elimin� el usuario.";
 
     // HSITORIA DE USUARIO

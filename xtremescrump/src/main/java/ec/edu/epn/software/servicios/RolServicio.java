@@ -7,5 +7,4 @@ public class RolServicio extends ServicioBase<Rol> {
     public RolServicio() {
         super(Rol.class, RolServicio.class);
     }
-
 }

@@ -4,6 +4,7 @@ import ec.edu.epn.software.entidades.Rol;
 import ec.edu.epn.software.entidades.Usuario;
 import ec.edu.epn.software.servicios.RolServicio;
 import ec.edu.epn.software.servicios.UsuarioServicio;
+import ec.edu.epn.software.utils.MensajesError;
 import ec.edu.epn.software.utils.MensajesInformacion;
 import ec.edu.epn.software.utils.MensajesPagina;
 import java.util.ArrayList;
@@ -31,13 +32,14 @@ public class UsuarioControlador extends ControladorBase {
 
     private List<Rol> roles;
 
-    private Integer IdRol;
+    private Long idRolEscogido;
 
     @PostConstruct
     @Override
     public void init() {
         setUsuario(new Usuario());
         setUsuarios(new ArrayList<Usuario>());
+        setRoles(new ArrayList<Rol>());
         buscar();
         buscarRoles();
     }
@@ -46,6 +48,7 @@ public class UsuarioControlador extends ControladorBase {
     public String buscar() {
         try {
             setUsuarios(usuarioServicio.buscarTodos());
+
         } catch (Exception ex) {
             LOG.error("Error al buscar usuarios", ex);
         }
@@ -55,22 +58,58 @@ public class UsuarioControlador extends ControladorBase {
     @Override
     public String nuevo() {
         setUsuario(new Usuario());
-        setIdRol(0);
+        buscarRoles();
+        setIdRolEscogido(0L);
         ejecutarJSPrimefaces("PF('dlgUsuario').show()");
         return null;
     }
 
     @Override
     public String editar() {
+        buscarRoles();
+        if (!usuario.getRol().getNombre().equals("No definido")) {
+            idRolEscogido = usuario.getRol().getId();
+        } else {
+            idRolEscogido = 0L;
+        }
+
+        setIdRolEscogido(idRolEscogido);
+        usuario.setPassword(usuario.getPassword());
         ejecutarJSPrimefaces("PF('dlgUsuario').show()");
         return null;
     }
 
     @Override
     public String guardar() {
-        usuarioServicio.guardar(getUsuario());
-        cerrarDialogo();
-        return nuevo();
+        try {
+            if (idRolEscogido != 0L) {
+                usuario.setRol(rolServicio.buscarPorId(idRolEscogido));
+            } else {
+                usuario.setRol(null);
+            }
+
+            if (validarRepetido()) {
+                usuarioServicio.guardar(usuario);
+                MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.USUARIO_INSERTADO);
+                cerrarDialogo();
+            } else {
+                MensajesPagina.mostrarMensajeError(MensajesError.USUARIO_REPETIDO);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return buscar();
+    }
+
+    public boolean validarRepetido() {
+        for (Usuario u : usuarios) {
+            if (usuario.getUsername().trim().equals(u.getUsername().trim()) && usuario.getId()!=u.getId()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -134,12 +173,18 @@ public class UsuarioControlador extends ControladorBase {
         this.roles = roles;
     }
 
-    public Integer getIdRol() {
-        return IdRol;
+    /**
+     * @return the idRolEscogido
+     */
+    public Long getIdRolEscogido() {
+        return idRolEscogido;
     }
 
-    public void setIdRol(Integer IdRol) {
-        this.IdRol = IdRol;
+    /**
+     * @param idRolEscogido the idRolEscogido to set
+     */
+    public void setIdRolEscogido(Long idRolEscogido) {
+        this.idRolEscogido = idRolEscogido;
     }
 
 }

@@ -35,12 +35,12 @@
                           style="width: 200px">
                     <h:outputText value="#{usuario.username}"/>
                 </p:column>
-               <!--
+
                 <p:column headerText="#{msg['ec.edu.epn.software.usuario.rol']}"
                           style="width: 200px">
                     <h:outputText value="#{usuario.rol.nombre}"/>
                 </p:column>
-               -->
+
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
                           style="text-align: center; width: 50px">
                     <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
@@ -81,11 +81,11 @@
 
                     <p:outputLabel for="password" value="#{msg['ec.edu.epn.software.usuario.password']}"/>
                     <p:password id="password" required="#{true}"
-                                value="#{usuarioControlador.usuario.password}"/>
+                                value="#{usuarioControlador.usuario.password}" redisplay="true"/>
                     <p:message for="password" showDetail="#{false}" display="icon"/>
                     <p:outputLabel for="comboRol" value="#{msg['ec.edu.epn.software.usuario.rol']}" />
-                    <p:selectOneMenu id="comboRol" value="#{usuarioControlador.idRol}"
-                                     required="#{true}">
+                    <p:selectOneMenu id="comboRol" value="#{usuarioControlador.idRolEscogido}"
+                                     required="false">
                         <f:selectItem itemLabel="Seleccione..." itemValue="0" />
                         <f:selectItems value="#{usuarioControlador.roles}"
                                        var="rol" itemLabel="#{rol.nombre}" itemValue="#{rol.id}" />

@@ -104,14 +104,20 @@ public class Usuario implements Serializable {
      * @return the rol
      */
     public Rol getRol() {
-        return rol.get();
+        if (rol != null) {
+            return rol.get();
+        } else {
+            return new Rol("No definido", "No definido");
+        }
     }
 
     /**
      * @param rol the rol to set
      */
     public void setRol(Rol rol) {
-        this.rol = Ref.create(rol);
+        if (rol != null) {
+            this.rol = Ref.create(rol);
+        }
     }
 
     /**
