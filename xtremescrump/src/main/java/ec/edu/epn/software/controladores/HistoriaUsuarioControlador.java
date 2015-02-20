@@ -80,14 +80,35 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @Override
     public String guardar() {
         try {
-            historiaUsuarioServicio.guardar(historiaUsuario);
-            MensajesPagina
-                    .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
-            cerrarDialogo();
+            Boolean existePrioridad = existePrioridadHU();
+            if (existePrioridad) {
+                MensajesPagina.mostrarMensajeError("Ya existe una Historia de Usuario con esa Prioridad.");
+            } else {
+                if (historiaUsuario.getId() == null) {
+                    historiaUsuarioServicio.guardar(historiaUsuario);
+                    MensajesPagina
+                            .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
+                } else {
+                    historiaUsuarioServicio.guardar(historiaUsuario);
+                    MensajesPagina
+                            .mostrarMensajeInformacion(MensajesInformacion.HU_ACTUALIZADO);
+                }
+                cerrarDialogo();
+            }
         } catch (Exception e) {
             MensajesPagina.mostrarMensajeError(MensajesError.ERROR_HU_CREADO);
         }
         return buscar();
+    }
+
+    private Boolean existePrioridadHU() {
+        Boolean existePrioridad = Boolean.FALSE;
+        for (HistoriaUsuario hu : historiasUsuarios) {
+            if (hu.getPrioridad().equals(historiaUsuario.getPrioridad())) {
+                existePrioridad = Boolean.TRUE;
+            }
+        }
+        return existePrioridad;
     }
 
     @Override

@@ -133,6 +133,8 @@ public class Usuario implements Serializable {
     public void setProyecto(Proyecto proyecto) {
         if (proyecto != null) {
             this.proyecto = Ref.create(proyecto);
+        } else {
+            this.proyecto = null;
         }
     }
 }

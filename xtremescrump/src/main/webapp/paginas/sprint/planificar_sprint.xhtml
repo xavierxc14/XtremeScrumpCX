@@ -20,37 +20,45 @@
         <h:form id="formSprint">
             <p:panel header="Asignación de Historias de Usuario">
                 <h:panelGrid columns="3">
-                    <p:fieldset id="historiasDisponibles" legend="Historias Disponibles">
-                        <p:dataGrid id="historiasLibres" var="historia"
-                                    value="#{sprintControlador.historiaUsuariosDisponibles}" columns="3"
-                                    emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}">
-                            <p:panel id="pnlDisponibles" header="#{historia.codigo}" style="text-align:center">
-                                <h:panelGrid columns="1" style="width:100%">
-                                    #{historia.titulo}
-                                </h:panelGrid>
-                            </p:panel>
-                            <p:draggable for="pnlDisponibles" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
-                        </p:dataGrid>
-                    </p:fieldset>
-                    <p:spacer style="width: 100px; height: 0px"/>
-                    <p:fieldset id="historiasAsignadas" legend="#{sprintControlador.sesionControlador.sprint.nombre}">
-                        <p:outputPanel id="dropArea">
+                    <p:fieldset id="fieldHistoriasDisponibles" legend="Historias Disponibles">
+                        <p:outputPanel id="dropAreaDisponibles">
                             <h:outputText value="Arastrar Aquí!!"
-                                          rendered="#{empty sprintControlador.historiaUsuariosAsignadas}"
+                                          rendered="#{empty planificacionSprintControlador.historiaUsuariosDisponibles}"
                                           style="font-size:24px;" />
-                            <p:dataGrid id="historiasOcupadas" var="historia"
-                                        value="#{sprintControlador.historiaUsuariosAsignadas}"
-                                        rendered="#{not empty sprintControlador.historiaUsuariosAsignadas}"
-                                        columns="3"
-                                        emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}">
-                                <p:panel id="pnl" style="text-align:center" header="#{historia.codigo}">
+                            <p:dataGrid id="gridHistoriasLibres" var="historia"
+                                        value="#{planificacionSprintControlador.historiaUsuariosDisponibles}"
+                                        emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
+                                        rendered="#{not empty planificacionSprintControlador.historiaUsuariosDisponibles}"
+                                        columns="3">
+                                <p:panel id="pnlDisponibles" header="#{historia.codigo}" style="text-align:center">
                                     <h:panelGrid columns="1" style="width:100%">
                                         #{historia.titulo}
                                     </h:panelGrid>
                                 </p:panel>
+                                <p:draggable for="pnlDisponibles" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+                            </p:dataGrid>
+                        </p:outputPanel>
+                    </p:fieldset>
+                    <p:spacer style="width: 100px; height: 0px"/>
+                    <p:fieldset id="fieldHistoriasAsignadas" legend="#{planificacionSprintControlador.sesionControlador.sprint.nombre}">
+                        <p:outputPanel id="dropAreaAsignadas">
+                            <h:outputText value="Arastrar Aquí!!"
+                                          rendered="#{empty planificacionSprintControlador.historiaUsuariosAsignadas}"
+                                          style="font-size:24px;" />
+                            <p:dataGrid id="gridHistoriasAsignadas" var="historia"
+                                        value="#{planificacionSprintControlador.historiaUsuariosAsignadas}"
+                                        emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
+                                        rendered="#{not empty planificacionSprintControlador.historiaUsuariosAsignadas}"
+                                        columns="3">
+                                <p:panel id="pnlAsignadas" style="text-align:center" header="#{historia.codigo}">
+                                    <h:panelGrid columns="1" style="width:100%">
+                                        #{historia.titulo}
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:draggable for="pnlAsignadas" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
                             </p:dataGrid>
                             <!--
-                            <p:dataTable id="historiasOcupadas" var="hu" value="#{sprintControlador.sesionControlador.sprint.historiasUsuario}" rendered="#{not empty sprintControlador.sesionControlador.sprint.historiasUsuario}">
+                            <p:dataTable id="gridHistoriasAsignadas" var="hu" value="#{planificacionSprintControlador.sesionControlador.sprint.historiasUsuario}" rendered="#{not empty planificacionSprintControlador.sesionControlador.sprint.historiasUsuario}">
                                 <p:column headerText="Código">
                                     <h:outputText value="#{hu.codigo}" />
                                 </p:column>
@@ -62,10 +70,17 @@
                             -->
                         </p:outputPanel>
                     </p:fieldset>
-                    <p:droppable for="historiasAsignadas" tolerance="touch"
+                    <p:droppable for="fieldHistoriasDisponibles" tolerance="touch"
                                  activeStyleClass="ui-state-highlight"
-                                 datasource="historiasLibres" onDrop="handleDrop">
-                        <p:ajax listener="#{sprintControlador.onDrop}" update="dropArea historiasLibres" />
+                                 datasource="gridHistoriasAsignadas" onDrop="handleDrop">
+                        <p:ajax listener="#{planificacionSprintControlador.onDropQuitar}"
+                                update="dropAreaDisponibles dropAreaAsignadas gridHistoriasAsignadas gridHistoriasLibres" />
+                    </p:droppable>
+                    <p:droppable for="fieldHistoriasAsignadas" tolerance="touch"
+                                 activeStyleClass="ui-state-highlight"
+                                 datasource="gridHistoriasLibres" onDrop="handleDrop">
+                        <p:ajax listener="#{planificacionSprintControlador.onDropAsignar}"
+                                update="dropAreaDisponibles dropAreaAsignadas gridHistoriasAsignadas gridHistoriasLibres" />
                     </p:droppable>
                 </h:panelGrid>
             </p:panel>

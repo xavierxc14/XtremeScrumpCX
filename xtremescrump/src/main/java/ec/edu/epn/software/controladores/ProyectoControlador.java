@@ -62,8 +62,13 @@ public class ProyectoControlador extends ControladorBase {
 
     @Override
     public String guardar() {
-        proyectoServicio.guardar(proyecto);
-        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.PROYECTO_CREADO);
+        if (proyecto.getId() == null) {
+            proyectoServicio.guardar(proyecto);
+            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.PROYECTO_CREADO);
+        } else {
+            proyectoServicio.guardar(proyecto);
+            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.PROYECTO_ACTUALIZADO);
+        }
         cerrarDialogo();
         return buscar();
     }

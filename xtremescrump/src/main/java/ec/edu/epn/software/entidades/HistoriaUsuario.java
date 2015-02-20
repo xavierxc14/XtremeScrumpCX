@@ -141,7 +141,11 @@ public class HistoriaUsuario implements Serializable {
      * @param sprint the sprint to set
      */
     public void setSprint(Sprint sprint) {
-        this.sprint = Ref.create(sprint);
+        if (sprint != null) {
+            this.sprint = Ref.create(sprint);
+        } else {
+            this.sprint = null;
+        }
     }
 
     /**

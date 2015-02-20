@@ -2,33 +2,29 @@ package ec.edu.epn.software.utils;
 
 public interface MensajesInformacion {
 
-    // ROL
-    final String ROL_CREADO = "Rol creado exitosamente.";
-    final String ROL_ACTUALIZO = "Rol actualizado exitosamente.";
-    final String ROL_ELIMINADO = "Rol eliminado exitosamente.";
+    // PROYECTO
+    static final String PROYECTO_CREADO = "Proyecto creado exitosamente.";
+    static final String PROYECTO_ACTUALIZADO = "Proyecto actualizado exitosamente.";
+    static final String PROYECTO_ELIMINADO = "Proyecto eliminado exitosamente.";
 
-    // SEGURIDADES
-    String USUARIO_ACTUALIZADO = "�XITO: Usuario actualizado.";
-    String USUARIO_INSERTADO = "�XITO: Usuario agregado.";
-    String USUARIO_ELIMINADO = "�XITO: Usuario eliminado.";
+    // SPRINT
+    static final String SPRINT_CREADO = "Sprint creado exitosamente.";
+    static final String SPRINT_ACTUALIZADO = "Sprint actualizado exitosamente.";
+    static final String SPRINT_ELIMINADO = "Sprint eliminado exitosamente.";
 
     // HSITORIA DE USUARIO
-    String HU_CREADO = "ÉXITO:  Historia de usuario registrada exitosamente.";
-    String HU_ELIMINADO = "ÉXITO:  Historia de usuario eliminada exitosamente.";
+    static final String HU_CREADO = "Historia de usuario creada exitosamente.";
+    static final String HU_ACTUALIZADO = "Historia de usuario actualizada exitosamente.";
+    static final String HU_ELIMINADO = "Historia de usuario eliminada exitosamente.";
 
-    //PROYECTO
-    String PROYECTO_CREADO = "ÉXITO:  Proyecto registrado exitosamente.";
-    String PROYECTO_ELIMINADO = "ÉXITO:  Proyecto eliminado exitosamente.";
+    // ROL
+    static final String ROL_CREADO = "Rol creado exitosamente.";
+    static final String ROL_ACTUALIZO = "Rol actualizado exitosamente.";
+    static final String ROL_ELIMINADO = "Rol eliminado exitosamente.";
 
- // PAGINAROL
-//
-//    final String ACEPTAR_CAMBIOS = "Cambios registrados existosamente.";
-//
-//    // PAGINA
-//    final String MENU_ORDEN = "Men�s ordenados exitosamente.";
-//    final String PAGINA_CREADA = "P�gina creada exitosamente.";
-//    final String PAGINA_ACTUALIZADA = "P�gina actualizada exitosamente.";
-//    final String PAGINA_ELIMINADA = "P�gina eliminada exitosamente.";
-//
-//    final String PAGINA_GUARDADA = "Valor ingresado correctamente!!";
+    // SEGURIDADES
+    static final String USUARIO_CREADO = "Usuario creado exitosamente.";
+    static final String USUARIO_ACTUALIZADO = "Usuario actualizado exitosamente.";
+    static final String USUARIO_ELIMINADO = "Usuario eliminado exitosamente.";
+
 }

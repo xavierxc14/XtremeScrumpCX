@@ -19,7 +19,9 @@
             <p:contextMenu for="tablaHistoriasUsuario" nodeType="historia">
                 <p:menuitem value="Nueva Tarea" update=":panelNuevaTarea" action="#{historiaUsuarioControlador.nuevaTarea}" icon="ui-icon-document" 
                             onclick="PF('dlgTarea').show()"/>
-                <p:menuitem value="Editar" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}"
+                            icon="ui-icon-pencil"
+                            action="#{historiaUsuarioControlador.editar}"/>
             </p:contextMenu>
             <p:contextMenu for="tablaHistoriasUsuario" nodeType="tarea">
                 <p:menuitem value="Editar" icon="ui-icon-pencil"/>
@@ -32,16 +34,25 @@
                 <f:facet name="header">
                     Historias de Usuario 
                 </f:facet>
-                <p:column headerText="Descripcion">
-                    <h:outputText value="#{historia.descripcion}" />
+                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.codigo']}"
+                          style="text-align: center; width: 100px">
+                    <h:outputText value="#{historia.codigo}"/>
                 </p:column>
-
-                <p:column headerText="Esfuerzo">
-                    <h:outputText value="#{historia.prioridad}" />
+                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.titulo']}"
+                          style="width: 200px">
+                    <h:outputText value="#{historia.titulo}"/>
                 </p:column>
-
-                <p:column headerText="Esfuerzo">
-                    <h:outputText value="#{historia.esfuerzo}" />
+                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.descripcion']}"
+                          style="width: 300px">
+                    <h:outputText value="#{historia.descripcion}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.prioridad']}"
+                          style="text-align: center; width: 50px">
+                    <h:outputText value="#{historia.prioridad}"/>
+                </p:column>
+                <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.esfuerzo']}"
+                          style="text-align: center; width: 50px">
+                    <h:outputText value="#{historia.esfuerzo}"/>
                 </p:column>
 
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"

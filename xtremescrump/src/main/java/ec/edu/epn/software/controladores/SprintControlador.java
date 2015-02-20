@@ -1,8 +1,6 @@
 package ec.edu.epn.software.controladores;
 
-import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Sprint;
-import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
 import ec.edu.epn.software.servicios.SprintServicio;
 import ec.edu.epn.software.utils.MensajesInformacion;
 import ec.edu.epn.software.utils.MensajesPagina;
@@ -11,13 +9,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
-import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.SelectEvent;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class SprintControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(SprintControlador.class);
@@ -31,24 +28,15 @@ public class SprintControlador extends ControladorBase {
 
     private final SprintServicio sprintServicio = new SprintServicio();
 
-    private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
-
     private Sprint sprint;
 
     private List<Sprint> sprints;
-
-    private List<HistoriaUsuario> historiaUsuariosDisponibles;
-
-    private List<HistoriaUsuario> historiaUsuariosAsignadas;
 
     @PostConstruct
     @Override
     public void init() {
         setSprints(new ArrayList<Sprint>());
-        setHistoriaUsuariosDisponibles(new ArrayList<HistoriaUsuario>());
-        setHistoriaUsuariosAsignadas(new ArrayList<HistoriaUsuario>());
         buscar();
-        buscarHistoriasDisponibles();
     }
 
     @Override
@@ -77,8 +65,13 @@ public class SprintControlador extends ControladorBase {
     @Override
     public String guardar() {
         sprint.setProyecto(sesionControlador.getProyecto());
-        sprintServicio.guardar(sprint);
-        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_CREADO);
+        if (sprint.getId() == null) {
+            sprintServicio.guardar(sprint);
+            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_CREADO);
+        } else {
+            sprintServicio.guardar(sprint);
+            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_ACTUALIZO);
+        }
         cerrarDialogo();
         return buscar();
     }
@@ -92,30 +85,13 @@ public class SprintControlador extends ControladorBase {
     @Override
     public String borrar() {
         sprintServicio.eliminar(sprint);
-        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_ELIMINADO);
+        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.SPRINT_ELIMINADO);
         ejecutarJSPrimefaces("PF('dlgElimSprint').hide()");
         return buscar();
     }
 
     public void redirectPlaneacion(SelectEvent evt) {
-        buscarHistoriasAsignadas();
         redirect(evt, PLANEACION);
-    }
-
-    public void buscarHistoriasDisponibles() {
-        setHistoriaUsuariosDisponibles(historiaUsuarioServicio.buscarSinSprint());
-    }
-
-    public void buscarHistoriasAsignadas() {
-        setHistoriaUsuariosAsignadas(historiaUsuarioServicio.buscarPorSprint(sesionControlador.getSprint().getId()));
-    }
-
-    public void onDrop(DragDropEvent ddEvent) {
-        HistoriaUsuario hu = ((HistoriaUsuario) ddEvent.getData());
-        historiaUsuariosAsignadas.add(hu);
-        hu.setSprint(sesionControlador.getSprint());
-        historiaUsuarioServicio.guardar(hu);
-        historiaUsuariosDisponibles.remove(hu);
     }
 
     /**
@@ -165,34 +141,6 @@ public class SprintControlador extends ControladorBase {
      */
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
-    }
-
-    /**
-     * @return the historiaUsuariosDisponibles
-     */
-    public List<HistoriaUsuario> getHistoriaUsuariosDisponibles() {
-        return historiaUsuariosDisponibles;
-    }
-
-    /**
-     * @param historiaUsuariosDisponibles the historiaUsuariosDisponibles to set
-     */
-    public void setHistoriaUsuariosDisponibles(List<HistoriaUsuario> historiaUsuariosDisponibles) {
-        this.historiaUsuariosDisponibles = historiaUsuariosDisponibles;
-    }
-
-    /**
-     * @return the historiaUsuariosAsignadas
-     */
-    public List<HistoriaUsuario> getHistoriaUsuariosAsignadas() {
-        return historiaUsuariosAsignadas;
-    }
-
-    /**
-     * @param historiaUsuariosAsignadas the historiaUsuariosAsignadas to set
-     */
-    public void setHistoriaUsuariosAsignadas(List<HistoriaUsuario> historiaUsuariosAsignadas) {
-        this.historiaUsuariosAsignadas = historiaUsuariosAsignadas;
     }
 
 }

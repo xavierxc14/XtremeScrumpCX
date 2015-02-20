@@ -90,7 +90,7 @@ public class UsuarioControlador extends ControladorBase {
 
             if (validarRepetido()) {
                 usuarioServicio.guardar(usuario);
-                MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.USUARIO_INSERTADO);
+                MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.USUARIO_CREADO);
                 cerrarDialogo();
             } else {
                 MensajesPagina.mostrarMensajeError(MensajesError.USUARIO_REPETIDO);
@@ -105,7 +105,7 @@ public class UsuarioControlador extends ControladorBase {
 
     public boolean validarRepetido() {
         for (Usuario u : usuarios) {
-            if (usuario.getUsername().trim().equals(u.getUsername().trim()) && usuario.getId()!=u.getId()) {
+            if (usuario.getUsername().trim().equals(u.getUsername().trim()) && usuario.getId() != u.getId()) {
                 return false;
             }
         }
