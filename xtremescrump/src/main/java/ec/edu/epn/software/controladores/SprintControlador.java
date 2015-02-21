@@ -67,10 +67,10 @@ public class SprintControlador extends ControladorBase {
         sprint.setProyecto(sesionControlador.getProyecto());
         if (sprint.getId() == null) {
             sprintServicio.guardar(sprint);
-            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_CREADO);
+            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.SPRINT_CREADO);
         } else {
             sprintServicio.guardar(sprint);
-            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.ROL_ACTUALIZO);
+            MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.SPRINT_ACTUALIZADO);
         }
         cerrarDialogo();
         return buscar();

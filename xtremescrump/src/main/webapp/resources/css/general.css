@@ -42,3 +42,14 @@ body {
     margin-left: 0.4em;
     margin-right: 1em;
 }
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 90% !important;
+}
+
+/*
+myFieldset .ui-fieldset, .ui-fieldset .ui-fieldset-legend {
+    background-color: transparent;
+    border-color: transparent;
+}
+*/

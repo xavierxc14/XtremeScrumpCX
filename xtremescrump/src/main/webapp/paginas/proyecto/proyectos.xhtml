@@ -43,13 +43,13 @@
                 <p:column headerText="#{msg['ec.edu.epn.software.proyecto.fechaInicio']}"
                           style="width: 100px">
                     <h:outputText value="#{proyecto.fechaInicio}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        <f:convertDateTime pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="#{msg['ec.edu.epn.software.proyecto.fechaFin']}"
                           style="width: 100px">
                     <h:outputText value="#{proyecto.fechaFin}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        <f:convertDateTime pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
@@ -111,7 +111,7 @@
                                 navigator="#{true}" showButtonPanel="#{true}"
                                 locale="es" showOn="button"
                                 required="#{true}" mask="#{true}"
-                                pattern="dd/MM/yyyy"
+                                pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"
                                 mindate="#{proyectoControlador.sesionControlador.fecha}"/>
                     <p:message for="fechaInicio" showDetail="#{false}" display="icon"/>
                     <p:outputLabel for="fechaFin" value="#{msg['ec.edu.epn.software.proyecto.fechaFin']}:"/>
@@ -120,7 +120,7 @@
                                 navigator="#{true}" showButtonPanel="#{true}"
                                 locale="es" showOn="button"
                                 required="#{true}"  mask="#{true}"
-                                pattern="dd/MM/yyyy"
+                                pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"
                                 mindate="#{proyectoControlador.sesionControlador.fecha}"/>
                     <h:panelGroup>
                         <p:message for="fechaFin" showDetail="#{false}" display="icon"/>

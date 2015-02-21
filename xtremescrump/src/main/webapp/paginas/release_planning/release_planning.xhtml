@@ -12,16 +12,16 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:define name="contenido">
         <h:form id="formSprint">
-            <p:fieldset id="historiasAsignadas" legend="Sprints">
+            <p:fieldset id="historiasAsignadas" legend="#{msg['ec.edu.epn.software.releasePlanning.Sprints']}">
                 <p:dataGrid id="historiasUsadas" columns="3"
                             value="#{releasePlanningControlador.sprintHUs}"
+                            emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
                             var="sprintHU">
-                    
                     <ui:repeat id="repeatSprints" value="#{sprintHU}" var="shu">
                         <p:fieldset id="sprint" legend="#{shu.sprint.nombre}">
                             <p:dataGrid id="historiasLibres" var="historia"
                                         value="#{shu.historiaUsuarios}" columns="1"
-                                         emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}">
+                                        emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}">
                                 <p:panel id="pnlDisponibles" header="#{historia.codigo}" style="text-align:center">
                                     <h:panelGrid columns="1" style="width:100%">
                                         #{historia.titulo}
@@ -35,8 +35,11 @@
             <br/>
             <p:separator/>
             <br/>
-            <p:fieldset id="historiasDisponibles" legend="Historias Disponibles">
-                <p:dataGrid id="historiasLibres" var="historia" value="#{releasePlanningControlador.historiaUsuarios}" columns="3">
+            <p:fieldset id="historiasDisponibles" legend="#{msg['ec.edu.epn.software.releasePlanning.historiasDisponibles']}">
+                <p:dataGrid id="historiasLibres" columns="3"
+                            value="#{releasePlanningControlador.historiaUsuarios}"
+                            emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
+                            var="historia">
                     <p:panel id="pnlDisponibles" header="#{historia.codigo}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
                             #{historia.titulo}

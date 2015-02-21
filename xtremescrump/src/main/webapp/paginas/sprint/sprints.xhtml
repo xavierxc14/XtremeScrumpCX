@@ -39,13 +39,13 @@
                 <p:column headerText="#{msg['ec.edu.epn.software.sprint.fechaInicio']}"
                           style="width: 100px">
                     <h:outputText value="#{sprint.fechaInicio}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        <f:convertDateTime pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="#{msg['ec.edu.epn.software.sprint.fechaFin']}"
                           style="width: 100px">
                     <h:outputText value="#{sprint.fechaFin}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        <f:convertDateTime pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
@@ -87,7 +87,7 @@
                                 navigator="#{true}" showButtonPanel="#{true}"
                                 locale="es" showOn="button"
                                 required="#{true}" mask="#{true}"
-                                pattern="dd/MM/yyyy"
+                                pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"
                                 mindate="#{sprintControlador.sesionControlador.proyecto.fechaInicio}"/>
                     <p:message for="fechaInicio" showDetail="#{false}" display="icon"/>
                     <p:outputLabel for="fechaFin" value="#{msg['ec.edu.epn.software.sprint.fechaFin']}:"/>
@@ -96,8 +96,9 @@
                                 navigator="#{true}" showButtonPanel="#{true}"
                                 locale="es" showOn="button"
                                 required="#{true}"  mask="#{true}"
-                                pattern="dd/MM/yyyy"
-                                mindate="#{sprintControlador.sesionControlador.proyecto.fechaInicio}"/>
+                                pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"
+                                mindate="#{sprintControlador.sprint.fechaInicio}"
+                                maxdate="#{sprintControlador.sesionControlador.proyecto.fechaFin}"/>
                     <h:panelGroup>
                         <p:message for="fechaFin" showDetail="#{false}" display="icon"/>
                         <o:validateOrder id="fechas" components="fechaInicio fechaFin"

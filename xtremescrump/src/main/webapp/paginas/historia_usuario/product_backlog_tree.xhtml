@@ -34,6 +34,8 @@
                 <f:facet name="header">
                     Historias de Usuario 
                 </f:facet>
+                <p:ajax event="rowSelect" process="ratingScaleTable" listener="#{ratingScaleBK.edit}"  update=":templateForm:tabView, :templateForm:dirtyFlag, :templateForm:tabView:RsContextMenuId" />
+                <p:ajax event="contextMenu" update=":templateForm:tabView:RsContextMenuId" oncomplete="ctxMenu.show(currentEvent);"/>
                 <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.codigo']}"
                           style="text-align: center; width: 100px">
                     <h:outputText value="#{historia.codigo}"/>
