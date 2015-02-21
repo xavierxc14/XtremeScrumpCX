@@ -10,7 +10,7 @@
     <name>XtremeScrumP</name>
 
     <properties>
-        <appengine.app.appId>xtremescrump</appengine.app.appId>
+        <appengine.app.appId>xtremescrumpcx</appengine.app.appId>
         <appengine.app.version>1</appengine.app.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
