@@ -14,8 +14,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
 
 @ManagedBean
 @ViewScoped
@@ -37,8 +35,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     @ManagedProperty("#{sesionControlador}")
     private SesionControlador sesionControlador;
-
-    private TreeNode root;
 
     @PostConstruct
     @Override
@@ -143,6 +139,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         }
         return buscar();
     }
+
     public String borrarTarea() {
         tareaServicio.eliminar(tarea);
         MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.HU_ELIMINADO);
@@ -157,21 +154,20 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         return LISTA;
     }
 
-    public String llenarArbol() {
-        root = new DefaultTreeNode("raiz", null);
-        for (HistoriaUsuario hu : historiasUsuarios) {
-            TreeNode nodoHistoria = new DefaultTreeNode("historia", hu, root);
-            List<Tarea> tareas = historiaUsuarioServicio.buscarTareasPorHU(hu.getId());
-            for (Tarea t : tareas) {
+//    public String llenarArbol() {
+//        root = new DefaultTreeNode("raiz", null);
+//        for (HistoriaUsuario hu : historiasUsuarios) {
+//            TreeNode nodoHistoria = new DefaultTreeNode("historia", hu, root);
+//            List<Tarea> tareas = historiaUsuarioServicio.buscarTareasPorHU(hu.getId());
+//            for (Tarea t : tareas) {
 //                Tarea t = new Tarea();
 //                t.setDescripcion("Tarea prueba " + j);
 //                t.setEsfuerzo(2);
-                TreeNode nodoTarea = new DefaultTreeNode("tarea", t, nodoHistoria);
-            }
-        }
-        return null;
-    }
-
+//                TreeNode nodoTarea = new DefaultTreeNode("tarea", t, nodoHistoria);
+//            }
+//        }
+//        return null;
+//    }
     /**
      * @return the historiaUsuario
      */
@@ -226,13 +222,5 @@ public class HistoriaUsuarioControlador extends ControladorBase {
      */
     public void setTarea(Tarea tarea) {
         this.tarea = tarea;
-    }
-
-    public TreeNode getRoot() {
-        return root;
-    }
-
-    public void setRoot(TreeNode root) {
-        this.root = root;
     }
 }
