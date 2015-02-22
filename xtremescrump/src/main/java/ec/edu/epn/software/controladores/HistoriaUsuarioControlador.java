@@ -33,7 +33,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     private HistoriaUsuario historiaUsuarioSeleccionada;
 
     private Tarea tarea;
-    private List<Tarea> tareas;
+    //private List<Tarea> tareas;
     private Tarea tareaSeleccionada;
 
     @ManagedProperty("#{sesionControlador}")
@@ -45,7 +45,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @Override
     public void init() {
         setHistoriaUsuarios(new ArrayList<HistoriaUsuario>());
-        setTareas(new ArrayList<Tarea>());
         tarea = new Tarea();
         buscar();
     }
@@ -114,7 +113,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @Override
     public String cerrarDialogo() {
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').hide()");
-        historiaUsuario = new HistoriaUsuario();
+        //historiaUsuario = new HistoriaUsuario();
         return null;
     }
 
@@ -126,11 +125,11 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         return buscar();
     }
 
-    public TreeNode llenarArbol() {
-        root = new DefaultTreeNode(new HistoriaUsuario(), null);
+    public String llenarArbol() {
+        root = new DefaultTreeNode("raiz", null);
         for (HistoriaUsuario hu : historiasUsuarios) {
             TreeNode nodoHistoria = new DefaultTreeNode("historia", hu, root);
-            setTareas(historiaUsuarioServicio.buscarTareasPorHU(hu.getId()));
+            List<Tarea> tareas = historiaUsuarioServicio.buscarTareasPorHU(hu.getId());
             for (Tarea t : tareas) {
 //                Tarea t = new Tarea();
 //                t.setDescripcion("Tarea prueba " + j);
@@ -138,12 +137,13 @@ public class HistoriaUsuarioControlador extends ControladorBase {
                 TreeNode nodoTarea = new DefaultTreeNode("tarea", t, nodoHistoria);
             }
         }
-        return root;
+        return null;
     }
 
-    public void nuevaTarea() {
+    public String nuevaTarea() {
         setTarea(new Tarea());
-        ejecutarJSPrimefaces("PF('dlgTarea').show()");
+        //ejecutarJSPrimefaces("PF('dlgTarea').show()");
+        return null;
     }
 
     public String guardarTarea() {
@@ -205,20 +205,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
      */
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
-    }
-
-    /**
-     * @return the tareas
-     */
-    public List<Tarea> getTareas() {
-        return tareas;
-    }
-
-    /**
-     * @param tareas the tareas to set
-     */
-    public void setTareas(List<Tarea> tareas) {
-        this.tareas = tareas;
     }
 
     /**

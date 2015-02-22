@@ -22,16 +22,18 @@ public class HistoriaUsuarioServicio extends ServicioBase<HistoriaUsuario> {
         return list;
     }
 
-    public List<HistoriaUsuario> buscarSinSprint() {
+    public List<HistoriaUsuario> buscarPorProyectoSinSprint(Long idProyecto) {
+        Key<Proyecto> proyectoKey = Key.create(Proyecto.class, idProyecto);
         Query<HistoriaUsuario> query = ofy().load().type(HistoriaUsuario.class);
-        List<HistoriaUsuario> list = query.filter("sprint", null).list();
+        List<HistoriaUsuario> list = query.filter("proyecto", proyectoKey).filter("sprint", null).list();
         return list;
     }
 
-    public List<HistoriaUsuario> buscarPorSprint(Long idSprint) {
+    public List<HistoriaUsuario> buscarPorProyectoConSprint(Long idProyecto, Long idSprint) {
+        Key<Proyecto> proyectoKey = Key.create(Proyecto.class, idProyecto);
         Key<Sprint> sprintKey = Key.create(Sprint.class, idSprint);
         Query<HistoriaUsuario> query = ofy().load().type(HistoriaUsuario.class);
-        List<HistoriaUsuario> list = query.filter("sprint", sprintKey).list();
+        List<HistoriaUsuario> list = query.filter("proyecto", proyectoKey).filter("sprint", sprintKey).list();
         return list;
     }
 

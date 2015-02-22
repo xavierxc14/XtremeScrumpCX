@@ -49,9 +49,10 @@ public class ReleasePlanningControlador extends ControladorBase {
     @Override
     public String buscar() {
         try {
-            setSprints(sprintServicio.buscarTodos());
+            setSprints(sprintServicio.buscarPorProyecto(sesionControlador.getProyecto().getId()));
             for (Sprint s : getSprints()) {
-                s.setHistoriasUsuario(historiaUsuarioServicio.buscarPorSprint(s.getId()));
+                s.setHistoriasUsuario(historiaUsuarioServicio.buscarPorProyectoConSprint(
+                        sesionControlador.getProyecto().getId(), s.getId()));
                 getSprintHUs().add(new SprintHU(s, s.getHistoriasUsuario()));
             }
         } catch (Exception ex) {
@@ -86,7 +87,12 @@ public class ReleasePlanningControlador extends ControladorBase {
     }
 
     public void buscarHistoriasDisponibles() {
-        setHistoriaUsuarios(historiaUsuarioServicio.buscarSinSprint());
+        if (sesionControlador.getProyecto() == null || sesionControlador.getProyecto().getId() == null) {
+            setHistoriaUsuarios(new ArrayList<HistoriaUsuario>());
+        } else {
+            setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyectoSinSprint(
+                    sesionControlador.getProyecto().getId()));
+        }
     }
 
     public void onDrop(DragDropEvent ddEvent) {

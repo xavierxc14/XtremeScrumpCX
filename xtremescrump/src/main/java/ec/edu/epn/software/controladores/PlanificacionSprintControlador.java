@@ -35,8 +35,10 @@ public class PlanificacionSprintControlador implements Serializable {
     }
 
     public void buscar() {
-        setHistoriaUsuariosDisponibles(historiaUsuarioServicio.buscarSinSprint());
-        setHistoriaUsuariosAsignadas(historiaUsuarioServicio.buscarPorSprint(sesionControlador.getSprint().getId()));
+        setHistoriaUsuariosDisponibles(historiaUsuarioServicio.buscarPorProyectoSinSprint(
+                sesionControlador.getProyecto().getId()));
+        setHistoriaUsuariosAsignadas(historiaUsuarioServicio.buscarPorProyectoConSprint(
+                sesionControlador.getProyecto().getId(), sesionControlador.getSprint().getId()));
     }
 
     public void onDropAsignar(DragDropEvent ddEvent) {

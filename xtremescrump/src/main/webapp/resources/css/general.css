@@ -53,3 +53,6 @@ myFieldset .ui-fieldset, .ui-fieldset .ui-fieldset-legend {
     border-color: transparent;
 }
 */
+.ui-datagrid-content {
+    border: none;
+}

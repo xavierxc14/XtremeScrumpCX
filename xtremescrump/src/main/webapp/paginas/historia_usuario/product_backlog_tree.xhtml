@@ -15,27 +15,27 @@
                              icon="ui-icon-document"
                              action="#{historiaUsuarioControlador.nuevo}"
                              update=":panelNuevaHistoriaUsuario"/>
-
-            <p:contextMenu for="tablaHistoriasUsuario" nodeType="historia">
-                <p:menuitem value="Nueva Tarea" update=":panelNuevaTarea" action="#{historiaUsuarioControlador.nuevaTarea}" icon="ui-icon-document" 
-                            onclick="PF('dlgTarea').show()"/>
+            <p:contextMenu id="menuHistoria" for="tablaHistoriasUsuario" nodeType="historia">
+                <p:menuitem value="Nueva Tarea" update=":panelNuevaTarea"
+                            actionListener="#{historiaUsuarioControlador.nuevaTarea}"
+                            oncomplete="PF('dlgTarea').show()"
+                            icon="ui-icon-document"/>
                 <p:menuitem value="#{msg['ec.edu.epn.software.generico.etiquetas.editar']}"
                             icon="ui-icon-pencil"
                             action="#{historiaUsuarioControlador.editar}"/>
             </p:contextMenu>
-            <p:contextMenu for="tablaHistoriasUsuario" nodeType="tarea">
+            <p:contextMenu id="menuTarea" for="tablaHistoriasUsuario" nodeType="tarea">
                 <p:menuitem value="Editar" icon="ui-icon-pencil"/>
             </p:contextMenu>
 
             <p:treeTable value="#{historiaUsuarioControlador.root}" var="historia"
                          id="tablaHistoriasUsuario"
                          selectionMode="single"
+                         emptyMessage="#{msg['ec.edu.epn.software.generico.datatable.vacia']}"
                          selection="#{historiaUsuarioControlador.historiaUsuarioSeleccionada}">
                 <f:facet name="header">
                     Historias de Usuario 
                 </f:facet>
-                <p:ajax event="rowSelect" process="ratingScaleTable" listener="#{ratingScaleBK.edit}"  update=":templateForm:tabView, :templateForm:dirtyFlag, :templateForm:tabView:RsContextMenuId" />
-                <p:ajax event="contextMenu" update=":templateForm:tabView:RsContextMenuId" oncomplete="ctxMenu.show(currentEvent);"/>
                 <p:column headerText="#{msg['ec.edu.epn.software.historiaUsuario.codigo']}"
                           style="text-align: center; width: 100px">
                     <h:outputText value="#{historia.codigo}"/>
@@ -56,7 +56,7 @@
                           style="text-align: center; width: 50px">
                     <h:outputText value="#{historia.esfuerzo}"/>
                 </p:column>
-
+<!--
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.opciones']}"
                           style="text-align: center; width: 50px">
                     <p:commandButton id="botonEdicion" icon="ui-icon-pencil"
@@ -73,6 +73,7 @@
                                                      target="#{historiaUsuarioControlador.historiaUsuario}"/>
                     </p:commandButton>
                 </p:column>
+-->
             </p:treeTable>
         </h:form>
     </ui:define>
@@ -184,7 +185,7 @@
                     <p:commandButton id="cancelar"
                                      value="#{msg['ec.edu.epn.software.generico.boton.cancelar']}"
                                      icon="ui-icon-arrowreturnthick-1-w"
-                                     action="#{historiaUsuarioControlador.cerrarDialogo}"
+                                     onclick="PF('dlgTarea').hide()"
                                      process="@this"/>
                 </center>
             </h:form>
