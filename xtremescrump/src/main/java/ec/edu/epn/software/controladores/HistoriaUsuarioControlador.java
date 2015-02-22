@@ -26,15 +26,14 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     private static final String LISTA = "/paginas/historia_usuario/product_backlog_table.jsf";
 
     private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
+
     private final TareaServicio tareaServicio = new TareaServicio();
 
     private HistoriaUsuario historiaUsuario;
+
     private List<HistoriaUsuario> historiasUsuarios;
-    private Object seleccion;
 
     private Tarea tarea;
-    //private List<Tarea> tareas;
-    private Tarea tareaSeleccionada;
 
     @ManagedProperty("#{sesionControlador}")
     private SesionControlador sesionControlador;
@@ -52,10 +51,12 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @Override
     public String buscar() {
         try {
-//            setHistoriaUsuarios(historiaUsuarioServicio.buscarTodos());
             getHistoriaUsuarios().clear();
             setHistoriaUsuarios(historiaUsuarioServicio.buscarPorProyecto(sesionControlador.getProyecto().getId()));
-            llenarArbol();
+            for (HistoriaUsuario hu : historiasUsuarios) {
+                hu.setTareas(tareaServicio.buscarPorHU(hu.getId()));
+            }
+            //llenarArbol();
         } catch (Exception ex) {
             LOG.error("Error al realizar la busqueda de proyectos", ex);
         }
@@ -72,11 +73,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     @Override
     public String editar() {
-        if (seleccion instanceof HistoriaUsuario) {
-            ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
-        } else if (seleccion instanceof Tarea) {
-            ejecutarJSPrimefaces("PF('dlgTarea').show()");
-        }
         return null;
     }
 
@@ -117,7 +113,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     @Override
     public String cerrarDialogo() {
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').hide()");
-        //historiaUsuario = new HistoriaUsuario();
+        ejecutarJSPrimefaces("PF('dlgTarea').hide()");
         return null;
     }
 
@@ -127,21 +123,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.HU_ELIMINADO);
         ejecutarJSPrimefaces("PF('dlgElimHistoriaUsuario').hide()");
         return buscar();
-    }
-
-    public String llenarArbol() {
-        root = new DefaultTreeNode("raiz", null);
-        for (HistoriaUsuario hu : historiasUsuarios) {
-            TreeNode nodoHistoria = new DefaultTreeNode("historia", hu, root);
-            List<Tarea> tareas = historiaUsuarioServicio.buscarTareasPorHU(hu.getId());
-            for (Tarea t : tareas) {
-//                Tarea t = new Tarea();
-//                t.setDescripcion("Tarea prueba " + j);
-//                t.setEsfuerzo(2);
-                TreeNode nodoTarea = new DefaultTreeNode("tarea", t, nodoHistoria);
-            }
-        }
-        return null;
     }
 
     public String nuevaTarea() {
@@ -162,12 +143,33 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         }
         return buscar();
     }
+    public String borrarTarea() {
+        tareaServicio.eliminar(tarea);
+        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.HU_ELIMINADO);
+        ejecutarJSPrimefaces("PF('dlgElimTarea').hide()");
+        return buscar();
+    }
 
     /**
      * @return the LISTA
      */
     public String getLISTA() {
         return LISTA;
+    }
+
+    public String llenarArbol() {
+        root = new DefaultTreeNode("raiz", null);
+        for (HistoriaUsuario hu : historiasUsuarios) {
+            TreeNode nodoHistoria = new DefaultTreeNode("historia", hu, root);
+            List<Tarea> tareas = historiaUsuarioServicio.buscarTareasPorHU(hu.getId());
+            for (Tarea t : tareas) {
+//                Tarea t = new Tarea();
+//                t.setDescripcion("Tarea prueba " + j);
+//                t.setEsfuerzo(2);
+                TreeNode nodoTarea = new DefaultTreeNode("tarea", t, nodoHistoria);
+            }
+        }
+        return null;
     }
 
     /**
@@ -213,20 +215,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     }
 
     /**
-     * @return the seleccion
-     */
-    public Object getSeleccion() {
-        return seleccion;
-    }
-
-    /**
-     * @param historiaUsuarioSeleccionada the seleccion to set
-     */
-    public void setHistoriaUsuarioSeleccionada(HistoriaUsuario historiaUsuarioSeleccionada) {
-        this.seleccion = historiaUsuarioSeleccionada;
-    }
-
-    /**
      * @return the tarea
      */
     public Tarea getTarea() {
@@ -238,20 +226,6 @@ public class HistoriaUsuarioControlador extends ControladorBase {
      */
     public void setTarea(Tarea tarea) {
         this.tarea = tarea;
-    }
-
-    /**
-     * @return the tareaSeleccionada
-     */
-    public Tarea getTareaSeleccionada() {
-        return tareaSeleccionada;
-    }
-
-    /**
-     * @param tareaSeleccionada the tareaSeleccionada to set
-     */
-    public void setTareaSeleccionada(Tarea tareaSeleccionada) {
-        this.tareaSeleccionada = tareaSeleccionada;
     }
 
     public TreeNode getRoot() {
