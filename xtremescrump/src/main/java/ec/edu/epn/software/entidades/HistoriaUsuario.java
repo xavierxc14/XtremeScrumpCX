@@ -5,6 +5,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Index
@@ -26,6 +27,8 @@ public class HistoriaUsuario implements Serializable {
     private Ref<Proyecto> proyecto;
 
     private Ref<Sprint> sprint;
+
+    private List<Tarea> tareas;
 
     /**
      * Constructor vacio.
@@ -160,6 +163,20 @@ public class HistoriaUsuario implements Serializable {
      */
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = Ref.create(proyecto);
+    }
+
+    /**
+     * @return the tareas
+     */
+    public List<Tarea> getTareas() {
+        return tareas;
+    }
+
+    /**
+     * @param tareas the tareas to set
+     */
+    public void setTareas(List<Tarea> tareas) {
+        this.tareas = tareas;
     }
 
 }

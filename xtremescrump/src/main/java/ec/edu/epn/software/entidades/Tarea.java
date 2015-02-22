@@ -93,16 +93,16 @@ public class Tarea implements Serializable {
     }
 
     /**
-     * @return the historia de usuario
+     * @return the historia
      */
     public HistoriaUsuario getHistoria() {
         return historia.get();
     }
 
     /**
-     * @param historia the backlog to set
+     * @param historia the historia to set
      */
-    public void setBacklog(HistoriaUsuario historia) {
+    public void setHistoria(HistoriaUsuario historia) {
         this.historia = Ref.create(historia);
     }
 

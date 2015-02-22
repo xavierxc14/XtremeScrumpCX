@@ -23,14 +23,14 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(HistoriaUsuarioControlador.class);
 
-    private static final String LISTA = "/paginas/historia_usuario/product_backlog_tree.jsf";
+    private static final String LISTA = "/paginas/historia_usuario/product_backlog_table.jsf";
 
     private final HistoriaUsuarioServicio historiaUsuarioServicio = new HistoriaUsuarioServicio();
     private final TareaServicio tareaServicio = new TareaServicio();
 
     private HistoriaUsuario historiaUsuario;
     private List<HistoriaUsuario> historiasUsuarios;
-    private HistoriaUsuario historiaUsuarioSeleccionada;
+    private Object seleccion;
 
     private Tarea tarea;
     //private List<Tarea> tareas;
@@ -72,7 +72,11 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     @Override
     public String editar() {
-        ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
+        if (seleccion instanceof HistoriaUsuario) {
+            ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
+        } else if (seleccion instanceof Tarea) {
+            ejecutarJSPrimefaces("PF('dlgTarea').show()");
+        }
         return null;
     }
 
@@ -142,12 +146,13 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     public String nuevaTarea() {
         setTarea(new Tarea());
-        //ejecutarJSPrimefaces("PF('dlgTarea').show()");
+        ejecutarJSPrimefaces("PF('dlgTarea').show()");
         return null;
     }
 
     public String guardarTarea() {
         try {
+            tarea.setHistoria(historiaUsuario);
             tareaServicio.guardar(tarea);
             MensajesPagina
                     .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
@@ -208,17 +213,17 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     }
 
     /**
-     * @return the historiaUsuarioSeleccionada
+     * @return the seleccion
      */
-    public HistoriaUsuario getHistoriaUsuarioSeleccionada() {
-        return historiaUsuarioSeleccionada;
+    public Object getSeleccion() {
+        return seleccion;
     }
 
     /**
-     * @param historiaUsuarioSeleccionada the historiaUsuarioSeleccionada to set
+     * @param historiaUsuarioSeleccionada the seleccion to set
      */
     public void setHistoriaUsuarioSeleccionada(HistoriaUsuario historiaUsuarioSeleccionada) {
-        this.historiaUsuarioSeleccionada = historiaUsuarioSeleccionada;
+        this.seleccion = historiaUsuarioSeleccionada;
     }
 
     /**
