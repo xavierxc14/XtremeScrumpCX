@@ -26,7 +26,8 @@
                          filterEvent="enter"
                          selectionMode="single" rowKey="#{sprint.id}"
                          selection="#{sprintControlador.sesionControlador.sprint}"
-                         style="overflow: auto">
+                         style="overflow: auto"
+                         sortBy="#{sprint.fechaInicio}">
                 <p:ajax event="rowSelect" listener="#{sprintControlador.redirectPlaneacion}"/>
                 <p:column headerText="#{msg['ec.edu.epn.software.generico.numero']}"
                           style="text-align: center; width: 0px">
@@ -88,7 +89,8 @@
                                 locale="es" showOn="button"
                                 required="#{true}" mask="#{true}"
                                 pattern="#{msg['ec.edu.epn.software.generico.formato.fechaCorta']}"
-                                mindate="#{sprintControlador.sesionControlador.proyecto.fechaInicio}">
+                                mindate="#{sprintControlador.fechaInicioSprint}"
+                                maxdate="#{sprintControlador.sesionControlador.proyecto.fechaFin}">
                         <p:ajax event="dateSelect" update="fechaFin"/>
                     </p:calendar>
                     <p:message for="fechaInicio" showDetail="#{false}" display="icon"/>

@@ -5,6 +5,8 @@ import ec.edu.epn.software.servicios.SprintServicio;
 import ec.edu.epn.software.utils.MensajesInformacion;
 import ec.edu.epn.software.utils.MensajesPagina;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +34,8 @@ public class SprintControlador extends ControladorBase {
 
     private List<Sprint> sprints;
 
+    private Date fechaInicioSprint;
+
     @PostConstruct
     @Override
     public void init() {
@@ -42,7 +46,9 @@ public class SprintControlador extends ControladorBase {
     @Override
     public String buscar() {
         try {
-            setSprints(sprintServicio.buscarPorProyecto(sesionControlador.getProyecto().getId()));
+            setSprints(sprintServicio.buscarPorProyecto(
+                    sesionControlador.getProyecto().getId()));
+            fechaInicioSprint = fechaSiguienteSprint();
         } catch (Exception ex) {
             LOG.error("Error al realizar la buscqueda de sprints", ex);
         }
@@ -52,6 +58,7 @@ public class SprintControlador extends ControladorBase {
     @Override
     public String nuevo() {
         setSprint(new Sprint());
+        fechaInicioSprint = fechaSiguienteSprint();
         ejecutarJSPrimefaces("PF('dlgSprint').show()");
         return null;
     }
@@ -92,6 +99,19 @@ public class SprintControlador extends ControladorBase {
 
     public void redirectPlaneacion(SelectEvent evt) {
         redirect(evt, PLANEACION);
+    }
+
+    public Date fechaSiguienteSprint() {
+        Date fecha;
+        if (sprints.size() > 0) {
+            fecha = sprints.get(sprints.size() - 1).getFechaFin();
+        } else {
+            fecha = sesionControlador.getProyecto().getFechaInicio();
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(fecha);
+        c.add(Calendar.DATE, 1);
+        return c.getTime();
     }
 
     /**
@@ -141,6 +161,20 @@ public class SprintControlador extends ControladorBase {
      */
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
+    }
+
+    /**
+     * @return the fechaSiguienteSprint
+     */
+    public Date getFechaInicioSprint() {
+        return fechaInicioSprint;
+    }
+
+    /**
+     * @param fechaInicioSprint the fechaSiguienteSprint to set
+     */
+    public void setFechaInicioSprint(Date fechaInicioSprint) {
+        this.fechaInicioSprint = fechaInicioSprint;
     }
 
 }
