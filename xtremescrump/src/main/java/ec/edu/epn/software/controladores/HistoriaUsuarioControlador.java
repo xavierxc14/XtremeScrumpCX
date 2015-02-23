@@ -1,7 +1,9 @@
 package ec.edu.epn.software.controladores;
 
+import ec.edu.epn.software.entidades.CriterioAceptacion;
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.entidades.Tarea;
+import ec.edu.epn.software.servicios.CriterioAceptacionServicio;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
 import ec.edu.epn.software.servicios.TareaServicio;
 import ec.edu.epn.software.utils.MensajesError;
@@ -27,11 +29,17 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     private final TareaServicio tareaServicio = new TareaServicio();
 
+    private final CriterioAceptacionServicio criterioAceptacionServicio = new CriterioAceptacionServicio();
+
     private HistoriaUsuario historiaUsuario;
 
     private List<HistoriaUsuario> historiasUsuarios;
 
     private Tarea tarea;
+
+    private CriterioAceptacion criterio;
+
+    private List<CriterioAceptacion> criterios;
 
     @ManagedProperty("#{sesionControlador}")
     private SesionControlador sesionControlador;
@@ -69,6 +77,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     @Override
     public String editar() {
+        ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').show()");
         return null;
     }
 
@@ -110,6 +119,7 @@ public class HistoriaUsuarioControlador extends ControladorBase {
     public String cerrarDialogo() {
         ejecutarJSPrimefaces("PF('dlgHistoriaUsuario').hide()");
         ejecutarJSPrimefaces("PF('dlgTarea').hide()");
+        ejecutarJSPrimefaces("PF('dlgCriterio').hide()");
         return null;
     }
 
@@ -123,6 +133,11 @@ public class HistoriaUsuarioControlador extends ControladorBase {
 
     public String nuevaTarea() {
         setTarea(new Tarea());
+        ejecutarJSPrimefaces("PF('dlgTarea').show()");
+        return null;
+    }
+
+    public String editarTarea() {
         ejecutarJSPrimefaces("PF('dlgTarea').show()");
         return null;
     }
@@ -144,6 +159,41 @@ public class HistoriaUsuarioControlador extends ControladorBase {
         tareaServicio.eliminar(tarea);
         MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.HU_ELIMINADO);
         ejecutarJSPrimefaces("PF('dlgElimTarea').hide()");
+        return buscar();
+    }
+
+    public String nuevoCriterio() {
+        setCriterio(new CriterioAceptacion());
+        ejecutarJSPrimefaces("PF('dlgCriterio').show()");
+        return null;
+    }
+
+    public String buscarCriterios() {
+        setCriterios(criterioAceptacionServicio.buscarPorTarea(tarea.getId()));
+        ejecutarJSPrimefaces("PF('dlgCriterios').show()");
+        return null;
+    }
+    public String editarCriterio() {
+        ejecutarJSPrimefaces("PF('dlgCriterio').show()");
+        return null;
+    }
+
+    public String guardarCriterio() {
+        try {
+            criterio.setTarea(tarea);
+            criterioAceptacionServicio.guardar(criterio);
+            MensajesPagina
+                    .mostrarMensajeInformacion(MensajesInformacion.HU_CREADO);
+            cerrarDialogo();
+        } catch (Exception e) {
+            MensajesPagina.mostrarMensajeError(MensajesError.ERROR_HU_CREADO);
+        }
+        return buscar();
+    }
+    public String borrarCriterio() {
+        criterioAceptacionServicio.eliminar(criterio);
+        MensajesPagina.mostrarMensajeInformacion(MensajesInformacion.HU_ELIMINADO);
+        ejecutarJSPrimefaces("PF('dlgElimCriterio').hide()");
         return buscar();
     }
 
@@ -222,5 +272,33 @@ public class HistoriaUsuarioControlador extends ControladorBase {
      */
     public void setTarea(Tarea tarea) {
         this.tarea = tarea;
+    }
+
+    /**
+     * @return the criterio
+     */
+    public CriterioAceptacion getCriterio() {
+        return criterio;
+    }
+
+    /**
+     * @param criterio the criterio to set
+     */
+    public void setCriterio(CriterioAceptacion criterio) {
+        this.criterio = criterio;
+    }
+
+    /**
+     * @return the criterios
+     */
+    public List<CriterioAceptacion> getCriterios() {
+        return criterios;
+    }
+
+    /**
+     * @param criterios the criterios to set
+     */
+    public void setCriterios(List<CriterioAceptacion> criterios) {
+        this.criterios = criterios;
     }
 }
