@@ -2,7 +2,6 @@ package ec.edu.epn.software.controladores;
 
 import ec.edu.epn.software.entidades.HistoriaUsuario;
 import ec.edu.epn.software.servicios.HistoriaUsuarioServicio;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -14,7 +13,7 @@ import org.primefaces.event.DragDropEvent;
 
 @ManagedBean
 @ViewScoped
-public class PlanificacionSprintControlador implements Serializable {
+public class PlanificacionSprintControlador extends ControladorBase {
 
     private static Logger LOG = Logger.getLogger(PlanificacionSprintControlador.class);
 
@@ -28,17 +27,20 @@ public class PlanificacionSprintControlador implements Serializable {
     private List<HistoriaUsuario> historiaUsuariosAsignadas;
 
     @PostConstruct
+    @Override
     public void init() {
         setHistoriaUsuariosDisponibles(new ArrayList<HistoriaUsuario>());
         setHistoriaUsuariosAsignadas(new ArrayList<HistoriaUsuario>());
         buscar();
     }
 
-    public void buscar() {
+    @Override
+    public String buscar() {
         setHistoriaUsuariosDisponibles(historiaUsuarioServicio.buscarPorProyectoSinSprint(
                 sesionControlador.getProyecto().getId()));
         setHistoriaUsuariosAsignadas(historiaUsuarioServicio.buscarPorProyectoConSprint(
                 sesionControlador.getProyecto().getId(), sesionControlador.getSprint().getId()));
+        return null;
     }
 
     public void onDropAsignar(DragDropEvent ddEvent) {
@@ -97,6 +99,31 @@ public class PlanificacionSprintControlador implements Serializable {
      */
     public void setHistoriaUsuariosAsignadas(List<HistoriaUsuario> historiaUsuariosAsignadas) {
         this.historiaUsuariosAsignadas = historiaUsuariosAsignadas;
+    }
+
+    @Override
+    public String nuevo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String editar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String guardar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String cerrarDialogo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String borrar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
